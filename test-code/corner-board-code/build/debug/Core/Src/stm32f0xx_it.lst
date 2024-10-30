@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\xhex8\AppData\Local\Temp\ccP0czKm.s 			page 1
+ARM GAS  C:\Users\xhex8\AppData\Local\Temp\ccPmq5KL.s 			page 1
 
 
    1              		.cpu cortex-m0
@@ -58,7 +58,7 @@ ARM GAS  C:\Users\xhex8\AppData\Local\Temp\ccP0czKm.s 			page 1
   30:Core/Src/stm32f0xx_it.c **** /* USER CODE END TD */
   31:Core/Src/stm32f0xx_it.c **** 
   32:Core/Src/stm32f0xx_it.c **** /* Private define ------------------------------------------------------------*/
-ARM GAS  C:\Users\xhex8\AppData\Local\Temp\ccP0czKm.s 			page 2
+ARM GAS  C:\Users\xhex8\AppData\Local\Temp\ccPmq5KL.s 			page 2
 
 
   33:Core/Src/stm32f0xx_it.c **** /* USER CODE BEGIN PD */
@@ -118,7 +118,7 @@ ARM GAS  C:\Users\xhex8\AppData\Local\Temp\ccP0czKm.s 			page 1
   75:Core/Src/stm32f0xx_it.c ****   {
   36              		.loc 1 75 10 discriminator 1 view .LVU3
   37 0000 FEE7     		b	.L2
-ARM GAS  C:\Users\xhex8\AppData\Local\Temp\ccP0czKm.s 			page 3
+ARM GAS  C:\Users\xhex8\AppData\Local\Temp\ccPmq5KL.s 			page 3
 
 
   38              		.cfi_endproc
@@ -178,7 +178,7 @@ ARM GAS  C:\Users\xhex8\AppData\Local\Temp\ccP0czKm.s 			page 1
  100:Core/Src/stm32f0xx_it.c **** {
   73              		.loc 1 100 1 view -0
   74              		.cfi_startproc
-ARM GAS  C:\Users\xhex8\AppData\Local\Temp\ccP0czKm.s 			page 4
+ARM GAS  C:\Users\xhex8\AppData\Local\Temp\ccPmq5KL.s 			page 4
 
 
   75              		@ args = 0, pretend = 0, frame = 0
@@ -238,7 +238,7 @@ ARM GAS  C:\Users\xhex8\AppData\Local\Temp\ccP0czKm.s 			page 1
  121:Core/Src/stm32f0xx_it.c **** 
  122:Core/Src/stm32f0xx_it.c **** /**
  123:Core/Src/stm32f0xx_it.c ****   * @brief This function handles System tick timer.
-ARM GAS  C:\Users\xhex8\AppData\Local\Temp\ccP0czKm.s 			page 5
+ARM GAS  C:\Users\xhex8\AppData\Local\Temp\ccPmq5KL.s 			page 5
 
 
  124:Core/Src/stm32f0xx_it.c ****   */
@@ -268,13 +268,13 @@ ARM GAS  C:\Users\xhex8\AppData\Local\Temp\ccP0czKm.s 			page 1
  126 0006 10BD     		pop	{r4, pc}
  127              		.cfi_endproc
  128              	.LFE44:
- 130              		.section	.text.CEC_CAN_IRQHandler,"ax",%progbits
+ 130              		.section	.text.EXTI2_3_IRQHandler,"ax",%progbits
  131              		.align	1
- 132              		.global	CEC_CAN_IRQHandler
+ 132              		.global	EXTI2_3_IRQHandler
  133              		.syntax unified
  134              		.code	16
  135              		.thumb_func
- 137              	CEC_CAN_IRQHandler:
+ 137              	EXTI2_3_IRQHandler:
  138              	.LFB45:
  135:Core/Src/stm32f0xx_it.c **** 
  136:Core/Src/stm32f0xx_it.c **** /******************************************************************************/
@@ -285,9 +285,9 @@ ARM GAS  C:\Users\xhex8\AppData\Local\Temp\ccP0czKm.s 			page 1
  141:Core/Src/stm32f0xx_it.c **** /******************************************************************************/
  142:Core/Src/stm32f0xx_it.c **** 
  143:Core/Src/stm32f0xx_it.c **** /**
- 144:Core/Src/stm32f0xx_it.c ****   * @brief This function handles HDMI-CEC and CAN global interrupts / HDMI-CEC wake-up interrupt th
+ 144:Core/Src/stm32f0xx_it.c ****   * @brief This function handles EXTI line 2 and 3 interrupts.
  145:Core/Src/stm32f0xx_it.c ****   */
- 146:Core/Src/stm32f0xx_it.c **** void CEC_CAN_IRQHandler(void)
+ 146:Core/Src/stm32f0xx_it.c **** void EXTI2_3_IRQHandler(void)
  147:Core/Src/stm32f0xx_it.c **** {
  139              		.loc 1 147 1 is_stmt 1 view -0
  140              		.cfi_startproc
@@ -297,58 +297,109 @@ ARM GAS  C:\Users\xhex8\AppData\Local\Temp\ccP0czKm.s 			page 1
  144              		.cfi_def_cfa_offset 8
  145              		.cfi_offset 4, -8
  146              		.cfi_offset 14, -4
- 148:Core/Src/stm32f0xx_it.c ****   /* USER CODE BEGIN CEC_CAN_IRQn 0 */
-ARM GAS  C:\Users\xhex8\AppData\Local\Temp\ccP0czKm.s 			page 6
+ 148:Core/Src/stm32f0xx_it.c ****   /* USER CODE BEGIN EXTI2_3_IRQn 0 */
+ARM GAS  C:\Users\xhex8\AppData\Local\Temp\ccPmq5KL.s 			page 6
 
 
- 149:Core/Src/stm32f0xx_it.c **** 
- 150:Core/Src/stm32f0xx_it.c ****   /* USER CODE END CEC_CAN_IRQn 0 */
- 151:Core/Src/stm32f0xx_it.c ****   HAL_CAN_IRQHandler(&hcan);
- 147              		.loc 1 151 3 view .LVU16
- 148 0002 0248     		ldr	r0, .L9
- 149 0004 FFF7FEFF 		bl	HAL_CAN_IRQHandler
- 150              	.LVL1:
- 152:Core/Src/stm32f0xx_it.c ****   /* USER CODE BEGIN CEC_CAN_IRQn 1 */
+ 149:Core/Src/stm32f0xx_it.c ****   ads131m04_drdy_exti_handler();
+ 147              		.loc 1 149 3 view .LVU16
+ 148 0002 FFF7FEFF 		bl	ads131m04_drdy_exti_handler
+ 149              	.LVL1:
+ 150:Core/Src/stm32f0xx_it.c ****   /* USER CODE END EXTI2_3_IRQn 0 */
+ 151:Core/Src/stm32f0xx_it.c ****   HAL_GPIO_EXTI_IRQHandler(DRDY_Pin);
+ 150              		.loc 1 151 3 view .LVU17
+ 151 0006 0820     		movs	r0, #8
+ 152 0008 FFF7FEFF 		bl	HAL_GPIO_EXTI_IRQHandler
+ 153              	.LVL2:
+ 152:Core/Src/stm32f0xx_it.c ****   /* USER CODE BEGIN EXTI2_3_IRQn 1 */
  153:Core/Src/stm32f0xx_it.c **** 
- 154:Core/Src/stm32f0xx_it.c ****   /* USER CODE END CEC_CAN_IRQn 1 */
+ 154:Core/Src/stm32f0xx_it.c ****   /* USER CODE END EXTI2_3_IRQn 1 */
  155:Core/Src/stm32f0xx_it.c **** }
- 151              		.loc 1 155 1 is_stmt 0 view .LVU17
- 152              		@ sp needed
- 153 0008 10BD     		pop	{r4, pc}
- 154              	.L10:
- 155 000a C046     		.align	2
- 156              	.L9:
- 157 000c 00000000 		.word	hcan
- 158              		.cfi_endproc
- 159              	.LFE45:
- 161              		.text
- 162              	.Letext0:
- 163              		.file 2 "c:\\users\\xhex8\\appdata\\roaming\\code\\user\\globalstorage\\bmd.stm32-for-vscode\\@xpa
- 164              		.file 3 "c:\\users\\xhex8\\appdata\\roaming\\code\\user\\globalstorage\\bmd.stm32-for-vscode\\@xpa
- 165              		.file 4 "Drivers/CMSIS/Device/ST/STM32F0xx/Include/stm32f042x6.h"
- 166              		.file 5 "Drivers/CMSIS/Device/ST/STM32F0xx/Include/stm32f0xx.h"
- 167              		.file 6 "Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_can.h"
- 168              		.file 7 "Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal.h"
-ARM GAS  C:\Users\xhex8\AppData\Local\Temp\ccP0czKm.s 			page 7
+ 154              		.loc 1 155 1 is_stmt 0 view .LVU18
+ 155              		@ sp needed
+ 156 000c 10BD     		pop	{r4, pc}
+ 157              		.cfi_endproc
+ 158              	.LFE45:
+ 160              		.section	.text.CEC_CAN_IRQHandler,"ax",%progbits
+ 161              		.align	1
+ 162              		.global	CEC_CAN_IRQHandler
+ 163              		.syntax unified
+ 164              		.code	16
+ 165              		.thumb_func
+ 167              	CEC_CAN_IRQHandler:
+ 168              	.LFB46:
+ 156:Core/Src/stm32f0xx_it.c **** 
+ 157:Core/Src/stm32f0xx_it.c **** /**
+ 158:Core/Src/stm32f0xx_it.c ****   * @brief This function handles HDMI-CEC and CAN global interrupts / HDMI-CEC wake-up interrupt th
+ 159:Core/Src/stm32f0xx_it.c ****   */
+ 160:Core/Src/stm32f0xx_it.c **** void CEC_CAN_IRQHandler(void)
+ 161:Core/Src/stm32f0xx_it.c **** {
+ 169              		.loc 1 161 1 is_stmt 1 view -0
+ 170              		.cfi_startproc
+ 171              		@ args = 0, pretend = 0, frame = 0
+ 172              		@ frame_needed = 0, uses_anonymous_args = 0
+ 173 0000 10B5     		push	{r4, lr}
+ 174              		.cfi_def_cfa_offset 8
+ 175              		.cfi_offset 4, -8
+ 176              		.cfi_offset 14, -4
+ 162:Core/Src/stm32f0xx_it.c ****   /* USER CODE BEGIN CEC_CAN_IRQn 0 */
+ 163:Core/Src/stm32f0xx_it.c **** 
+ 164:Core/Src/stm32f0xx_it.c ****   /* USER CODE END CEC_CAN_IRQn 0 */
+ 165:Core/Src/stm32f0xx_it.c ****   HAL_CAN_IRQHandler(&hcan);
+ 177              		.loc 1 165 3 view .LVU20
+ 178 0002 0248     		ldr	r0, .L10
+ 179 0004 FFF7FEFF 		bl	HAL_CAN_IRQHandler
+ 180              	.LVL3:
+ 166:Core/Src/stm32f0xx_it.c ****   /* USER CODE BEGIN CEC_CAN_IRQn 1 */
+ 167:Core/Src/stm32f0xx_it.c **** 
+ 168:Core/Src/stm32f0xx_it.c ****   /* USER CODE END CEC_CAN_IRQn 1 */
+ 169:Core/Src/stm32f0xx_it.c **** }
+ 181              		.loc 1 169 1 is_stmt 0 view .LVU21
+ 182              		@ sp needed
+ 183 0008 10BD     		pop	{r4, pc}
+ 184              	.L11:
+ARM GAS  C:\Users\xhex8\AppData\Local\Temp\ccPmq5KL.s 			page 7
+
+
+ 185 000a C046     		.align	2
+ 186              	.L10:
+ 187 000c 00000000 		.word	hcan
+ 188              		.cfi_endproc
+ 189              	.LFE46:
+ 191              		.text
+ 192              	.Letext0:
+ 193              		.file 2 "c:\\users\\xhex8\\appdata\\roaming\\code\\user\\globalstorage\\bmd.stm32-for-vscode\\@xpa
+ 194              		.file 3 "c:\\users\\xhex8\\appdata\\roaming\\code\\user\\globalstorage\\bmd.stm32-for-vscode\\@xpa
+ 195              		.file 4 "Drivers/CMSIS/Device/ST/STM32F0xx/Include/stm32f042x6.h"
+ 196              		.file 5 "Drivers/CMSIS/Device/ST/STM32F0xx/Include/stm32f0xx.h"
+ 197              		.file 6 "Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_can.h"
+ 198              		.file 7 "Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_gpio.h"
+ 199              		.file 8 "Core/Inc/main.h"
+ 200              		.file 9 "Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal.h"
+ARM GAS  C:\Users\xhex8\AppData\Local\Temp\ccPmq5KL.s 			page 8
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 stm32f0xx_it.c
-C:\Users\xhex8\AppData\Local\Temp\ccP0czKm.s:19     .text.NMI_Handler:00000000 $t
-C:\Users\xhex8\AppData\Local\Temp\ccP0czKm.s:25     .text.NMI_Handler:00000000 NMI_Handler
-C:\Users\xhex8\AppData\Local\Temp\ccP0czKm.s:42     .text.HardFault_Handler:00000000 $t
-C:\Users\xhex8\AppData\Local\Temp\ccP0czKm.s:48     .text.HardFault_Handler:00000000 HardFault_Handler
-C:\Users\xhex8\AppData\Local\Temp\ccP0czKm.s:65     .text.SVC_Handler:00000000 $t
-C:\Users\xhex8\AppData\Local\Temp\ccP0czKm.s:71     .text.SVC_Handler:00000000 SVC_Handler
-C:\Users\xhex8\AppData\Local\Temp\ccP0czKm.s:85     .text.PendSV_Handler:00000000 $t
-C:\Users\xhex8\AppData\Local\Temp\ccP0czKm.s:91     .text.PendSV_Handler:00000000 PendSV_Handler
-C:\Users\xhex8\AppData\Local\Temp\ccP0czKm.s:105    .text.SysTick_Handler:00000000 $t
-C:\Users\xhex8\AppData\Local\Temp\ccP0czKm.s:111    .text.SysTick_Handler:00000000 SysTick_Handler
-C:\Users\xhex8\AppData\Local\Temp\ccP0czKm.s:131    .text.CEC_CAN_IRQHandler:00000000 $t
-C:\Users\xhex8\AppData\Local\Temp\ccP0czKm.s:137    .text.CEC_CAN_IRQHandler:00000000 CEC_CAN_IRQHandler
-C:\Users\xhex8\AppData\Local\Temp\ccP0czKm.s:157    .text.CEC_CAN_IRQHandler:0000000c $d
+C:\Users\xhex8\AppData\Local\Temp\ccPmq5KL.s:19     .text.NMI_Handler:00000000 $t
+C:\Users\xhex8\AppData\Local\Temp\ccPmq5KL.s:25     .text.NMI_Handler:00000000 NMI_Handler
+C:\Users\xhex8\AppData\Local\Temp\ccPmq5KL.s:42     .text.HardFault_Handler:00000000 $t
+C:\Users\xhex8\AppData\Local\Temp\ccPmq5KL.s:48     .text.HardFault_Handler:00000000 HardFault_Handler
+C:\Users\xhex8\AppData\Local\Temp\ccPmq5KL.s:65     .text.SVC_Handler:00000000 $t
+C:\Users\xhex8\AppData\Local\Temp\ccPmq5KL.s:71     .text.SVC_Handler:00000000 SVC_Handler
+C:\Users\xhex8\AppData\Local\Temp\ccPmq5KL.s:85     .text.PendSV_Handler:00000000 $t
+C:\Users\xhex8\AppData\Local\Temp\ccPmq5KL.s:91     .text.PendSV_Handler:00000000 PendSV_Handler
+C:\Users\xhex8\AppData\Local\Temp\ccPmq5KL.s:105    .text.SysTick_Handler:00000000 $t
+C:\Users\xhex8\AppData\Local\Temp\ccPmq5KL.s:111    .text.SysTick_Handler:00000000 SysTick_Handler
+C:\Users\xhex8\AppData\Local\Temp\ccPmq5KL.s:131    .text.EXTI2_3_IRQHandler:00000000 $t
+C:\Users\xhex8\AppData\Local\Temp\ccPmq5KL.s:137    .text.EXTI2_3_IRQHandler:00000000 EXTI2_3_IRQHandler
+C:\Users\xhex8\AppData\Local\Temp\ccPmq5KL.s:161    .text.CEC_CAN_IRQHandler:00000000 $t
+C:\Users\xhex8\AppData\Local\Temp\ccPmq5KL.s:167    .text.CEC_CAN_IRQHandler:00000000 CEC_CAN_IRQHandler
+C:\Users\xhex8\AppData\Local\Temp\ccPmq5KL.s:187    .text.CEC_CAN_IRQHandler:0000000c $d
 
 UNDEFINED SYMBOLS
 HAL_IncTick
+ads131m04_drdy_exti_handler
+HAL_GPIO_EXTI_IRQHandler
 HAL_CAN_IRQHandler
 hcan

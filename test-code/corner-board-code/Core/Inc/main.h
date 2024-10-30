@@ -55,6 +55,7 @@ void HAL_TIM_MspPostInit(TIM_HandleTypeDef *htim);
 void Error_Handler(void);
 
 /* USER CODE BEGIN EFP */
+void ads131m04_drdy_exti_handler();
 
 /* USER CODE END EFP */
 
@@ -71,6 +72,7 @@ void Error_Handler(void);
 #define A0_GPIO_Port GPIOA
 #define DRDY_Pin GPIO_PIN_3
 #define DRDY_GPIO_Port GPIOA
+#define DRDY_EXTI_IRQn EXTI2_3_IRQn
 #define CS_Pin GPIO_PIN_4
 #define CS_GPIO_Port GPIOA
 #define CLKOUT_Pin GPIO_PIN_1

@@ -49,6 +49,8 @@ TIM_HandleTypeDef htim16;
 
 /* USER CODE BEGIN PV */
 
+uint32_t adc_data[4];
+
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -93,12 +95,28 @@ void ads131m04_transfer_frame(uint32_t* out, uint16_t* words, uint16_t tx_rx_del
   HAL_GPIO_WritePin(CS_GPIO_Port, CS_Pin, 1);
 }
 
+void ads131m04_read_adc_nonblocking(uint32_t* out) {
+  uint32_t recv[12];
+  uint16_t words[6] = {0, 0, 0, 0, 0, 0};
+  ads131m04_transfer_frame(recv, words, 0);
+  out[0] = recv[1];
+  out[1] = recv[2];
+  out[2] = recv[3];
+  out[3] = recv[4];
+}
+
+void ads131m04_drdy_exti_handler() {
+  ads131m04_read_adc_nonblocking(adc_data);
+}
+
 void ads131m04_cmd(uint16_t cmd, uint32_t* out, uint16_t tx_rx_delay) {
+  HAL_NVIC_DisableIRQ(EXTI2_3_IRQn);
   uint16_t words[6] = {cmd, 0, 0, 0, 0, 0};
   uint16_t zeros[6] = {0, 0, 0, 0, 0, 0};
   ads131m04_transfer_frame(out, words, tx_rx_delay);
   ads131m04_transfer_frame(out+6, zeros, 0);
   if (tx_rx_delay) delay_us(tx_rx_delay); 
+  HAL_NVIC_EnableIRQ(EXTI2_3_IRQn);
 }
 
 uint16_t ads131m04_reset() {
@@ -149,6 +167,7 @@ uint16_t ads131m04_rreg(uint8_t reg) {
 // returns read acknowledgement in out[0]
 // returns register i in out[1+i]
 void ads131m04_rreg_multiple(uint8_t start_reg, uint8_t count, uint32_t* out) {
+  HAL_NVIC_DisableIRQ(EXTI2_3_IRQn);
   // if count is 1 then just use regular rreg and duplicate out[6] to out[7]
   if (count == 0) return;
   if (count == 1) {
@@ -174,21 +193,26 @@ void ads131m04_rreg_multiple(uint8_t start_reg, uint8_t count, uint32_t* out) {
 
   delay_us(4); // need to wait length of one word. at 6mhz this is 4us
   HAL_GPIO_WritePin(CS_GPIO_Port, CS_Pin, 1);
+
+  HAL_NVIC_EnableIRQ(EXTI2_3_IRQn);
 }
 
 // returns write acknowledgement
 uint16_t ads131m04_wreg(uint8_t reg, uint16_t data) {
+  HAL_NVIC_DisableIRQ(EXTI2_3_IRQn);
   uint16_t cmd = 0x6000 | ((reg & 0x3F) << 7);
   uint32_t recv[12];
   uint16_t words[6] = {cmd, data, 0, 0, 0, 0};
   uint16_t zeros[6] = {0, 0, 0, 0, 0, 0};
   ads131m04_transfer_frame(recv, words, 0);
   ads131m04_transfer_frame(recv+6, zeros, 0);
+  HAL_NVIC_EnableIRQ(EXTI2_3_IRQn);
   return recv[6] >> 8;
 }
 
 // returns write acknowledgement
 uint16_t ads131m04_wreg_multiple(uint8_t start_reg, uint8_t count, uint16_t* data) {
+  HAL_NVIC_DisableIRQ(EXTI2_3_IRQn);
   if (count == 0) return 0;
 
   uint16_t cmd = 0x6000 | ((start_reg & 0x3F) << 7) | ((count - 1) & 0x7F);
@@ -218,6 +242,8 @@ uint16_t ads131m04_wreg_multiple(uint8_t start_reg, uint8_t count, uint16_t* dat
   uint16_t zeros[6] = {0, 0, 0, 0, 0, 0};
   uint32_t recv[12];
   ads131m04_transfer_frame(recv, zeros, 0);
+
+  HAL_NVIC_EnableIRQ(EXTI2_3_IRQn);
   return recv[6] >> 8;  
 }
 /* USER CODE END 0 */
@@ -401,7 +427,7 @@ static void MX_SPI1_Init(void)
   hspi1.Init.CLKPolarity = SPI_POLARITY_LOW;
   hspi1.Init.CLKPhase = SPI_PHASE_2EDGE;
   hspi1.Init.NSS = SPI_NSS_SOFT;
-  hspi1.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_32;
+  hspi1.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_8;
   hspi1.Init.FirstBit = SPI_FIRSTBIT_MSB;
   hspi1.Init.TIMode = SPI_TIMODE_DISABLE;
   hspi1.Init.CRCCalculation = SPI_CRCCALCULATION_DISABLE;
@@ -552,7 +578,7 @@ static void MX_GPIO_Init(void)
 
   /*Configure GPIO pin : DRDY_Pin */
   GPIO_InitStruct.Pin = DRDY_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
+  GPIO_InitStruct.Mode = GPIO_MODE_IT_FALLING;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(DRDY_GPIO_Port, &GPIO_InitStruct);
 
@@ -562,6 +588,10 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(CS_GPIO_Port, &GPIO_InitStruct);
+
+  /* EXTI interrupt init*/
+  HAL_NVIC_SetPriority(EXTI2_3_IRQn, 0, 0);
+  HAL_NVIC_EnableIRQ(EXTI2_3_IRQn);
 
 /* USER CODE BEGIN MX_GPIO_Init_2 */
 /* USER CODE END MX_GPIO_Init_2 */
