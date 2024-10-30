@@ -71,87 +71,154 @@ void delay_us (uint16_t us)
 	while (__HAL_TIM_GET_COUNTER(&htim16) < us);  
 }
 
-void ads131m04_cmd(uint8_t* cmd, uint8_t* recv, uint16_t tx_rx_delay) {
-    uint8_t zero[1] = {0};
-    HAL_GPIO_WritePin(CS_GPIO_Port, CS_Pin, 0);
-    // write first frame (command)
-    HAL_SPI_TransmitReceive(&hspi1, cmd, recv, 1, 0.1); // CMD
-    HAL_SPI_TransmitReceive(&hspi1, cmd+1, recv+1, 1, 0.1);
-    HAL_SPI_TransmitReceive(&hspi1, cmd+2, recv+2, 1, 0.1);
-    // send 18 more bytes of zero
-    for (uint8_t i = 3; i <= 17; ++i) {
-        HAL_SPI_TransmitReceive(&hspi1, zero, recv+i, 1, 0.1); 
-    }
-    HAL_GPIO_WritePin(CS_GPIO_Port, CS_Pin, 1);
-
-    delay_us(tx_rx_delay);
-
-    // send null command with full frame to obtain data
-    HAL_GPIO_WritePin(CS_GPIO_Port, CS_Pin, 0);
-    for (uint8_t i = 18; i <= 18+17; ++i) {
-        HAL_SPI_TransmitReceive(&hspi1, zero, recv+i, 1, 0.1); 
-    }
-    HAL_GPIO_WritePin(CS_GPIO_Port, CS_Pin, 1);
-    delay_us(tx_rx_delay);
+uint32_t ads131m04_transfer_word(uint16_t word) {
+  uint8_t lower = word & 0xff;
+  uint8_t upper = word >> 8;
+  uint8_t zero = 0;
+  uint8_t recv[3];
+  HAL_SPI_TransmitReceive(&hspi1, &upper, recv, 1, 0.1); // CMD
+  HAL_SPI_TransmitReceive(&hspi1, &lower, recv+1, 1, 0.1);
+  HAL_SPI_TransmitReceive(&hspi1, &zero, recv+2, 1, 0.1);
+  return (recv[0] << 16) | (recv[1] << 8) | recv[2];
 }
 
-uint8_t ads131m04_reset() {
-    uint8_t cmd[3] = {0x00, 0x11, 0x00};
-    uint8_t rcv[36];
-    ads131m04_cmd(cmd, rcv, 12);
-    if (rcv[18] == 0x00 && rcv[19] == 0x11) return 1;
-    if (rcv[18] == 0xFF && rcv[19] == 0x24) return 0;
-    return 255;
+void ads131m04_transfer_frame(uint32_t* out, uint16_t* words, uint16_t tx_rx_delay) {
+  HAL_GPIO_WritePin(CS_GPIO_Port, CS_Pin, 0);
+  
+  for (uint8_t i = 0; i < 6; i++) {
+    out[i] = ads131m04_transfer_word(words[i]);
+  }
+  // need to wait length of one word. at 6mhz this is 4us
+  delay_us(4);
+  HAL_GPIO_WritePin(CS_GPIO_Port, CS_Pin, 1);
+}
+
+void ads131m04_cmd(uint16_t cmd, uint32_t* out, uint16_t tx_rx_delay) {
+  uint16_t words[6] = {cmd, 0, 0, 0, 0, 0};
+  uint16_t zeros[6] = {0, 0, 0, 0, 0, 0};
+  ads131m04_transfer_frame(out, words, tx_rx_delay);
+  ads131m04_transfer_frame(out+6, zeros, 0);
+  if (tx_rx_delay) delay_us(tx_rx_delay); 
+}
+
+uint16_t ads131m04_reset() {
+    uint32_t recv[12];
+    ads131m04_cmd(0x0011, recv, 12); // reset time
+    return recv[6] >> 8;
 }
 
 uint16_t ads131m04_status() {
-    uint8_t cmd[3] = {0x00, 0x00, 0x00};
-    uint8_t rcv[36];
-    ads131m04_cmd(cmd, rcv, 3);
-    return (rcv[18] << 8) + rcv[19];
+    uint32_t recv[12];
+    ads131m04_cmd(0x0000, recv, 0);
+    return recv[6] >> 8;
 }
 
-uint8_t ads131m04_standby() {
-    uint8_t cmd[3] = {0x00, 0x22, 0x00};
-    uint8_t rcv[36];
-    ads131m04_cmd(cmd, rcv, 3);
-    if (rcv[18] == 0x00 && rcv[19] == 0x22) return 0;
-    return 255;
+uint16_t ads131m04_standby() {
+    uint32_t recv[12];
+    ads131m04_cmd(0x0022, recv, 0);
+    return recv[6] >> 8;
 }
 
-uint8_t ads131m04_wake() {
-    uint8_t cmd[3] = {0x00, 0x33, 0x00};
-    uint8_t rcv[36];
-    ads131m04_cmd(cmd, rcv, 3);
-    if (rcv[18] == 0x00 && rcv[19] == 0x33) return 0;
-    return 255;
+uint16_t ads131m04_wake() {
+    uint32_t recv[12];
+    ads131m04_cmd(0x0033, recv, 0);
+    return recv[6] >> 8;
 }
 
-uint8_t ads131m04_lock() {
-    uint8_t cmd[3] = {0x05, 0x55, 0x00};
-    uint8_t rcv[36];
-    ads131m04_cmd(cmd, rcv, 3);
-    if (rcv[18] == 0x05 && rcv[19] == 0x55) return 0;
-    return 255;
+uint16_t ads131m04_lock() {
+    uint32_t recv[12];
+    ads131m04_cmd(0x0555, recv, 0);
+    return recv[6] >> 8;
 }
 
-uint8_t ads131m04_unlock() {
-    uint8_t cmd[3] = {0x06, 0x55, 0x00};
-    uint8_t rcv[36];
-    ads131m04_cmd(cmd, rcv, 3);
-    if (rcv[18] == 0x06 && rcv[19] == 0x55) return 0;
-    return 255;
+uint16_t ads131m04_unlock() {
+    uint32_t recv[12];
+    ads131m04_cmd(0x0655, recv, 0);
+    return recv[6] >> 8;
 }
 
+// returns register value
 uint16_t ads131m04_rreg(uint8_t reg) {
-    uint8_t cmd[3];
-    reg = reg & 0x3f;
-    cmd[0] = 0x0A | (reg >> 5);
-    cmd[1] = (reg >> 1) & 0xf;
-    cmd[2] = (reg | 0x1) << 3;
-    uint8_t rcv[36];
-    ads131m04_cmd(cmd, rcv, 3);
-    return (rcv[18] << 8) + rcv[19];
+    uint16_t cmd = 0xA000 | ((reg & 0x3F) << 7);
+    uint32_t recv[12];
+    ads131m04_cmd(cmd, recv, 0);
+    return recv[6] >> 8;
+}
+
+// read multiple registers
+// returns read acknowledgement in out[0]
+// returns register i in out[1+i]
+void ads131m04_rreg_multiple(uint8_t start_reg, uint8_t count, uint32_t* out) {
+  // if count is 1 then just use regular rreg and duplicate out[6] to out[7]
+  if (count == 0) return;
+  if (count == 1) {
+    uint16_t cmd = 0xA000 | ((start_reg & 0x3F) << 7);
+    ads131m04_cmd(cmd, out, 0);
+    out[7] = out[6];
+    return;
+  }
+
+  // write first frame asking to read
+  uint16_t cmd = 0xA000 | ((start_reg & 0x3F) << 7) | ((count - 1) & 0x7F);
+  uint16_t words[6] = {cmd, 0, 0, 0, 0, 0};
+  ads131m04_transfer_frame(out, words, 0);
+
+  // manually transfer the second frame
+  HAL_GPIO_WritePin(CS_GPIO_Port, CS_Pin, 0);
+  
+  // write min(6, count + 2) zero words
+  uint8_t max = (count < 4) ? 6 : (count + 2);
+  for (uint8_t i = 0; i < max; i++) {
+    out[i] = ads131m04_transfer_word(0);
+  }
+
+  delay_us(4); // need to wait length of one word. at 6mhz this is 4us
+  HAL_GPIO_WritePin(CS_GPIO_Port, CS_Pin, 1);
+}
+
+// returns write acknowledgement
+uint16_t ads131m04_wreg(uint8_t reg, uint16_t data) {
+  uint16_t cmd = 0x6000 | ((reg & 0x3F) << 7);
+  uint32_t recv[12];
+  uint16_t words[6] = {cmd, data, 0, 0, 0, 0};
+  uint16_t zeros[6] = {0, 0, 0, 0, 0, 0};
+  ads131m04_transfer_frame(recv, words, 0);
+  ads131m04_transfer_frame(recv+6, zeros, 0);
+  return recv[6] >> 8;
+}
+
+// returns write acknowledgement
+uint16_t ads131m04_wreg_multiple(uint8_t start_reg, uint8_t count, uint16_t* data) {
+  if (count == 0) return 0;
+
+  uint16_t cmd = 0x6000 | ((start_reg & 0x3F) << 7) | ((count - 1) & 0x7F);
+  // manually transfer the first frame
+  HAL_GPIO_WritePin(CS_GPIO_Port, CS_Pin, 0);
+
+  // write the command
+  ads131m04_transfer_word(cmd);
+
+  // write all registers to write
+  for (uint8_t i = 0; i < count; i++) {
+    ads131m04_transfer_word(data[i]);
+  }
+
+  // pad if not written enough (need to have written at least 6 words)
+  for (int8_t i = 0; i < 4 - count; i++) {
+    ads131m04_transfer_word(0);
+  }
+
+  // write one zero word
+  ads131m04_transfer_word(0);
+
+  delay_us(4); // need to wait length of one word. at 6mhz this is 4us
+  HAL_GPIO_WritePin(CS_GPIO_Port, CS_Pin, 1);
+
+  // transfer the second frame to get the write acknowledgement
+  uint16_t zeros[6] = {0, 0, 0, 0, 0, 0};
+  uint32_t recv[12];
+  ads131m04_transfer_frame(recv, zeros, 0);
+  return recv[6] >> 8;  
 }
 /* USER CODE END 0 */
 
@@ -193,11 +260,14 @@ int main(void)
   HAL_TIM_Base_Start(&htim16);
   HAL_GPIO_WritePin(CS_GPIO_Port, CS_Pin, 1);
 
-  uint16_t status, id, mode, clock, gain, cfg;
+  uint32_t registers[64];
+  for (int i = 0; i < 64; i++) registers[i] = 0;
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
+
+  ads131m04_reset();
   while (1)
   {
     HAL_GPIO_TogglePin(LED_GPIO_Port, LED_Pin);
@@ -205,19 +275,27 @@ int main(void)
 
     ads131m04_reset();
 
-    status = ads131m04_status();
+    HAL_Delay(1);
+
+    ads131m04_status();
     ads131m04_lock();
     ads131m04_unlock();
-    ads131m04_standby();
+    
     ads131m04_wake();
-    id = ads131m04_rreg(0x00);
-    status = ads131m04_rreg(0x01);
-    mode = ads131m04_rreg(0x02);
-    clock = ads131m04_rreg(0x03);
-    gain = ads131m04_rreg(0x04);
-    cfg = ads131m04_rreg(0x06);
-
-    HAL_Delay(id | status | mode | clock | gain | cfg); // no optimization >:(((
+    HAL_Delay(1);
+    ads131m04_standby();
+    HAL_Delay(1);
+    ads131m04_wake();
+    HAL_Delay(1);
+    ads131m04_rreg_multiple(0x00, 28, registers);
+    HAL_Delay(1);
+    ads131m04_wreg(0x06, 0x0602);
+    HAL_Delay(1);
+    registers[0x07] = ads131m04_rreg(0x06);
+    HAL_Delay(1);
+    uint16_t towrite[2] = {0x0513, 0x0f0e};
+    ads131m04_wreg_multiple(0x02, 2, towrite);
+    // HAL_Delay(id | status | mode | clock | gain | cfg); // no optimization >:(((
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -321,9 +399,9 @@ static void MX_SPI1_Init(void)
   hspi1.Init.Direction = SPI_DIRECTION_2LINES;
   hspi1.Init.DataSize = SPI_DATASIZE_8BIT;
   hspi1.Init.CLKPolarity = SPI_POLARITY_LOW;
-  hspi1.Init.CLKPhase = SPI_PHASE_1EDGE;
+  hspi1.Init.CLKPhase = SPI_PHASE_2EDGE;
   hspi1.Init.NSS = SPI_NSS_SOFT;
-  hspi1.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_8;
+  hspi1.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_32;
   hspi1.Init.FirstBit = SPI_FIRSTBIT_MSB;
   hspi1.Init.TIMode = SPI_TIMODE_DISABLE;
   hspi1.Init.CRCCalculation = SPI_CRCCALCULATION_DISABLE;
