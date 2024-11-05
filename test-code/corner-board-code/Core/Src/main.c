@@ -31,7 +31,13 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
+#define STD_READY 0xF0
+#define STD_STARTUP 0xE0
 
+#define NST_INSTR 0xC0
+#define NST_STARTUP 0xE0
+#define NST_FAILED 0xD0
+#define NST_READY 0xF0
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -45,11 +51,47 @@ CAN_HandleTypeDef hcan;
 SPI_HandleTypeDef hspi1;
 
 TIM_HandleTypeDef htim3;
+TIM_HandleTypeDef htim14;
 TIM_HandleTypeDef htim16;
 
 /* USER CODE BEGIN PV */
+// standard transmission (1ksps) - configured once and not modified
+// transmit only, no receive defined
+// format: 29-bit extended identifier
+// id[28:16] = 0x0001 
+// id[15:12] = 0x0
+// id[11:8] = addr
+// id[7:4] = 0xF if successful, 0xE if setting up
+// id[3:0] = sensor # 
+CAN_TxHeaderTypeDef txh_std;
 
-uint32_t adc_data[4];
+// non standard transmission (higher priority than data)
+// transmit and receive - receive means control signals, transmit for feedback
+// id[28:16] = 0x0000
+// id[15:12] = 0x0
+// id[11:8] = addr
+// id[7:4] = 0xF if successful, 0xE if setting up, 0xD if failed, 0xC if instruction
+// id[3:0] = instruction
+CAN_TxHeaderTypeDef txh_nst;
+CAN_RxHeaderTypeDef rxh_nst;
+
+CAN_FilterTypeDef filter;
+
+// ADC data array
+int32_t adc_data[4];
+
+// address
+uint8_t addr = 0x00;
+
+// for CAN
+uint32_t std_addr_base = 0x00010000;
+uint8_t std_state = STD_STARTUP;
+uint32_t nst_addr_base = 0x00000000;
+uint8_t nst_state = NST_STARTUP;
+uint32_t txMailbox;
+uint8_t can_std_channel = 0x00;
+uint8_t rx_nst_data[8];
+uint8_t tx_nst_data[8];
 
 /* USER CODE END PV */
 
@@ -60,12 +102,83 @@ static void MX_CAN_Init(void);
 static void MX_SPI1_Init(void);
 static void MX_TIM3_Init(void);
 static void MX_TIM16_Init(void);
+static void MX_TIM14_Init(void);
 /* USER CODE BEGIN PFP */
 
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
+
+void addr_setup() {  
+  uint8_t a0 = HAL_GPIO_ReadPin(A0_GPIO_Port, A0_Pin) & 1;
+  uint8_t a1 = HAL_GPIO_ReadPin(A1_GPIO_Port, A1_Pin) & 1;
+  uint8_t a2 = HAL_GPIO_ReadPin(A2_GPIO_Port, A2_Pin) & 1;
+  uint8_t a3 = HAL_GPIO_ReadPin(A3_GPIO_Port, A3_Pin) & 1;
+  addr = (a3 << 3) | (a2 << 2) | (a1 << 1) | a0;
+  addr = ~addr; // remove if dip s
+  std_addr_base = 0x000100C0 | (addr << 8);
+}
+
+void can_setup() {
+  // txh std
+  txh_std.DLC = 4; // send 32-bit ADC data
+  txh_std.StdId = 0; // not used
+  txh_std.ExtId = std_addr_base | std_state;
+  txh_std.IDE = CAN_ID_EXT;
+  txh_std.RTR = CAN_RTR_DATA;
+  txh_std.TransmitGlobalTime = DISABLE;
+
+  // txh nst
+  txh_std.DLC = 4; // default
+  txh_std.StdId = 0; // not used
+  txh_std.ExtId = nst_addr_base ;
+  txh_std.IDE = CAN_ID_EXT;
+  txh_std.RTR = CAN_RTR_DATA;
+  txh_std.TransmitGlobalTime = DISABLE;
+
+  // filter config
+  filter.FilterMaskIdHigh = 0x1FFF;
+  filter.FilterMaskIdLow = 0xFFF0;
+  filter.FilterIdHigh = 0x0000;
+  filter.FilterIdLow = 0x00C0 | (addr << 8);
+  filter.FilterMode = CAN_FILTERMODE_IDMASK;
+  filter.FilterFIFOAssignment = CAN_FILTER_FIFO0;
+  filter.FilterScale = CAN_FILTERSCALE_32BIT;
+  filter.FilterActivation = CAN_FILTER_ENABLE;
+  filter.FilterBank = 0x00; // use first filter bank
+
+  HAL_CAN_ConfigFilter(&hcan, &filter);
+}
+
+void can_std_transmit(uint8_t sensor) {
+  txh_std.ExtId = std_addr_base | std_state | sensor;
+  if (HAL_CAN_AddTxMessage(&hcan, &txh_std, (uint8_t*) (adc_data + sensor), &txMailbox) != HAL_OK) {
+    // too many messages! FIXME
+    while (1);
+  } 
+}
+
+void can_nst_transmit(uint8_t cmd, uint8_t len) {
+  txh_nst.ExtId = nst_addr_base | nst_state | cmd;
+  // right now we can't transmit too many messages too quickly or they will be lost
+  // we can use TX completion interrupts and a FIFO to fix this, but it may not be necessary
+  if (HAL_CAN_AddTxMessage(&hcan, &txh_nst, tx_nst_data, &txMailbox) != HAL_OK) {
+    // too many messages! FIXME
+    while (1);
+  }
+}
+
+void can_tx_transmit_timer_handler() {
+  can_std_transmit(can_std_channel);
+  can_std_channel++;
+  can_std_channel %= 4;
+}
+
+void can_rx_handler() {
+  // handle various commands
+  // parameters are in rxh and rx_nst_data
+}
 
 void delay_us (uint16_t us)
 {
@@ -95,14 +208,18 @@ void ads131m04_transfer_frame(uint32_t* out, uint16_t* words, uint16_t tx_rx_del
   HAL_GPIO_WritePin(CS_GPIO_Port, CS_Pin, 1);
 }
 
-void ads131m04_read_adc_nonblocking(uint32_t* out) {
+int32_t ads131m04_adc_format_convert(int32_t data){
+  return ((data & 0x800000) ? -0x800000 : 0x000000) + (data & 0x7FFFFF);
+}
+
+void ads131m04_read_adc_nonblocking(int32_t* out) {
   uint32_t recv[12];
   uint16_t words[6] = {0, 0, 0, 0, 0, 0};
   ads131m04_transfer_frame(recv, words, 0);
-  out[0] = recv[1];
-  out[1] = recv[2];
-  out[2] = recv[3];
-  out[3] = recv[4];
+  out[0] = ads131m04_adc_format_convert(recv[1]);
+  out[1] = ads131m04_adc_format_convert(recv[2]);
+  out[2] = ads131m04_adc_format_convert(recv[3]);
+  out[3] = ads131m04_adc_format_convert(recv[4]);
 }
 
 void ads131m04_drdy_exti_handler() {
@@ -246,6 +363,34 @@ uint16_t ads131m04_wreg_multiple(uint8_t start_reg, uint8_t count, uint16_t* dat
   HAL_NVIC_EnableIRQ(EXTI2_3_IRQn);
   return recv[6] >> 8;  
 }
+
+// returns 1 if success, 0 if failed
+uint8_t ads131m04_test() {
+  uint16_t id = ads131m04_rreg(0x00);
+  return (id >> 8) == 0x24;
+}
+
+// returns 1 if success, 0 if failed
+uint8_t adc_configure() {
+  if (!ads131m04_test()) return 0;
+  uint16_t mode = 0x0110; // clear reset bit, disable all CRCs
+  ads131m04_wreg(0x02, mode);
+
+  uint8_t osr = 0b100; // 2048, results in a data rate of ~1.4ksps
+  uint16_t clock = 0x0F03 | (osr << 2); // enable all, highest precision
+  ads131m04_wreg(0x03, clock);
+
+  uint8_t gain = 0b110; // 64
+  uint16_t gain1 = (gain << 12) | (gain << 8) | (gain << 4) | gain;
+  ads131m04_wreg(0x04, gain1);
+
+  uint16_t cfg = 0x0000; // disable global chop and current detect
+  ads131m04_wreg(0x06, cfg);
+
+  // add calibration here if we want to do that
+  return 1;
+}
+
 /* USER CODE END 0 */
 
 /**
@@ -256,6 +401,9 @@ int main(void)
 {
 
   /* USER CODE BEGIN 1 */
+  // disable IRQ until it's ready
+  HAL_NVIC_DisableIRQ(EXTI2_3_IRQn);
+  HAL_NVIC_DisableIRQ(TIM14_IRQn);
 
   /* USER CODE END 1 */
 
@@ -281,47 +429,30 @@ int main(void)
   MX_SPI1_Init();
   MX_TIM3_Init();
   MX_TIM16_Init();
+  MX_TIM14_Init();
   /* USER CODE BEGIN 2 */
   HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_4);
   HAL_TIM_Base_Start(&htim16);
   HAL_GPIO_WritePin(CS_GPIO_Port, CS_Pin, 1);
+  
+  addr_setup();
+  can_setup();
 
-  uint32_t registers[64];
-  for (int i = 0; i < 64; i++) registers[i] = 0;
+  HAL_CAN_Start(&hcan);
+  HAL_CAN_ActivateNotification(&hcan, CAN_IT_RX_FIFO0_MSG_PENDING);
+
+  HAL_NVIC_EnableIRQ(EXTI2_3_IRQn);
+  HAL_TIM_Base_Start_IT(&htim14);
+  HAL_NVIC_EnableIRQ(TIM14_IRQn);
+
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-
-  ads131m04_reset();
   while (1)
   {
     HAL_GPIO_TogglePin(LED_GPIO_Port, LED_Pin);
-    HAL_Delay(1);
-
-    ads131m04_reset();
-
-    HAL_Delay(1);
-
-    ads131m04_status();
-    ads131m04_lock();
-    ads131m04_unlock();
-    
-    ads131m04_wake();
-    HAL_Delay(1);
-    ads131m04_standby();
-    HAL_Delay(1);
-    ads131m04_wake();
-    HAL_Delay(1);
-    ads131m04_rreg_multiple(0x00, 28, registers);
-    HAL_Delay(1);
-    ads131m04_wreg(0x06, 0x0602);
-    HAL_Delay(1);
-    registers[0x07] = ads131m04_rreg(0x06);
-    HAL_Delay(1);
-    uint16_t towrite[2] = {0x0513, 0x0f0e};
-    ads131m04_wreg_multiple(0x02, 2, towrite);
-    // HAL_Delay(id | status | mode | clock | gain | cfg); // no optimization >:(((
+    HAL_Delay(500);
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -383,7 +514,7 @@ static void MX_CAN_Init(void)
 
   /* USER CODE END CAN_Init 1 */
   hcan.Instance = CAN;
-  hcan.Init.Prescaler = 32;
+  hcan.Init.Prescaler = 16;
   hcan.Init.Mode = CAN_MODE_NORMAL;
   hcan.Init.SyncJumpWidth = CAN_SJW_1TQ;
   hcan.Init.TimeSeg1 = CAN_BS1_1TQ;
@@ -504,6 +635,37 @@ static void MX_TIM3_Init(void)
 }
 
 /**
+  * @brief TIM14 Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_TIM14_Init(void)
+{
+
+  /* USER CODE BEGIN TIM14_Init 0 */
+
+  /* USER CODE END TIM14_Init 0 */
+
+  /* USER CODE BEGIN TIM14_Init 1 */
+
+  /* USER CODE END TIM14_Init 1 */
+  htim14.Instance = TIM14;
+  htim14.Init.Prescaler = 11;
+  htim14.Init.CounterMode = TIM_COUNTERMODE_UP;
+  htim14.Init.Period = 1000;
+  htim14.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
+  htim14.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
+  if (HAL_TIM_Base_Init(&htim14) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN TIM14_Init 2 */
+
+  /* USER CODE END TIM14_Init 2 */
+
+}
+
+/**
   * @brief TIM16 Initialization Function
   * @param None
   * @retval None
@@ -519,7 +681,7 @@ static void MX_TIM16_Init(void)
 
   /* USER CODE END TIM16_Init 1 */
   htim16.Instance = TIM16;
-  htim16.Init.Prescaler = 48;
+  htim16.Init.Prescaler = 47;
   htim16.Init.CounterMode = TIM_COUNTERMODE_UP;
   htim16.Init.Period = 65535;
   htim16.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
@@ -598,7 +760,10 @@ static void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
-
+void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan) {
+  HAL_CAN_GetRxMessage(hcan, CAN_RX_FIFO0, &rxh_nst, rx_nst_data);
+  can_rx_handler();
+}
 /* USER CODE END 4 */
 
 /**

@@ -56,6 +56,7 @@ void Error_Handler(void);
 
 /* USER CODE BEGIN EFP */
 void ads131m04_drdy_exti_handler();
+void can_tx_transmit_timer_handler();
 
 /* USER CODE END EFP */
 
