@@ -1,0 +1,1775 @@
+ARM GAS  C:\Users\sapph\AppData\Local\Temp\cctkBC00.s 			page 1
+
+
+   1              		.cpu cortex-m33
+   2              		.arch armv8-m.main
+   3              		.fpu fpv4-sp-d16
+   4              		.arch_extension dsp
+   5              		.eabi_attribute 27, 1
+   6              		.eabi_attribute 28, 1
+   7              		.eabi_attribute 20, 1
+   8              		.eabi_attribute 21, 1
+   9              		.eabi_attribute 23, 3
+  10              		.eabi_attribute 24, 1
+  11              		.eabi_attribute 25, 1
+  12              		.eabi_attribute 26, 1
+  13              		.eabi_attribute 30, 1
+  14              		.eabi_attribute 34, 1
+  15              		.eabi_attribute 18, 4
+  16              		.file	"usbd_hid.c"
+  17              		.text
+  18              	.Ltext0:
+  19              		.cfi_sections	.debug_frame
+  20              		.file 1 "USB/Class/HID/Src/usbd_hid.c"
+  21              		.section	.text.USBD_HID_DataIn,"ax",%progbits
+  22              		.align	1
+  23              		.syntax unified
+  24              		.thumb
+  25              		.thumb_func
+  27              	USBD_HID_DataIn:
+  28              	.LVL0:
+  29              	.LFB169:
+   1:USB/Class/HID/Src/usbd_hid.c **** /**
+   2:USB/Class/HID/Src/usbd_hid.c ****   ******************************************************************************
+   3:USB/Class/HID/Src/usbd_hid.c ****   * @file    usbd_hid.c
+   4:USB/Class/HID/Src/usbd_hid.c ****   * @author  MCD Application Team
+   5:USB/Class/HID/Src/usbd_hid.c ****   * @brief   This file provides the HID core functions.
+   6:USB/Class/HID/Src/usbd_hid.c ****   *
+   7:USB/Class/HID/Src/usbd_hid.c ****   ******************************************************************************
+   8:USB/Class/HID/Src/usbd_hid.c ****   * @attention
+   9:USB/Class/HID/Src/usbd_hid.c ****   *
+  10:USB/Class/HID/Src/usbd_hid.c ****   * Copyright (c) 2015 STMicroelectronics.
+  11:USB/Class/HID/Src/usbd_hid.c ****   * All rights reserved.
+  12:USB/Class/HID/Src/usbd_hid.c ****   *
+  13:USB/Class/HID/Src/usbd_hid.c ****   * This software is licensed under terms that can be found in the LICENSE file
+  14:USB/Class/HID/Src/usbd_hid.c ****   * in the root directory of this software component.
+  15:USB/Class/HID/Src/usbd_hid.c ****   * If no LICENSE file comes with this software, it is provided AS-IS.
+  16:USB/Class/HID/Src/usbd_hid.c ****   *
+  17:USB/Class/HID/Src/usbd_hid.c ****   ******************************************************************************
+  18:USB/Class/HID/Src/usbd_hid.c ****   * @verbatim
+  19:USB/Class/HID/Src/usbd_hid.c ****   *
+  20:USB/Class/HID/Src/usbd_hid.c ****   *          ===================================================================
+  21:USB/Class/HID/Src/usbd_hid.c ****   *                                HID Class  Description
+  22:USB/Class/HID/Src/usbd_hid.c ****   *          ===================================================================
+  23:USB/Class/HID/Src/usbd_hid.c ****   *           This module manages the HID class V1.11 following the "Device Class Definition
+  24:USB/Class/HID/Src/usbd_hid.c ****   *           for Human Interface Devices (HID) Version 1.11 Jun 27, 2001".
+  25:USB/Class/HID/Src/usbd_hid.c ****   *           This driver implements the following aspects of the specification:
+  26:USB/Class/HID/Src/usbd_hid.c ****   *             - The Boot Interface Subclass
+  27:USB/Class/HID/Src/usbd_hid.c ****   *             - The Mouse protocol
+  28:USB/Class/HID/Src/usbd_hid.c ****   *             - Usage Page : Generic Desktop
+  29:USB/Class/HID/Src/usbd_hid.c ****   *             - Usage : Joystick
+ARM GAS  C:\Users\sapph\AppData\Local\Temp\cctkBC00.s 			page 2
+
+
+  30:USB/Class/HID/Src/usbd_hid.c ****   *             - Collection : Application
+  31:USB/Class/HID/Src/usbd_hid.c ****   *
+  32:USB/Class/HID/Src/usbd_hid.c ****   * @note     In HS mode and when the DMA is used, all variables and data structures
+  33:USB/Class/HID/Src/usbd_hid.c ****   *           dealing with the DMA during the transaction process should be 32-bit aligned.
+  34:USB/Class/HID/Src/usbd_hid.c ****   *
+  35:USB/Class/HID/Src/usbd_hid.c ****   *
+  36:USB/Class/HID/Src/usbd_hid.c ****   *  @endverbatim
+  37:USB/Class/HID/Src/usbd_hid.c ****   *
+  38:USB/Class/HID/Src/usbd_hid.c ****   ******************************************************************************
+  39:USB/Class/HID/Src/usbd_hid.c ****   */
+  40:USB/Class/HID/Src/usbd_hid.c **** 
+  41:USB/Class/HID/Src/usbd_hid.c **** /* BSPDependencies
+  42:USB/Class/HID/Src/usbd_hid.c **** - "stm32xxxxx_{eval}{discovery}{nucleo_144}.c"
+  43:USB/Class/HID/Src/usbd_hid.c **** - "stm32xxxxx_{eval}{discovery}_io.c"
+  44:USB/Class/HID/Src/usbd_hid.c **** EndBSPDependencies */
+  45:USB/Class/HID/Src/usbd_hid.c **** 
+  46:USB/Class/HID/Src/usbd_hid.c **** /* Includes ------------------------------------------------------------------*/
+  47:USB/Class/HID/Src/usbd_hid.c **** #include "usbd_hid.h"
+  48:USB/Class/HID/Src/usbd_hid.c **** #include "usbd_ctlreq.h"
+  49:USB/Class/HID/Src/usbd_hid.c **** 
+  50:USB/Class/HID/Src/usbd_hid.c **** 
+  51:USB/Class/HID/Src/usbd_hid.c **** /** @addtogroup STM32_USB_DEVICE_LIBRARY
+  52:USB/Class/HID/Src/usbd_hid.c ****   * @{
+  53:USB/Class/HID/Src/usbd_hid.c ****   */
+  54:USB/Class/HID/Src/usbd_hid.c **** 
+  55:USB/Class/HID/Src/usbd_hid.c **** 
+  56:USB/Class/HID/Src/usbd_hid.c **** /** @defgroup USBD_HID
+  57:USB/Class/HID/Src/usbd_hid.c ****   * @brief usbd core module
+  58:USB/Class/HID/Src/usbd_hid.c ****   * @{
+  59:USB/Class/HID/Src/usbd_hid.c ****   */
+  60:USB/Class/HID/Src/usbd_hid.c **** 
+  61:USB/Class/HID/Src/usbd_hid.c **** /** @defgroup USBD_HID_Private_TypesDefinitions
+  62:USB/Class/HID/Src/usbd_hid.c ****   * @{
+  63:USB/Class/HID/Src/usbd_hid.c ****   */
+  64:USB/Class/HID/Src/usbd_hid.c **** /**
+  65:USB/Class/HID/Src/usbd_hid.c ****   * @}
+  66:USB/Class/HID/Src/usbd_hid.c ****   */
+  67:USB/Class/HID/Src/usbd_hid.c **** 
+  68:USB/Class/HID/Src/usbd_hid.c **** 
+  69:USB/Class/HID/Src/usbd_hid.c **** /** @defgroup USBD_HID_Private_Defines
+  70:USB/Class/HID/Src/usbd_hid.c ****   * @{
+  71:USB/Class/HID/Src/usbd_hid.c ****   */
+  72:USB/Class/HID/Src/usbd_hid.c **** 
+  73:USB/Class/HID/Src/usbd_hid.c **** /**
+  74:USB/Class/HID/Src/usbd_hid.c ****   * @}
+  75:USB/Class/HID/Src/usbd_hid.c ****   */
+  76:USB/Class/HID/Src/usbd_hid.c **** 
+  77:USB/Class/HID/Src/usbd_hid.c **** 
+  78:USB/Class/HID/Src/usbd_hid.c **** /** @defgroup USBD_HID_Private_Macros
+  79:USB/Class/HID/Src/usbd_hid.c ****   * @{
+  80:USB/Class/HID/Src/usbd_hid.c ****   */
+  81:USB/Class/HID/Src/usbd_hid.c **** /**
+  82:USB/Class/HID/Src/usbd_hid.c ****   * @}
+  83:USB/Class/HID/Src/usbd_hid.c ****   */
+  84:USB/Class/HID/Src/usbd_hid.c **** 
+  85:USB/Class/HID/Src/usbd_hid.c **** 
+  86:USB/Class/HID/Src/usbd_hid.c **** /** @defgroup USBD_HID_Private_FunctionPrototypes
+ARM GAS  C:\Users\sapph\AppData\Local\Temp\cctkBC00.s 			page 3
+
+
+  87:USB/Class/HID/Src/usbd_hid.c ****   * @{
+  88:USB/Class/HID/Src/usbd_hid.c ****   */
+  89:USB/Class/HID/Src/usbd_hid.c **** 
+  90:USB/Class/HID/Src/usbd_hid.c **** static uint8_t USBD_HID_Init(USBD_HandleTypeDef *pdev, uint8_t cfgidx);
+  91:USB/Class/HID/Src/usbd_hid.c **** static uint8_t USBD_HID_DeInit(USBD_HandleTypeDef *pdev, uint8_t cfgidx);
+  92:USB/Class/HID/Src/usbd_hid.c **** static uint8_t USBD_HID_Setup(USBD_HandleTypeDef *pdev, USBD_SetupReqTypedef *req);
+  93:USB/Class/HID/Src/usbd_hid.c **** static uint8_t USBD_HID_DataIn(USBD_HandleTypeDef *pdev, uint8_t epnum);
+  94:USB/Class/HID/Src/usbd_hid.c **** #ifndef USE_USBD_COMPOSITE
+  95:USB/Class/HID/Src/usbd_hid.c **** static uint8_t *USBD_HID_GetFSCfgDesc(uint16_t *length);
+  96:USB/Class/HID/Src/usbd_hid.c **** static uint8_t *USBD_HID_GetHSCfgDesc(uint16_t *length);
+  97:USB/Class/HID/Src/usbd_hid.c **** static uint8_t *USBD_HID_GetOtherSpeedCfgDesc(uint16_t *length);
+  98:USB/Class/HID/Src/usbd_hid.c **** static uint8_t *USBD_HID_GetDeviceQualifierDesc(uint16_t *length);
+  99:USB/Class/HID/Src/usbd_hid.c **** #endif /* USE_USBD_COMPOSITE  */
+ 100:USB/Class/HID/Src/usbd_hid.c **** /**
+ 101:USB/Class/HID/Src/usbd_hid.c ****   * @}
+ 102:USB/Class/HID/Src/usbd_hid.c ****   */
+ 103:USB/Class/HID/Src/usbd_hid.c **** 
+ 104:USB/Class/HID/Src/usbd_hid.c **** /** @defgroup USBD_HID_Private_Variables
+ 105:USB/Class/HID/Src/usbd_hid.c ****   * @{
+ 106:USB/Class/HID/Src/usbd_hid.c ****   */
+ 107:USB/Class/HID/Src/usbd_hid.c **** 
+ 108:USB/Class/HID/Src/usbd_hid.c **** USBD_ClassTypeDef USBD_HID =
+ 109:USB/Class/HID/Src/usbd_hid.c **** {
+ 110:USB/Class/HID/Src/usbd_hid.c ****   USBD_HID_Init,
+ 111:USB/Class/HID/Src/usbd_hid.c ****   USBD_HID_DeInit,
+ 112:USB/Class/HID/Src/usbd_hid.c ****   USBD_HID_Setup,
+ 113:USB/Class/HID/Src/usbd_hid.c ****   NULL,              /* EP0_TxSent */
+ 114:USB/Class/HID/Src/usbd_hid.c ****   NULL,              /* EP0_RxReady */
+ 115:USB/Class/HID/Src/usbd_hid.c ****   USBD_HID_DataIn,   /* DataIn */
+ 116:USB/Class/HID/Src/usbd_hid.c ****   NULL,              /* DataOut */
+ 117:USB/Class/HID/Src/usbd_hid.c ****   NULL,              /* SOF */
+ 118:USB/Class/HID/Src/usbd_hid.c ****   NULL,
+ 119:USB/Class/HID/Src/usbd_hid.c ****   NULL,
+ 120:USB/Class/HID/Src/usbd_hid.c **** #ifdef USE_USBD_COMPOSITE
+ 121:USB/Class/HID/Src/usbd_hid.c ****   NULL,
+ 122:USB/Class/HID/Src/usbd_hid.c ****   NULL,
+ 123:USB/Class/HID/Src/usbd_hid.c ****   NULL,
+ 124:USB/Class/HID/Src/usbd_hid.c ****   NULL,
+ 125:USB/Class/HID/Src/usbd_hid.c **** #else
+ 126:USB/Class/HID/Src/usbd_hid.c ****   USBD_HID_GetHSCfgDesc,
+ 127:USB/Class/HID/Src/usbd_hid.c ****   USBD_HID_GetFSCfgDesc,
+ 128:USB/Class/HID/Src/usbd_hid.c ****   USBD_HID_GetOtherSpeedCfgDesc,
+ 129:USB/Class/HID/Src/usbd_hid.c ****   USBD_HID_GetDeviceQualifierDesc,
+ 130:USB/Class/HID/Src/usbd_hid.c **** #endif /* USE_USBD_COMPOSITE  */
+ 131:USB/Class/HID/Src/usbd_hid.c **** };
+ 132:USB/Class/HID/Src/usbd_hid.c **** 
+ 133:USB/Class/HID/Src/usbd_hid.c **** #ifndef USE_USBD_COMPOSITE
+ 134:USB/Class/HID/Src/usbd_hid.c **** /* USB HID device FS Configuration Descriptor */
+ 135:USB/Class/HID/Src/usbd_hid.c **** __ALIGN_BEGIN static uint8_t USBD_HID_CfgDesc[USB_HID_CONFIG_DESC_SIZ] __ALIGN_END =
+ 136:USB/Class/HID/Src/usbd_hid.c **** {
+ 137:USB/Class/HID/Src/usbd_hid.c ****   0x09,                                               /* bLength: Configuration Descriptor size */
+ 138:USB/Class/HID/Src/usbd_hid.c ****   USB_DESC_TYPE_CONFIGURATION,                        /* bDescriptorType: Configuration */
+ 139:USB/Class/HID/Src/usbd_hid.c ****   USB_HID_CONFIG_DESC_SIZ,                            /* wTotalLength: Bytes returned */
+ 140:USB/Class/HID/Src/usbd_hid.c ****   0x00,
+ 141:USB/Class/HID/Src/usbd_hid.c ****   0x01,                                               /* bNumInterfaces: 1 interface */
+ 142:USB/Class/HID/Src/usbd_hid.c ****   0x01,                                               /* bConfigurationValue: Configuration value *
+ 143:USB/Class/HID/Src/usbd_hid.c ****   0x00,                                               /* iConfiguration: Index of string descriptor
+ARM GAS  C:\Users\sapph\AppData\Local\Temp\cctkBC00.s 			page 4
+
+
+ 144:USB/Class/HID/Src/usbd_hid.c ****                                                          describing the configuration */
+ 145:USB/Class/HID/Src/usbd_hid.c **** #if (USBD_SELF_POWERED == 1U)
+ 146:USB/Class/HID/Src/usbd_hid.c ****   0xE0,                                               /* bmAttributes: Bus Powered according to use
+ 147:USB/Class/HID/Src/usbd_hid.c **** #else
+ 148:USB/Class/HID/Src/usbd_hid.c ****   0xA0,                                               /* bmAttributes: Bus Powered according to use
+ 149:USB/Class/HID/Src/usbd_hid.c **** #endif /* USBD_SELF_POWERED */
+ 150:USB/Class/HID/Src/usbd_hid.c ****   USBD_MAX_POWER,                                     /* MaxPower (mA) */
+ 151:USB/Class/HID/Src/usbd_hid.c **** 
+ 152:USB/Class/HID/Src/usbd_hid.c ****   /************** Descriptor of Joystick Mouse interface ****************/
+ 153:USB/Class/HID/Src/usbd_hid.c ****   /* 09 */
+ 154:USB/Class/HID/Src/usbd_hid.c ****   0x09,                                               /* bLength: Interface Descriptor size */
+ 155:USB/Class/HID/Src/usbd_hid.c ****   USB_DESC_TYPE_INTERFACE,                            /* bDescriptorType: Interface descriptor type
+ 156:USB/Class/HID/Src/usbd_hid.c ****   0x00,                                               /* bInterfaceNumber: Number of Interface */
+ 157:USB/Class/HID/Src/usbd_hid.c ****   0x00,                                               /* bAlternateSetting: Alternate setting */
+ 158:USB/Class/HID/Src/usbd_hid.c ****   0x01,                                               /* bNumEndpoints */
+ 159:USB/Class/HID/Src/usbd_hid.c ****   0x03,                                               /* bInterfaceClass: HID */
+ 160:USB/Class/HID/Src/usbd_hid.c ****   0x01,                                               /* bInterfaceSubClass : 1=BOOT, 0=no boot */
+ 161:USB/Class/HID/Src/usbd_hid.c ****   0x02,                                               /* nInterfaceProtocol : 0=none, 1=keyboard, 2
+ 162:USB/Class/HID/Src/usbd_hid.c ****   0,                                                  /* iInterface: Index of string descriptor */
+ 163:USB/Class/HID/Src/usbd_hid.c ****   /******************** Descriptor of Joystick Mouse HID ********************/
+ 164:USB/Class/HID/Src/usbd_hid.c ****   /* 18 */
+ 165:USB/Class/HID/Src/usbd_hid.c ****   0x09,                                               /* bLength: HID Descriptor size */
+ 166:USB/Class/HID/Src/usbd_hid.c ****   HID_DESCRIPTOR_TYPE,                                /* bDescriptorType: HID */
+ 167:USB/Class/HID/Src/usbd_hid.c ****   0x11,                                               /* bcdHID: HID Class Spec release number */
+ 168:USB/Class/HID/Src/usbd_hid.c ****   0x01,
+ 169:USB/Class/HID/Src/usbd_hid.c ****   0x00,                                               /* bCountryCode: Hardware target country */
+ 170:USB/Class/HID/Src/usbd_hid.c ****   0x01,                                               /* bNumDescriptors: Number of HID class descr
+ 171:USB/Class/HID/Src/usbd_hid.c ****   0x22,                                               /* bDescriptorType */
+ 172:USB/Class/HID/Src/usbd_hid.c ****   HID_MOUSE_REPORT_DESC_SIZE,                         /* wItemLength: Total length of Report descri
+ 173:USB/Class/HID/Src/usbd_hid.c ****   0x00,
+ 174:USB/Class/HID/Src/usbd_hid.c ****   /******************** Descriptor of Mouse endpoint ********************/
+ 175:USB/Class/HID/Src/usbd_hid.c ****   /* 27 */
+ 176:USB/Class/HID/Src/usbd_hid.c ****   0x07,                                               /* bLength: Endpoint Descriptor size */
+ 177:USB/Class/HID/Src/usbd_hid.c ****   USB_DESC_TYPE_ENDPOINT,                             /* bDescriptorType:*/
+ 178:USB/Class/HID/Src/usbd_hid.c **** 
+ 179:USB/Class/HID/Src/usbd_hid.c ****   HID_EPIN_ADDR,                                      /* bEndpointAddress: Endpoint Address (IN) */
+ 180:USB/Class/HID/Src/usbd_hid.c ****   0x03,                                               /* bmAttributes: Interrupt endpoint */
+ 181:USB/Class/HID/Src/usbd_hid.c ****   HID_EPIN_SIZE,                                      /* wMaxPacketSize: 4 Bytes max */
+ 182:USB/Class/HID/Src/usbd_hid.c ****   0x00,
+ 183:USB/Class/HID/Src/usbd_hid.c ****   HID_FS_BINTERVAL,                                   /* bInterval: Polling Interval */
+ 184:USB/Class/HID/Src/usbd_hid.c ****   /* 34 */
+ 185:USB/Class/HID/Src/usbd_hid.c **** };
+ 186:USB/Class/HID/Src/usbd_hid.c **** #endif /* USE_USBD_COMPOSITE  */
+ 187:USB/Class/HID/Src/usbd_hid.c **** 
+ 188:USB/Class/HID/Src/usbd_hid.c **** /* USB HID device Configuration Descriptor */
+ 189:USB/Class/HID/Src/usbd_hid.c **** __ALIGN_BEGIN static uint8_t USBD_HID_Desc[USB_HID_DESC_SIZ] __ALIGN_END =
+ 190:USB/Class/HID/Src/usbd_hid.c **** {
+ 191:USB/Class/HID/Src/usbd_hid.c ****   /* 18 */
+ 192:USB/Class/HID/Src/usbd_hid.c ****   0x09,                                               /* bLength: HID Descriptor size */
+ 193:USB/Class/HID/Src/usbd_hid.c ****   HID_DESCRIPTOR_TYPE,                                /* bDescriptorType: HID */
+ 194:USB/Class/HID/Src/usbd_hid.c ****   0x11,                                               /* bcdHID: HID Class Spec release number */
+ 195:USB/Class/HID/Src/usbd_hid.c ****   0x01,
+ 196:USB/Class/HID/Src/usbd_hid.c ****   0x00,                                               /* bCountryCode: Hardware target country */
+ 197:USB/Class/HID/Src/usbd_hid.c ****   0x01,                                               /* bNumDescriptors: Number of HID class descr
+ 198:USB/Class/HID/Src/usbd_hid.c ****   0x22,                                               /* bDescriptorType */
+ 199:USB/Class/HID/Src/usbd_hid.c ****   HID_MOUSE_REPORT_DESC_SIZE,                         /* wItemLength: Total length of Report descri
+ 200:USB/Class/HID/Src/usbd_hid.c ****   0x00,
+ARM GAS  C:\Users\sapph\AppData\Local\Temp\cctkBC00.s 			page 5
+
+
+ 201:USB/Class/HID/Src/usbd_hid.c **** };
+ 202:USB/Class/HID/Src/usbd_hid.c **** 
+ 203:USB/Class/HID/Src/usbd_hid.c **** #ifndef USE_USBD_COMPOSITE
+ 204:USB/Class/HID/Src/usbd_hid.c **** /* USB Standard Device Descriptor */
+ 205:USB/Class/HID/Src/usbd_hid.c **** __ALIGN_BEGIN static uint8_t USBD_HID_DeviceQualifierDesc[USB_LEN_DEV_QUALIFIER_DESC] __ALIGN_END =
+ 206:USB/Class/HID/Src/usbd_hid.c **** {
+ 207:USB/Class/HID/Src/usbd_hid.c ****   USB_LEN_DEV_QUALIFIER_DESC,
+ 208:USB/Class/HID/Src/usbd_hid.c ****   USB_DESC_TYPE_DEVICE_QUALIFIER,
+ 209:USB/Class/HID/Src/usbd_hid.c ****   0x00,
+ 210:USB/Class/HID/Src/usbd_hid.c ****   0x02,
+ 211:USB/Class/HID/Src/usbd_hid.c ****   0x00,
+ 212:USB/Class/HID/Src/usbd_hid.c ****   0x00,
+ 213:USB/Class/HID/Src/usbd_hid.c ****   0x00,
+ 214:USB/Class/HID/Src/usbd_hid.c ****   0x40,
+ 215:USB/Class/HID/Src/usbd_hid.c ****   0x01,
+ 216:USB/Class/HID/Src/usbd_hid.c ****   0x00,
+ 217:USB/Class/HID/Src/usbd_hid.c **** };
+ 218:USB/Class/HID/Src/usbd_hid.c **** #endif /* USE_USBD_COMPOSITE  */
+ 219:USB/Class/HID/Src/usbd_hid.c **** 
+ 220:USB/Class/HID/Src/usbd_hid.c **** __ALIGN_BEGIN static uint8_t HID_MOUSE_ReportDesc[HID_MOUSE_REPORT_DESC_SIZE] __ALIGN_END =
+ 221:USB/Class/HID/Src/usbd_hid.c **** {
+ 222:USB/Class/HID/Src/usbd_hid.c ****   0x05, 0x01,        /* Usage Page (Generic Desktop Ctrls)     */
+ 223:USB/Class/HID/Src/usbd_hid.c ****   0x09, 0x02,        /* Usage (Mouse)                          */
+ 224:USB/Class/HID/Src/usbd_hid.c ****   0xA1, 0x01,        /* Collection (Application)               */
+ 225:USB/Class/HID/Src/usbd_hid.c ****   0x09, 0x01,        /*   Usage (Pointer)                      */
+ 226:USB/Class/HID/Src/usbd_hid.c ****   0xA1, 0x00,        /*   Collection (Physical)                */
+ 227:USB/Class/HID/Src/usbd_hid.c ****   0x05, 0x09,        /*     Usage Page (Button)                */
+ 228:USB/Class/HID/Src/usbd_hid.c ****   0x19, 0x01,        /*     Usage Minimum (0x01)               */
+ 229:USB/Class/HID/Src/usbd_hid.c ****   0x29, 0x03,        /*     Usage Maximum (0x03)               */
+ 230:USB/Class/HID/Src/usbd_hid.c ****   0x15, 0x00,        /*     Logical Minimum (0)                */
+ 231:USB/Class/HID/Src/usbd_hid.c ****   0x25, 0x01,        /*     Logical Maximum (1)                */
+ 232:USB/Class/HID/Src/usbd_hid.c ****   0x95, 0x03,        /*     Report Count (3)                   */
+ 233:USB/Class/HID/Src/usbd_hid.c ****   0x75, 0x01,        /*     Report Size (1)                    */
+ 234:USB/Class/HID/Src/usbd_hid.c ****   0x81, 0x02,        /*     Input (Data,Var,Abs)               */
+ 235:USB/Class/HID/Src/usbd_hid.c ****   0x95, 0x01,        /*     Report Count (1)                   */
+ 236:USB/Class/HID/Src/usbd_hid.c ****   0x75, 0x05,        /*     Report Size (5)                    */
+ 237:USB/Class/HID/Src/usbd_hid.c ****   0x81, 0x01,        /*     Input (Const,Array,Abs)            */
+ 238:USB/Class/HID/Src/usbd_hid.c ****   0x05, 0x01,        /*     Usage Page (Generic Desktop Ctrls) */
+ 239:USB/Class/HID/Src/usbd_hid.c ****   0x09, 0x30,        /*     Usage (X)                          */
+ 240:USB/Class/HID/Src/usbd_hid.c ****   0x09, 0x31,        /*     Usage (Y)                          */
+ 241:USB/Class/HID/Src/usbd_hid.c ****   0x09, 0x38,        /*     Usage (Wheel)                      */
+ 242:USB/Class/HID/Src/usbd_hid.c ****   0x15, 0x81,        /*     Logical Minimum (-127)             */
+ 243:USB/Class/HID/Src/usbd_hid.c ****   0x25, 0x7F,        /*     Logical Maximum (127)              */
+ 244:USB/Class/HID/Src/usbd_hid.c ****   0x75, 0x08,        /*     Report Size (8)                    */
+ 245:USB/Class/HID/Src/usbd_hid.c ****   0x95, 0x03,        /*     Report Count (3)                   */
+ 246:USB/Class/HID/Src/usbd_hid.c ****   0x81, 0x06,        /*     Input (Data,Var,Rel)               */
+ 247:USB/Class/HID/Src/usbd_hid.c ****   0xC0,              /*   End Collection                       */
+ 248:USB/Class/HID/Src/usbd_hid.c ****   0x09, 0x3C,        /*   Usage (Motion Wakeup)                */
+ 249:USB/Class/HID/Src/usbd_hid.c ****   0x05, 0xFF,        /*   Usage Page (Reserved 0xFF)           */
+ 250:USB/Class/HID/Src/usbd_hid.c ****   0x09, 0x01,        /*   Usage (0x01)                         */
+ 251:USB/Class/HID/Src/usbd_hid.c ****   0x15, 0x00,        /*   Logical Minimum (0)                  */
+ 252:USB/Class/HID/Src/usbd_hid.c ****   0x25, 0x01,        /*   Logical Maximum (1)                  */
+ 253:USB/Class/HID/Src/usbd_hid.c ****   0x75, 0x01,        /*   Report Size (1)                      */
+ 254:USB/Class/HID/Src/usbd_hid.c ****   0x95, 0x02,        /*   Report Count (2)                     */
+ 255:USB/Class/HID/Src/usbd_hid.c ****   0xB1, 0x22,        /*   Feature (Data,Var,Abs,NoWrp)         */
+ 256:USB/Class/HID/Src/usbd_hid.c ****   0x75, 0x06,        /*   Report Size (6)                      */
+ 257:USB/Class/HID/Src/usbd_hid.c ****   0x95, 0x01,        /*   Report Count (1)                     */
+ARM GAS  C:\Users\sapph\AppData\Local\Temp\cctkBC00.s 			page 6
+
+
+ 258:USB/Class/HID/Src/usbd_hid.c ****   0xB1, 0x01,        /*   Feature (Const,Array,Abs,NoWrp)      */
+ 259:USB/Class/HID/Src/usbd_hid.c ****   0xC0               /* End Collection                         */
+ 260:USB/Class/HID/Src/usbd_hid.c **** };
+ 261:USB/Class/HID/Src/usbd_hid.c **** 
+ 262:USB/Class/HID/Src/usbd_hid.c **** static uint8_t HIDInEpAdd = HID_EPIN_ADDR;
+ 263:USB/Class/HID/Src/usbd_hid.c **** 
+ 264:USB/Class/HID/Src/usbd_hid.c **** /**
+ 265:USB/Class/HID/Src/usbd_hid.c ****   * @}
+ 266:USB/Class/HID/Src/usbd_hid.c ****   */
+ 267:USB/Class/HID/Src/usbd_hid.c **** 
+ 268:USB/Class/HID/Src/usbd_hid.c **** /** @defgroup USBD_HID_Private_Functions
+ 269:USB/Class/HID/Src/usbd_hid.c ****   * @{
+ 270:USB/Class/HID/Src/usbd_hid.c ****   */
+ 271:USB/Class/HID/Src/usbd_hid.c **** 
+ 272:USB/Class/HID/Src/usbd_hid.c **** /**
+ 273:USB/Class/HID/Src/usbd_hid.c ****   * @brief  USBD_HID_Init
+ 274:USB/Class/HID/Src/usbd_hid.c ****   *         Initialize the HID interface
+ 275:USB/Class/HID/Src/usbd_hid.c ****   * @param  pdev: device instance
+ 276:USB/Class/HID/Src/usbd_hid.c ****   * @param  cfgidx: Configuration index
+ 277:USB/Class/HID/Src/usbd_hid.c ****   * @retval status
+ 278:USB/Class/HID/Src/usbd_hid.c ****   */
+ 279:USB/Class/HID/Src/usbd_hid.c **** static uint8_t USBD_HID_Init(USBD_HandleTypeDef *pdev, uint8_t cfgidx)
+ 280:USB/Class/HID/Src/usbd_hid.c **** {
+ 281:USB/Class/HID/Src/usbd_hid.c ****   UNUSED(cfgidx);
+ 282:USB/Class/HID/Src/usbd_hid.c **** 
+ 283:USB/Class/HID/Src/usbd_hid.c ****   USBD_HID_HandleTypeDef *hhid;
+ 284:USB/Class/HID/Src/usbd_hid.c **** 
+ 285:USB/Class/HID/Src/usbd_hid.c ****   hhid = (USBD_HID_HandleTypeDef *)USBD_malloc(sizeof(USBD_HID_HandleTypeDef));
+ 286:USB/Class/HID/Src/usbd_hid.c **** 
+ 287:USB/Class/HID/Src/usbd_hid.c ****   if (hhid == NULL)
+ 288:USB/Class/HID/Src/usbd_hid.c ****   {
+ 289:USB/Class/HID/Src/usbd_hid.c ****     pdev->pClassDataCmsit[pdev->classId] = NULL;
+ 290:USB/Class/HID/Src/usbd_hid.c ****     return (uint8_t)USBD_EMEM;
+ 291:USB/Class/HID/Src/usbd_hid.c ****   }
+ 292:USB/Class/HID/Src/usbd_hid.c **** 
+ 293:USB/Class/HID/Src/usbd_hid.c ****   pdev->pClassDataCmsit[pdev->classId] = (void *)hhid;
+ 294:USB/Class/HID/Src/usbd_hid.c ****   pdev->pClassData = pdev->pClassDataCmsit[pdev->classId];
+ 295:USB/Class/HID/Src/usbd_hid.c **** 
+ 296:USB/Class/HID/Src/usbd_hid.c **** #ifdef USE_USBD_COMPOSITE
+ 297:USB/Class/HID/Src/usbd_hid.c ****   /* Get the Endpoints addresses allocated for this class instance */
+ 298:USB/Class/HID/Src/usbd_hid.c ****   HIDInEpAdd  = USBD_CoreGetEPAdd(pdev, USBD_EP_IN, USBD_EP_TYPE_INTR, (uint8_t)pdev->classId);
+ 299:USB/Class/HID/Src/usbd_hid.c **** #endif /* USE_USBD_COMPOSITE */
+ 300:USB/Class/HID/Src/usbd_hid.c **** 
+ 301:USB/Class/HID/Src/usbd_hid.c ****   if (pdev->dev_speed == USBD_SPEED_HIGH)
+ 302:USB/Class/HID/Src/usbd_hid.c ****   {
+ 303:USB/Class/HID/Src/usbd_hid.c ****     pdev->ep_in[HIDInEpAdd & 0xFU].bInterval = HID_HS_BINTERVAL;
+ 304:USB/Class/HID/Src/usbd_hid.c ****   }
+ 305:USB/Class/HID/Src/usbd_hid.c ****   else   /* LOW and FULL-speed endpoints */
+ 306:USB/Class/HID/Src/usbd_hid.c ****   {
+ 307:USB/Class/HID/Src/usbd_hid.c ****     pdev->ep_in[HIDInEpAdd & 0xFU].bInterval = HID_FS_BINTERVAL;
+ 308:USB/Class/HID/Src/usbd_hid.c ****   }
+ 309:USB/Class/HID/Src/usbd_hid.c **** 
+ 310:USB/Class/HID/Src/usbd_hid.c ****   /* Open EP IN */
+ 311:USB/Class/HID/Src/usbd_hid.c ****   (void)USBD_LL_OpenEP(pdev, HIDInEpAdd, USBD_EP_TYPE_INTR, HID_EPIN_SIZE);
+ 312:USB/Class/HID/Src/usbd_hid.c ****   pdev->ep_in[HIDInEpAdd & 0xFU].is_used = 1U;
+ 313:USB/Class/HID/Src/usbd_hid.c **** 
+ 314:USB/Class/HID/Src/usbd_hid.c ****   hhid->state = USBD_HID_IDLE;
+ARM GAS  C:\Users\sapph\AppData\Local\Temp\cctkBC00.s 			page 7
+
+
+ 315:USB/Class/HID/Src/usbd_hid.c **** 
+ 316:USB/Class/HID/Src/usbd_hid.c ****   return (uint8_t)USBD_OK;
+ 317:USB/Class/HID/Src/usbd_hid.c **** }
+ 318:USB/Class/HID/Src/usbd_hid.c **** 
+ 319:USB/Class/HID/Src/usbd_hid.c **** /**
+ 320:USB/Class/HID/Src/usbd_hid.c ****   * @brief  USBD_HID_DeInit
+ 321:USB/Class/HID/Src/usbd_hid.c ****   *         DeInitialize the HID layer
+ 322:USB/Class/HID/Src/usbd_hid.c ****   * @param  pdev: device instance
+ 323:USB/Class/HID/Src/usbd_hid.c ****   * @param  cfgidx: Configuration index
+ 324:USB/Class/HID/Src/usbd_hid.c ****   * @retval status
+ 325:USB/Class/HID/Src/usbd_hid.c ****   */
+ 326:USB/Class/HID/Src/usbd_hid.c **** static uint8_t USBD_HID_DeInit(USBD_HandleTypeDef *pdev, uint8_t cfgidx)
+ 327:USB/Class/HID/Src/usbd_hid.c **** {
+ 328:USB/Class/HID/Src/usbd_hid.c ****   UNUSED(cfgidx);
+ 329:USB/Class/HID/Src/usbd_hid.c **** 
+ 330:USB/Class/HID/Src/usbd_hid.c **** #ifdef USE_USBD_COMPOSITE
+ 331:USB/Class/HID/Src/usbd_hid.c ****   /* Get the Endpoints addresses allocated for this class instance */
+ 332:USB/Class/HID/Src/usbd_hid.c ****   HIDInEpAdd  = USBD_CoreGetEPAdd(pdev, USBD_EP_IN, USBD_EP_TYPE_INTR, (uint8_t)pdev->classId);
+ 333:USB/Class/HID/Src/usbd_hid.c **** #endif /* USE_USBD_COMPOSITE */
+ 334:USB/Class/HID/Src/usbd_hid.c **** 
+ 335:USB/Class/HID/Src/usbd_hid.c ****   /* Close HID EPs */
+ 336:USB/Class/HID/Src/usbd_hid.c ****   (void)USBD_LL_CloseEP(pdev, HIDInEpAdd);
+ 337:USB/Class/HID/Src/usbd_hid.c ****   pdev->ep_in[HIDInEpAdd & 0xFU].is_used = 0U;
+ 338:USB/Class/HID/Src/usbd_hid.c ****   pdev->ep_in[HIDInEpAdd & 0xFU].bInterval = 0U;
+ 339:USB/Class/HID/Src/usbd_hid.c **** 
+ 340:USB/Class/HID/Src/usbd_hid.c ****   /* Free allocated memory */
+ 341:USB/Class/HID/Src/usbd_hid.c ****   if (pdev->pClassDataCmsit[pdev->classId] != NULL)
+ 342:USB/Class/HID/Src/usbd_hid.c ****   {
+ 343:USB/Class/HID/Src/usbd_hid.c ****     (void)USBD_free(pdev->pClassDataCmsit[pdev->classId]);
+ 344:USB/Class/HID/Src/usbd_hid.c ****     pdev->pClassDataCmsit[pdev->classId] = NULL;
+ 345:USB/Class/HID/Src/usbd_hid.c ****   }
+ 346:USB/Class/HID/Src/usbd_hid.c **** 
+ 347:USB/Class/HID/Src/usbd_hid.c ****   return (uint8_t)USBD_OK;
+ 348:USB/Class/HID/Src/usbd_hid.c **** }
+ 349:USB/Class/HID/Src/usbd_hid.c **** 
+ 350:USB/Class/HID/Src/usbd_hid.c **** /**
+ 351:USB/Class/HID/Src/usbd_hid.c ****   * @brief  USBD_HID_Setup
+ 352:USB/Class/HID/Src/usbd_hid.c ****   *         Handle the HID specific requests
+ 353:USB/Class/HID/Src/usbd_hid.c ****   * @param  pdev: instance
+ 354:USB/Class/HID/Src/usbd_hid.c ****   * @param  req: usb requests
+ 355:USB/Class/HID/Src/usbd_hid.c ****   * @retval status
+ 356:USB/Class/HID/Src/usbd_hid.c ****   */
+ 357:USB/Class/HID/Src/usbd_hid.c **** static uint8_t USBD_HID_Setup(USBD_HandleTypeDef *pdev, USBD_SetupReqTypedef *req)
+ 358:USB/Class/HID/Src/usbd_hid.c **** {
+ 359:USB/Class/HID/Src/usbd_hid.c ****   USBD_HID_HandleTypeDef *hhid = (USBD_HID_HandleTypeDef *)pdev->pClassDataCmsit[pdev->classId];
+ 360:USB/Class/HID/Src/usbd_hid.c ****   USBD_StatusTypeDef ret = USBD_OK;
+ 361:USB/Class/HID/Src/usbd_hid.c ****   uint16_t len;
+ 362:USB/Class/HID/Src/usbd_hid.c ****   uint8_t *pbuf;
+ 363:USB/Class/HID/Src/usbd_hid.c ****   uint16_t status_info = 0U;
+ 364:USB/Class/HID/Src/usbd_hid.c **** 
+ 365:USB/Class/HID/Src/usbd_hid.c ****   if (hhid == NULL)
+ 366:USB/Class/HID/Src/usbd_hid.c ****   {
+ 367:USB/Class/HID/Src/usbd_hid.c ****     return (uint8_t)USBD_FAIL;
+ 368:USB/Class/HID/Src/usbd_hid.c ****   }
+ 369:USB/Class/HID/Src/usbd_hid.c **** 
+ 370:USB/Class/HID/Src/usbd_hid.c ****   switch (req->bmRequest & USB_REQ_TYPE_MASK)
+ 371:USB/Class/HID/Src/usbd_hid.c ****   {
+ARM GAS  C:\Users\sapph\AppData\Local\Temp\cctkBC00.s 			page 8
+
+
+ 372:USB/Class/HID/Src/usbd_hid.c ****     case USB_REQ_TYPE_CLASS :
+ 373:USB/Class/HID/Src/usbd_hid.c ****       switch (req->bRequest)
+ 374:USB/Class/HID/Src/usbd_hid.c ****       {
+ 375:USB/Class/HID/Src/usbd_hid.c ****         case USBD_HID_REQ_SET_PROTOCOL:
+ 376:USB/Class/HID/Src/usbd_hid.c ****           hhid->Protocol = (uint8_t)(req->wValue);
+ 377:USB/Class/HID/Src/usbd_hid.c ****           break;
+ 378:USB/Class/HID/Src/usbd_hid.c **** 
+ 379:USB/Class/HID/Src/usbd_hid.c ****         case USBD_HID_REQ_GET_PROTOCOL:
+ 380:USB/Class/HID/Src/usbd_hid.c ****           (void)USBD_CtlSendData(pdev, (uint8_t *)&hhid->Protocol, 1U);
+ 381:USB/Class/HID/Src/usbd_hid.c ****           break;
+ 382:USB/Class/HID/Src/usbd_hid.c **** 
+ 383:USB/Class/HID/Src/usbd_hid.c ****         case USBD_HID_REQ_SET_IDLE:
+ 384:USB/Class/HID/Src/usbd_hid.c ****           hhid->IdleState = (uint8_t)(req->wValue >> 8);
+ 385:USB/Class/HID/Src/usbd_hid.c ****           break;
+ 386:USB/Class/HID/Src/usbd_hid.c **** 
+ 387:USB/Class/HID/Src/usbd_hid.c ****         case USBD_HID_REQ_GET_IDLE:
+ 388:USB/Class/HID/Src/usbd_hid.c ****           (void)USBD_CtlSendData(pdev, (uint8_t *)&hhid->IdleState, 1U);
+ 389:USB/Class/HID/Src/usbd_hid.c ****           break;
+ 390:USB/Class/HID/Src/usbd_hid.c **** 
+ 391:USB/Class/HID/Src/usbd_hid.c ****         default:
+ 392:USB/Class/HID/Src/usbd_hid.c ****           USBD_CtlError(pdev, req);
+ 393:USB/Class/HID/Src/usbd_hid.c ****           ret = USBD_FAIL;
+ 394:USB/Class/HID/Src/usbd_hid.c ****           break;
+ 395:USB/Class/HID/Src/usbd_hid.c ****       }
+ 396:USB/Class/HID/Src/usbd_hid.c ****       break;
+ 397:USB/Class/HID/Src/usbd_hid.c ****     case USB_REQ_TYPE_STANDARD:
+ 398:USB/Class/HID/Src/usbd_hid.c ****       switch (req->bRequest)
+ 399:USB/Class/HID/Src/usbd_hid.c ****       {
+ 400:USB/Class/HID/Src/usbd_hid.c ****         case USB_REQ_GET_STATUS:
+ 401:USB/Class/HID/Src/usbd_hid.c ****           if (pdev->dev_state == USBD_STATE_CONFIGURED)
+ 402:USB/Class/HID/Src/usbd_hid.c ****           {
+ 403:USB/Class/HID/Src/usbd_hid.c ****             (void)USBD_CtlSendData(pdev, (uint8_t *)&status_info, 2U);
+ 404:USB/Class/HID/Src/usbd_hid.c ****           }
+ 405:USB/Class/HID/Src/usbd_hid.c ****           else
+ 406:USB/Class/HID/Src/usbd_hid.c ****           {
+ 407:USB/Class/HID/Src/usbd_hid.c ****             USBD_CtlError(pdev, req);
+ 408:USB/Class/HID/Src/usbd_hid.c ****             ret = USBD_FAIL;
+ 409:USB/Class/HID/Src/usbd_hid.c ****           }
+ 410:USB/Class/HID/Src/usbd_hid.c ****           break;
+ 411:USB/Class/HID/Src/usbd_hid.c **** 
+ 412:USB/Class/HID/Src/usbd_hid.c ****         case USB_REQ_GET_DESCRIPTOR:
+ 413:USB/Class/HID/Src/usbd_hid.c ****           if ((req->wValue >> 8) == HID_REPORT_DESC)
+ 414:USB/Class/HID/Src/usbd_hid.c ****           {
+ 415:USB/Class/HID/Src/usbd_hid.c ****             len = MIN(HID_MOUSE_REPORT_DESC_SIZE, req->wLength);
+ 416:USB/Class/HID/Src/usbd_hid.c ****             pbuf = HID_MOUSE_ReportDesc;
+ 417:USB/Class/HID/Src/usbd_hid.c ****           }
+ 418:USB/Class/HID/Src/usbd_hid.c ****           else if ((req->wValue >> 8) == HID_DESCRIPTOR_TYPE)
+ 419:USB/Class/HID/Src/usbd_hid.c ****           {
+ 420:USB/Class/HID/Src/usbd_hid.c ****             pbuf = USBD_HID_Desc;
+ 421:USB/Class/HID/Src/usbd_hid.c ****             len = MIN(USB_HID_DESC_SIZ, req->wLength);
+ 422:USB/Class/HID/Src/usbd_hid.c ****           }
+ 423:USB/Class/HID/Src/usbd_hid.c ****           else
+ 424:USB/Class/HID/Src/usbd_hid.c ****           {
+ 425:USB/Class/HID/Src/usbd_hid.c ****             USBD_CtlError(pdev, req);
+ 426:USB/Class/HID/Src/usbd_hid.c ****             ret = USBD_FAIL;
+ 427:USB/Class/HID/Src/usbd_hid.c ****             break;
+ 428:USB/Class/HID/Src/usbd_hid.c ****           }
+ARM GAS  C:\Users\sapph\AppData\Local\Temp\cctkBC00.s 			page 9
+
+
+ 429:USB/Class/HID/Src/usbd_hid.c ****           (void)USBD_CtlSendData(pdev, pbuf, len);
+ 430:USB/Class/HID/Src/usbd_hid.c ****           break;
+ 431:USB/Class/HID/Src/usbd_hid.c **** 
+ 432:USB/Class/HID/Src/usbd_hid.c ****         case USB_REQ_GET_INTERFACE :
+ 433:USB/Class/HID/Src/usbd_hid.c ****           if (pdev->dev_state == USBD_STATE_CONFIGURED)
+ 434:USB/Class/HID/Src/usbd_hid.c ****           {
+ 435:USB/Class/HID/Src/usbd_hid.c ****             (void)USBD_CtlSendData(pdev, (uint8_t *)&hhid->AltSetting, 1U);
+ 436:USB/Class/HID/Src/usbd_hid.c ****           }
+ 437:USB/Class/HID/Src/usbd_hid.c ****           else
+ 438:USB/Class/HID/Src/usbd_hid.c ****           {
+ 439:USB/Class/HID/Src/usbd_hid.c ****             USBD_CtlError(pdev, req);
+ 440:USB/Class/HID/Src/usbd_hid.c ****             ret = USBD_FAIL;
+ 441:USB/Class/HID/Src/usbd_hid.c ****           }
+ 442:USB/Class/HID/Src/usbd_hid.c ****           break;
+ 443:USB/Class/HID/Src/usbd_hid.c **** 
+ 444:USB/Class/HID/Src/usbd_hid.c ****         case USB_REQ_SET_INTERFACE:
+ 445:USB/Class/HID/Src/usbd_hid.c ****           if (pdev->dev_state == USBD_STATE_CONFIGURED)
+ 446:USB/Class/HID/Src/usbd_hid.c ****           {
+ 447:USB/Class/HID/Src/usbd_hid.c ****             hhid->AltSetting = (uint8_t)(req->wValue);
+ 448:USB/Class/HID/Src/usbd_hid.c ****           }
+ 449:USB/Class/HID/Src/usbd_hid.c ****           else
+ 450:USB/Class/HID/Src/usbd_hid.c ****           {
+ 451:USB/Class/HID/Src/usbd_hid.c ****             USBD_CtlError(pdev, req);
+ 452:USB/Class/HID/Src/usbd_hid.c ****             ret = USBD_FAIL;
+ 453:USB/Class/HID/Src/usbd_hid.c ****           }
+ 454:USB/Class/HID/Src/usbd_hid.c ****           break;
+ 455:USB/Class/HID/Src/usbd_hid.c **** 
+ 456:USB/Class/HID/Src/usbd_hid.c ****         case USB_REQ_CLEAR_FEATURE:
+ 457:USB/Class/HID/Src/usbd_hid.c ****           break;
+ 458:USB/Class/HID/Src/usbd_hid.c **** 
+ 459:USB/Class/HID/Src/usbd_hid.c ****         default:
+ 460:USB/Class/HID/Src/usbd_hid.c ****           USBD_CtlError(pdev, req);
+ 461:USB/Class/HID/Src/usbd_hid.c ****           ret = USBD_FAIL;
+ 462:USB/Class/HID/Src/usbd_hid.c ****           break;
+ 463:USB/Class/HID/Src/usbd_hid.c ****       }
+ 464:USB/Class/HID/Src/usbd_hid.c ****       break;
+ 465:USB/Class/HID/Src/usbd_hid.c **** 
+ 466:USB/Class/HID/Src/usbd_hid.c ****     default:
+ 467:USB/Class/HID/Src/usbd_hid.c ****       USBD_CtlError(pdev, req);
+ 468:USB/Class/HID/Src/usbd_hid.c ****       ret = USBD_FAIL;
+ 469:USB/Class/HID/Src/usbd_hid.c ****       break;
+ 470:USB/Class/HID/Src/usbd_hid.c ****   }
+ 471:USB/Class/HID/Src/usbd_hid.c **** 
+ 472:USB/Class/HID/Src/usbd_hid.c ****   return (uint8_t)ret;
+ 473:USB/Class/HID/Src/usbd_hid.c **** }
+ 474:USB/Class/HID/Src/usbd_hid.c **** 
+ 475:USB/Class/HID/Src/usbd_hid.c **** 
+ 476:USB/Class/HID/Src/usbd_hid.c **** /**
+ 477:USB/Class/HID/Src/usbd_hid.c ****   * @brief  USBD_HID_SendReport
+ 478:USB/Class/HID/Src/usbd_hid.c ****   *         Send HID Report
+ 479:USB/Class/HID/Src/usbd_hid.c ****   * @param  pdev: device instance
+ 480:USB/Class/HID/Src/usbd_hid.c ****   * @param  buff: pointer to report
+ 481:USB/Class/HID/Src/usbd_hid.c ****   * @param  ClassId: The Class ID
+ 482:USB/Class/HID/Src/usbd_hid.c ****   * @retval status
+ 483:USB/Class/HID/Src/usbd_hid.c ****   */
+ 484:USB/Class/HID/Src/usbd_hid.c **** #ifdef USE_USBD_COMPOSITE
+ 485:USB/Class/HID/Src/usbd_hid.c **** uint8_t USBD_HID_SendReport(USBD_HandleTypeDef *pdev, uint8_t *report, uint16_t len, uint8_t ClassI
+ARM GAS  C:\Users\sapph\AppData\Local\Temp\cctkBC00.s 			page 10
+
+
+ 486:USB/Class/HID/Src/usbd_hid.c **** {
+ 487:USB/Class/HID/Src/usbd_hid.c ****   USBD_HID_HandleTypeDef *hhid = (USBD_HID_HandleTypeDef *)pdev->pClassDataCmsit[ClassId];
+ 488:USB/Class/HID/Src/usbd_hid.c **** #else
+ 489:USB/Class/HID/Src/usbd_hid.c **** uint8_t USBD_HID_SendReport(USBD_HandleTypeDef *pdev, uint8_t *report, uint16_t len)
+ 490:USB/Class/HID/Src/usbd_hid.c **** {
+ 491:USB/Class/HID/Src/usbd_hid.c ****   USBD_HID_HandleTypeDef *hhid = (USBD_HID_HandleTypeDef *)pdev->pClassDataCmsit[pdev->classId];
+ 492:USB/Class/HID/Src/usbd_hid.c **** #endif /* USE_USBD_COMPOSITE */
+ 493:USB/Class/HID/Src/usbd_hid.c **** 
+ 494:USB/Class/HID/Src/usbd_hid.c ****   if (hhid == NULL)
+ 495:USB/Class/HID/Src/usbd_hid.c ****   {
+ 496:USB/Class/HID/Src/usbd_hid.c ****     return (uint8_t)USBD_FAIL;
+ 497:USB/Class/HID/Src/usbd_hid.c ****   }
+ 498:USB/Class/HID/Src/usbd_hid.c **** 
+ 499:USB/Class/HID/Src/usbd_hid.c **** #ifdef USE_USBD_COMPOSITE
+ 500:USB/Class/HID/Src/usbd_hid.c ****   /* Get the Endpoints addresses allocated for this class instance */
+ 501:USB/Class/HID/Src/usbd_hid.c ****   HIDInEpAdd = USBD_CoreGetEPAdd(pdev, USBD_EP_IN, USBD_EP_TYPE_INTR, ClassId);
+ 502:USB/Class/HID/Src/usbd_hid.c **** #endif /* USE_USBD_COMPOSITE */
+ 503:USB/Class/HID/Src/usbd_hid.c **** 
+ 504:USB/Class/HID/Src/usbd_hid.c ****   if (pdev->dev_state == USBD_STATE_CONFIGURED)
+ 505:USB/Class/HID/Src/usbd_hid.c ****   {
+ 506:USB/Class/HID/Src/usbd_hid.c ****     if (hhid->state == USBD_HID_IDLE)
+ 507:USB/Class/HID/Src/usbd_hid.c ****     {
+ 508:USB/Class/HID/Src/usbd_hid.c ****       hhid->state = USBD_HID_BUSY;
+ 509:USB/Class/HID/Src/usbd_hid.c ****       (void)USBD_LL_Transmit(pdev, HIDInEpAdd, report, len);
+ 510:USB/Class/HID/Src/usbd_hid.c ****     }
+ 511:USB/Class/HID/Src/usbd_hid.c ****   }
+ 512:USB/Class/HID/Src/usbd_hid.c **** 
+ 513:USB/Class/HID/Src/usbd_hid.c ****   return (uint8_t)USBD_OK;
+ 514:USB/Class/HID/Src/usbd_hid.c **** }
+ 515:USB/Class/HID/Src/usbd_hid.c **** 
+ 516:USB/Class/HID/Src/usbd_hid.c **** /**
+ 517:USB/Class/HID/Src/usbd_hid.c ****   * @brief  USBD_HID_GetPollingInterval
+ 518:USB/Class/HID/Src/usbd_hid.c ****   *         return polling interval from endpoint descriptor
+ 519:USB/Class/HID/Src/usbd_hid.c ****   * @param  pdev: device instance
+ 520:USB/Class/HID/Src/usbd_hid.c ****   * @retval polling interval
+ 521:USB/Class/HID/Src/usbd_hid.c ****   */
+ 522:USB/Class/HID/Src/usbd_hid.c **** uint32_t USBD_HID_GetPollingInterval(USBD_HandleTypeDef *pdev)
+ 523:USB/Class/HID/Src/usbd_hid.c **** {
+ 524:USB/Class/HID/Src/usbd_hid.c ****   uint32_t polling_interval;
+ 525:USB/Class/HID/Src/usbd_hid.c **** 
+ 526:USB/Class/HID/Src/usbd_hid.c ****   /* HIGH-speed endpoints */
+ 527:USB/Class/HID/Src/usbd_hid.c ****   if (pdev->dev_speed == USBD_SPEED_HIGH)
+ 528:USB/Class/HID/Src/usbd_hid.c ****   {
+ 529:USB/Class/HID/Src/usbd_hid.c ****     /* Sets the data transfer polling interval for high speed transfers.
+ 530:USB/Class/HID/Src/usbd_hid.c ****      Values between 1..16 are allowed. Values correspond to interval
+ 531:USB/Class/HID/Src/usbd_hid.c ****      of 2 ^ (bInterval-1). This option (8 ms, corresponds to HID_HS_BINTERVAL */
+ 532:USB/Class/HID/Src/usbd_hid.c ****     polling_interval = (((1U << (HID_HS_BINTERVAL - 1U))) / 8U);
+ 533:USB/Class/HID/Src/usbd_hid.c ****   }
+ 534:USB/Class/HID/Src/usbd_hid.c ****   else   /* LOW and FULL-speed endpoints */
+ 535:USB/Class/HID/Src/usbd_hid.c ****   {
+ 536:USB/Class/HID/Src/usbd_hid.c ****     /* Sets the data transfer polling interval for low and full
+ 537:USB/Class/HID/Src/usbd_hid.c ****     speed transfers */
+ 538:USB/Class/HID/Src/usbd_hid.c ****     polling_interval =  HID_FS_BINTERVAL;
+ 539:USB/Class/HID/Src/usbd_hid.c ****   }
+ 540:USB/Class/HID/Src/usbd_hid.c **** 
+ 541:USB/Class/HID/Src/usbd_hid.c ****   return ((uint32_t)(polling_interval));
+ 542:USB/Class/HID/Src/usbd_hid.c **** }
+ARM GAS  C:\Users\sapph\AppData\Local\Temp\cctkBC00.s 			page 11
+
+
+ 543:USB/Class/HID/Src/usbd_hid.c **** 
+ 544:USB/Class/HID/Src/usbd_hid.c **** #ifndef USE_USBD_COMPOSITE
+ 545:USB/Class/HID/Src/usbd_hid.c **** /**
+ 546:USB/Class/HID/Src/usbd_hid.c ****   * @brief  USBD_HID_GetCfgFSDesc
+ 547:USB/Class/HID/Src/usbd_hid.c ****   *         return FS configuration descriptor
+ 548:USB/Class/HID/Src/usbd_hid.c ****   * @param  speed : current device speed
+ 549:USB/Class/HID/Src/usbd_hid.c ****   * @param  length : pointer data length
+ 550:USB/Class/HID/Src/usbd_hid.c ****   * @retval pointer to descriptor buffer
+ 551:USB/Class/HID/Src/usbd_hid.c ****   */
+ 552:USB/Class/HID/Src/usbd_hid.c **** static uint8_t *USBD_HID_GetFSCfgDesc(uint16_t *length)
+ 553:USB/Class/HID/Src/usbd_hid.c **** {
+ 554:USB/Class/HID/Src/usbd_hid.c ****   USBD_EpDescTypeDef *pEpDesc = USBD_GetEpDesc(USBD_HID_CfgDesc, HID_EPIN_ADDR);
+ 555:USB/Class/HID/Src/usbd_hid.c **** 
+ 556:USB/Class/HID/Src/usbd_hid.c ****   if (pEpDesc != NULL)
+ 557:USB/Class/HID/Src/usbd_hid.c ****   {
+ 558:USB/Class/HID/Src/usbd_hid.c ****     pEpDesc->bInterval = HID_FS_BINTERVAL;
+ 559:USB/Class/HID/Src/usbd_hid.c ****   }
+ 560:USB/Class/HID/Src/usbd_hid.c **** 
+ 561:USB/Class/HID/Src/usbd_hid.c ****   *length = (uint16_t)sizeof(USBD_HID_CfgDesc);
+ 562:USB/Class/HID/Src/usbd_hid.c ****   return USBD_HID_CfgDesc;
+ 563:USB/Class/HID/Src/usbd_hid.c **** }
+ 564:USB/Class/HID/Src/usbd_hid.c **** 
+ 565:USB/Class/HID/Src/usbd_hid.c **** /**
+ 566:USB/Class/HID/Src/usbd_hid.c ****   * @brief  USBD_HID_GetCfgHSDesc
+ 567:USB/Class/HID/Src/usbd_hid.c ****   *         return HS configuration descriptor
+ 568:USB/Class/HID/Src/usbd_hid.c ****   * @param  speed : current device speed
+ 569:USB/Class/HID/Src/usbd_hid.c ****   * @param  length : pointer data length
+ 570:USB/Class/HID/Src/usbd_hid.c ****   * @retval pointer to descriptor buffer
+ 571:USB/Class/HID/Src/usbd_hid.c ****   */
+ 572:USB/Class/HID/Src/usbd_hid.c **** static uint8_t *USBD_HID_GetHSCfgDesc(uint16_t *length)
+ 573:USB/Class/HID/Src/usbd_hid.c **** {
+ 574:USB/Class/HID/Src/usbd_hid.c ****   USBD_EpDescTypeDef *pEpDesc = USBD_GetEpDesc(USBD_HID_CfgDesc, HID_EPIN_ADDR);
+ 575:USB/Class/HID/Src/usbd_hid.c **** 
+ 576:USB/Class/HID/Src/usbd_hid.c ****   if (pEpDesc != NULL)
+ 577:USB/Class/HID/Src/usbd_hid.c ****   {
+ 578:USB/Class/HID/Src/usbd_hid.c ****     pEpDesc->bInterval = HID_HS_BINTERVAL;
+ 579:USB/Class/HID/Src/usbd_hid.c ****   }
+ 580:USB/Class/HID/Src/usbd_hid.c **** 
+ 581:USB/Class/HID/Src/usbd_hid.c ****   *length = (uint16_t)sizeof(USBD_HID_CfgDesc);
+ 582:USB/Class/HID/Src/usbd_hid.c ****   return USBD_HID_CfgDesc;
+ 583:USB/Class/HID/Src/usbd_hid.c **** }
+ 584:USB/Class/HID/Src/usbd_hid.c **** 
+ 585:USB/Class/HID/Src/usbd_hid.c **** /**
+ 586:USB/Class/HID/Src/usbd_hid.c ****   * @brief  USBD_HID_GetOtherSpeedCfgDesc
+ 587:USB/Class/HID/Src/usbd_hid.c ****   *         return other speed configuration descriptor
+ 588:USB/Class/HID/Src/usbd_hid.c ****   * @param  speed : current device speed
+ 589:USB/Class/HID/Src/usbd_hid.c ****   * @param  length : pointer data length
+ 590:USB/Class/HID/Src/usbd_hid.c ****   * @retval pointer to descriptor buffer
+ 591:USB/Class/HID/Src/usbd_hid.c ****   */
+ 592:USB/Class/HID/Src/usbd_hid.c **** static uint8_t *USBD_HID_GetOtherSpeedCfgDesc(uint16_t *length)
+ 593:USB/Class/HID/Src/usbd_hid.c **** {
+ 594:USB/Class/HID/Src/usbd_hid.c ****   USBD_EpDescTypeDef *pEpDesc = USBD_GetEpDesc(USBD_HID_CfgDesc, HID_EPIN_ADDR);
+ 595:USB/Class/HID/Src/usbd_hid.c **** 
+ 596:USB/Class/HID/Src/usbd_hid.c ****   if (pEpDesc != NULL)
+ 597:USB/Class/HID/Src/usbd_hid.c ****   {
+ 598:USB/Class/HID/Src/usbd_hid.c ****     pEpDesc->bInterval = HID_FS_BINTERVAL;
+ 599:USB/Class/HID/Src/usbd_hid.c ****   }
+ARM GAS  C:\Users\sapph\AppData\Local\Temp\cctkBC00.s 			page 12
+
+
+ 600:USB/Class/HID/Src/usbd_hid.c **** 
+ 601:USB/Class/HID/Src/usbd_hid.c ****   *length = (uint16_t)sizeof(USBD_HID_CfgDesc);
+ 602:USB/Class/HID/Src/usbd_hid.c ****   return USBD_HID_CfgDesc;
+ 603:USB/Class/HID/Src/usbd_hid.c **** }
+ 604:USB/Class/HID/Src/usbd_hid.c **** #endif /* USE_USBD_COMPOSITE  */
+ 605:USB/Class/HID/Src/usbd_hid.c **** 
+ 606:USB/Class/HID/Src/usbd_hid.c **** /**
+ 607:USB/Class/HID/Src/usbd_hid.c ****   * @brief  USBD_HID_DataIn
+ 608:USB/Class/HID/Src/usbd_hid.c ****   *         handle data IN Stage
+ 609:USB/Class/HID/Src/usbd_hid.c ****   * @param  pdev: device instance
+ 610:USB/Class/HID/Src/usbd_hid.c ****   * @param  epnum: endpoint index
+ 611:USB/Class/HID/Src/usbd_hid.c ****   * @retval status
+ 612:USB/Class/HID/Src/usbd_hid.c ****   */
+ 613:USB/Class/HID/Src/usbd_hid.c **** static uint8_t USBD_HID_DataIn(USBD_HandleTypeDef *pdev, uint8_t epnum)
+ 614:USB/Class/HID/Src/usbd_hid.c **** {
+  30              		.loc 1 614 1 view -0
+  31              		.cfi_startproc
+  32              		@ args = 0, pretend = 0, frame = 0
+  33              		@ frame_needed = 0, uses_anonymous_args = 0
+  34              		@ link register save eliminated.
+ 615:USB/Class/HID/Src/usbd_hid.c ****   UNUSED(epnum);
+  35              		.loc 1 615 3 view .LVU1
+ 616:USB/Class/HID/Src/usbd_hid.c ****   /* Ensure that the FIFO is empty before a new transfer, this condition could
+ 617:USB/Class/HID/Src/usbd_hid.c ****   be caused by  a new transfer before the end of the previous transfer */
+ 618:USB/Class/HID/Src/usbd_hid.c ****   ((USBD_HID_HandleTypeDef *)pdev->pClassDataCmsit[pdev->classId])->state = USBD_HID_IDLE;
+  36              		.loc 1 618 3 view .LVU2
+  37              		.loc 1 618 56 is_stmt 0 view .LVU3
+  38 0000 D0F8E032 		ldr	r3, [r0, #736]
+  39              		.loc 1 618 51 view .LVU4
+  40 0004 B033     		adds	r3, r3, #176
+  41 0006 00EB8300 		add	r0, r0, r3, lsl #2
+  42              	.LVL1:
+  43              		.loc 1 618 51 view .LVU5
+  44 000a 4368     		ldr	r3, [r0, #4]
+  45              		.loc 1 618 75 view .LVU6
+  46 000c 0020     		movs	r0, #0
+  47 000e 1873     		strb	r0, [r3, #12]
+ 619:USB/Class/HID/Src/usbd_hid.c **** 
+ 620:USB/Class/HID/Src/usbd_hid.c ****   return (uint8_t)USBD_OK;
+  48              		.loc 1 620 3 is_stmt 1 view .LVU7
+ 621:USB/Class/HID/Src/usbd_hid.c **** }
+  49              		.loc 1 621 1 is_stmt 0 view .LVU8
+  50 0010 7047     		bx	lr
+  51              		.cfi_endproc
+  52              	.LFE169:
+  54              		.section	.text.USBD_HID_Setup,"ax",%progbits
+  55              		.align	1
+  56              		.syntax unified
+  57              		.thumb
+  58              		.thumb_func
+  60              	USBD_HID_Setup:
+  61              	.LVL2:
+  62              	.LFB166:
+ 358:USB/Class/HID/Src/usbd_hid.c ****   USBD_HID_HandleTypeDef *hhid = (USBD_HID_HandleTypeDef *)pdev->pClassDataCmsit[pdev->classId];
+  63              		.loc 1 358 1 is_stmt 1 view -0
+  64              		.cfi_startproc
+  65              		@ args = 0, pretend = 0, frame = 8
+ARM GAS  C:\Users\sapph\AppData\Local\Temp\cctkBC00.s 			page 13
+
+
+  66              		@ frame_needed = 0, uses_anonymous_args = 0
+ 358:USB/Class/HID/Src/usbd_hid.c ****   USBD_HID_HandleTypeDef *hhid = (USBD_HID_HandleTypeDef *)pdev->pClassDataCmsit[pdev->classId];
+  67              		.loc 1 358 1 is_stmt 0 view .LVU10
+  68 0000 30B5     		push	{r4, r5, lr}
+  69              		.cfi_def_cfa_offset 12
+  70              		.cfi_offset 4, -12
+  71              		.cfi_offset 5, -8
+  72              		.cfi_offset 14, -4
+  73 0002 83B0     		sub	sp, sp, #12
+  74              		.cfi_def_cfa_offset 24
+ 359:USB/Class/HID/Src/usbd_hid.c ****   USBD_StatusTypeDef ret = USBD_OK;
+  75              		.loc 1 359 3 is_stmt 1 view .LVU11
+ 359:USB/Class/HID/Src/usbd_hid.c ****   USBD_StatusTypeDef ret = USBD_OK;
+  76              		.loc 1 359 86 is_stmt 0 view .LVU12
+  77 0004 D0F8E032 		ldr	r3, [r0, #736]
+ 359:USB/Class/HID/Src/usbd_hid.c ****   USBD_StatusTypeDef ret = USBD_OK;
+  78              		.loc 1 359 27 view .LVU13
+  79 0008 B033     		adds	r3, r3, #176
+  80 000a 00EB8303 		add	r3, r0, r3, lsl #2
+  81 000e 5B68     		ldr	r3, [r3, #4]
+  82              	.LVL3:
+ 360:USB/Class/HID/Src/usbd_hid.c ****   uint16_t len;
+  83              		.loc 1 360 3 is_stmt 1 view .LVU14
+ 361:USB/Class/HID/Src/usbd_hid.c ****   uint8_t *pbuf;
+  84              		.loc 1 361 3 view .LVU15
+ 362:USB/Class/HID/Src/usbd_hid.c ****   uint16_t status_info = 0U;
+  85              		.loc 1 362 3 view .LVU16
+ 363:USB/Class/HID/Src/usbd_hid.c **** 
+  86              		.loc 1 363 3 view .LVU17
+ 363:USB/Class/HID/Src/usbd_hid.c **** 
+  87              		.loc 1 363 12 is_stmt 0 view .LVU18
+  88 0010 0022     		movs	r2, #0
+  89 0012 ADF80620 		strh	r2, [sp, #6]	@ movhi
+ 365:USB/Class/HID/Src/usbd_hid.c ****   {
+  90              		.loc 1 365 3 is_stmt 1 view .LVU19
+ 365:USB/Class/HID/Src/usbd_hid.c ****   {
+  91              		.loc 1 365 6 is_stmt 0 view .LVU20
+  92 0016 002B     		cmp	r3, #0
+  93 0018 00F08280 		beq	.L24
+ 370:USB/Class/HID/Src/usbd_hid.c ****   {
+  94              		.loc 1 370 3 is_stmt 1 view .LVU21
+ 370:USB/Class/HID/Src/usbd_hid.c ****   {
+  95              		.loc 1 370 14 is_stmt 0 view .LVU22
+  96 001c 0C78     		ldrb	r4, [r1]	@ zero_extendqisi2
+ 370:USB/Class/HID/Src/usbd_hid.c ****   {
+  97              		.loc 1 370 3 view .LVU23
+  98 001e 14F06004 		ands	r4, r4, #96
+  99 0022 25D0     		beq	.L4
+ 100 0024 202C     		cmp	r4, #32
+ 101 0026 75D1     		bne	.L5
+ 373:USB/Class/HID/Src/usbd_hid.c ****       {
+ 102              		.loc 1 373 7 is_stmt 1 view .LVU24
+ 373:USB/Class/HID/Src/usbd_hid.c ****       {
+ 103              		.loc 1 373 18 is_stmt 0 view .LVU25
+ 104 0028 4A78     		ldrb	r2, [r1, #1]	@ zero_extendqisi2
+ 373:USB/Class/HID/Src/usbd_hid.c ****       {
+ 105              		.loc 1 373 7 view .LVU26
+ARM GAS  C:\Users\sapph\AppData\Local\Temp\cctkBC00.s 			page 14
+
+
+ 106 002a 023A     		subs	r2, r2, #2
+ 107 002c 092A     		cmp	r2, #9
+ 108 002e 1BD8     		bhi	.L6
+ 109 0030 DFE802F0 		tbb	[pc, r2]
+ 110              	.L8:
+ 111 0034 14       		.byte	(.L11-.L8)/2
+ 112 0035 09       		.byte	(.L10-.L8)/2
+ 113 0036 1A       		.byte	(.L6-.L8)/2
+ 114 0037 1A       		.byte	(.L6-.L8)/2
+ 115 0038 1A       		.byte	(.L6-.L8)/2
+ 116 0039 1A       		.byte	(.L6-.L8)/2
+ 117 003a 1A       		.byte	(.L6-.L8)/2
+ 118 003b 1A       		.byte	(.L6-.L8)/2
+ 119 003c 0F       		.byte	(.L9-.L8)/2
+ 120 003d 05       		.byte	(.L7-.L8)/2
+ 121              		.p2align 1
+ 122              	.L7:
+ 376:USB/Class/HID/Src/usbd_hid.c ****           break;
+ 123              		.loc 1 376 11 is_stmt 1 view .LVU27
+ 376:USB/Class/HID/Src/usbd_hid.c ****           break;
+ 124              		.loc 1 376 28 is_stmt 0 view .LVU28
+ 125 003e 8A78     		ldrb	r2, [r1, #2]	@ zero_extendqisi2
+ 376:USB/Class/HID/Src/usbd_hid.c ****           break;
+ 126              		.loc 1 376 26 view .LVU29
+ 127 0040 1A60     		str	r2, [r3]
+ 377:USB/Class/HID/Src/usbd_hid.c **** 
+ 128              		.loc 1 377 11 is_stmt 1 view .LVU30
+ 360:USB/Class/HID/Src/usbd_hid.c ****   uint16_t len;
+ 129              		.loc 1 360 22 is_stmt 0 view .LVU31
+ 130 0042 0024     		movs	r4, #0
+ 377:USB/Class/HID/Src/usbd_hid.c **** 
+ 131              		.loc 1 377 11 view .LVU32
+ 132 0044 69E0     		b	.L3
+ 133              	.L10:
+ 380:USB/Class/HID/Src/usbd_hid.c ****           break;
+ 134              		.loc 1 380 11 is_stmt 1 view .LVU33
+ 380:USB/Class/HID/Src/usbd_hid.c ****           break;
+ 135              		.loc 1 380 17 is_stmt 0 view .LVU34
+ 136 0046 0122     		movs	r2, #1
+ 137 0048 1946     		mov	r1, r3
+ 138              	.LVL4:
+ 380:USB/Class/HID/Src/usbd_hid.c ****           break;
+ 139              		.loc 1 380 17 view .LVU35
+ 140 004a FFF7FEFF 		bl	USBD_CtlSendData
+ 141              	.LVL5:
+ 381:USB/Class/HID/Src/usbd_hid.c **** 
+ 142              		.loc 1 381 11 is_stmt 1 view .LVU36
+ 360:USB/Class/HID/Src/usbd_hid.c ****   uint16_t len;
+ 143              		.loc 1 360 22 is_stmt 0 view .LVU37
+ 144 004e 0024     		movs	r4, #0
+ 381:USB/Class/HID/Src/usbd_hid.c **** 
+ 145              		.loc 1 381 11 view .LVU38
+ 146 0050 63E0     		b	.L3
+ 147              	.LVL6:
+ 148              	.L9:
+ 384:USB/Class/HID/Src/usbd_hid.c ****           break;
+ 149              		.loc 1 384 11 is_stmt 1 view .LVU39
+ARM GAS  C:\Users\sapph\AppData\Local\Temp\cctkBC00.s 			page 15
+
+
+ 384:USB/Class/HID/Src/usbd_hid.c ****           break;
+ 150              		.loc 1 384 42 is_stmt 0 view .LVU40
+ 151 0052 4A88     		ldrh	r2, [r1, #2]
+ 384:USB/Class/HID/Src/usbd_hid.c ****           break;
+ 152              		.loc 1 384 29 view .LVU41
+ 153 0054 120A     		lsrs	r2, r2, #8
+ 384:USB/Class/HID/Src/usbd_hid.c ****           break;
+ 154              		.loc 1 384 27 view .LVU42
+ 155 0056 5A60     		str	r2, [r3, #4]
+ 385:USB/Class/HID/Src/usbd_hid.c **** 
+ 156              		.loc 1 385 11 is_stmt 1 view .LVU43
+ 360:USB/Class/HID/Src/usbd_hid.c ****   uint16_t len;
+ 157              		.loc 1 360 22 is_stmt 0 view .LVU44
+ 158 0058 0024     		movs	r4, #0
+ 385:USB/Class/HID/Src/usbd_hid.c **** 
+ 159              		.loc 1 385 11 view .LVU45
+ 160 005a 5EE0     		b	.L3
+ 161              	.L11:
+ 388:USB/Class/HID/Src/usbd_hid.c ****           break;
+ 162              		.loc 1 388 11 is_stmt 1 view .LVU46
+ 388:USB/Class/HID/Src/usbd_hid.c ****           break;
+ 163              		.loc 1 388 17 is_stmt 0 view .LVU47
+ 164 005c 0122     		movs	r2, #1
+ 165 005e 191D     		adds	r1, r3, #4
+ 166              	.LVL7:
+ 388:USB/Class/HID/Src/usbd_hid.c ****           break;
+ 167              		.loc 1 388 17 view .LVU48
+ 168 0060 FFF7FEFF 		bl	USBD_CtlSendData
+ 169              	.LVL8:
+ 389:USB/Class/HID/Src/usbd_hid.c **** 
+ 170              		.loc 1 389 11 is_stmt 1 view .LVU49
+ 360:USB/Class/HID/Src/usbd_hid.c ****   uint16_t len;
+ 171              		.loc 1 360 22 is_stmt 0 view .LVU50
+ 172 0064 0024     		movs	r4, #0
+ 389:USB/Class/HID/Src/usbd_hid.c **** 
+ 173              		.loc 1 389 11 view .LVU51
+ 174 0066 58E0     		b	.L3
+ 175              	.LVL9:
+ 176              	.L6:
+ 392:USB/Class/HID/Src/usbd_hid.c ****           ret = USBD_FAIL;
+ 177              		.loc 1 392 11 is_stmt 1 view .LVU52
+ 178 0068 FFF7FEFF 		bl	USBD_CtlError
+ 179              	.LVL10:
+ 393:USB/Class/HID/Src/usbd_hid.c ****           break;
+ 180              		.loc 1 393 11 view .LVU53
+ 394:USB/Class/HID/Src/usbd_hid.c ****       }
+ 181              		.loc 1 394 11 view .LVU54
+ 393:USB/Class/HID/Src/usbd_hid.c ****           break;
+ 182              		.loc 1 393 15 is_stmt 0 view .LVU55
+ 183 006c 0324     		movs	r4, #3
+ 394:USB/Class/HID/Src/usbd_hid.c ****       }
+ 184              		.loc 1 394 11 view .LVU56
+ 185 006e 54E0     		b	.L3
+ 186              	.LVL11:
+ 187              	.L4:
+ 398:USB/Class/HID/Src/usbd_hid.c ****       {
+ 188              		.loc 1 398 7 is_stmt 1 view .LVU57
+ARM GAS  C:\Users\sapph\AppData\Local\Temp\cctkBC00.s 			page 16
+
+
+ 398:USB/Class/HID/Src/usbd_hid.c ****       {
+ 189              		.loc 1 398 18 is_stmt 0 view .LVU58
+ 190 0070 4D78     		ldrb	r5, [r1, #1]	@ zero_extendqisi2
+ 398:USB/Class/HID/Src/usbd_hid.c ****       {
+ 191              		.loc 1 398 7 view .LVU59
+ 192 0072 0B2D     		cmp	r5, #11
+ 193 0074 4AD8     		bhi	.L12
+ 194 0076 DFE805F0 		tbb	[pc, r5]
+ 195              	.L14:
+ 196 007a 06       		.byte	(.L17-.L14)/2
+ 197 007b 50       		.byte	(.L3-.L14)/2
+ 198 007c 49       		.byte	(.L12-.L14)/2
+ 199 007d 49       		.byte	(.L12-.L14)/2
+ 200 007e 49       		.byte	(.L12-.L14)/2
+ 201 007f 49       		.byte	(.L12-.L14)/2
+ 202 0080 16       		.byte	(.L16-.L14)/2
+ 203 0081 49       		.byte	(.L12-.L14)/2
+ 204 0082 49       		.byte	(.L12-.L14)/2
+ 205 0083 49       		.byte	(.L12-.L14)/2
+ 206 0084 2E       		.byte	(.L15-.L14)/2
+ 207 0085 3D       		.byte	(.L13-.L14)/2
+ 208              		.p2align 1
+ 209              	.L17:
+ 401:USB/Class/HID/Src/usbd_hid.c ****           {
+ 210              		.loc 1 401 11 is_stmt 1 view .LVU60
+ 401:USB/Class/HID/Src/usbd_hid.c ****           {
+ 211              		.loc 1 401 19 is_stmt 0 view .LVU61
+ 212 0086 90F89C32 		ldrb	r3, [r0, #668]	@ zero_extendqisi2
+ 213              	.LVL12:
+ 401:USB/Class/HID/Src/usbd_hid.c ****           {
+ 214              		.loc 1 401 19 view .LVU62
+ 215 008a DBB2     		uxtb	r3, r3
+ 401:USB/Class/HID/Src/usbd_hid.c ****           {
+ 216              		.loc 1 401 14 view .LVU63
+ 217 008c 032B     		cmp	r3, #3
+ 218 008e 03D0     		beq	.L27
+ 407:USB/Class/HID/Src/usbd_hid.c ****             ret = USBD_FAIL;
+ 219              		.loc 1 407 13 is_stmt 1 view .LVU64
+ 220 0090 FFF7FEFF 		bl	USBD_CtlError
+ 221              	.LVL13:
+ 408:USB/Class/HID/Src/usbd_hid.c ****           }
+ 222              		.loc 1 408 13 view .LVU65
+ 408:USB/Class/HID/Src/usbd_hid.c ****           }
+ 223              		.loc 1 408 17 is_stmt 0 view .LVU66
+ 224 0094 0324     		movs	r4, #3
+ 225 0096 40E0     		b	.L3
+ 226              	.LVL14:
+ 227              	.L27:
+ 403:USB/Class/HID/Src/usbd_hid.c ****           }
+ 228              		.loc 1 403 13 is_stmt 1 view .LVU67
+ 403:USB/Class/HID/Src/usbd_hid.c ****           }
+ 229              		.loc 1 403 19 is_stmt 0 view .LVU68
+ 230 0098 0222     		movs	r2, #2
+ 231 009a 0DF10601 		add	r1, sp, #6
+ 232              	.LVL15:
+ 403:USB/Class/HID/Src/usbd_hid.c ****           }
+ 233              		.loc 1 403 19 view .LVU69
+ARM GAS  C:\Users\sapph\AppData\Local\Temp\cctkBC00.s 			page 17
+
+
+ 234 009e FFF7FEFF 		bl	USBD_CtlSendData
+ 235              	.LVL16:
+ 360:USB/Class/HID/Src/usbd_hid.c ****   uint16_t len;
+ 236              		.loc 1 360 22 view .LVU70
+ 237 00a2 2C46     		mov	r4, r5
+ 238 00a4 39E0     		b	.L3
+ 239              	.LVL17:
+ 240              	.L16:
+ 413:USB/Class/HID/Src/usbd_hid.c ****           {
+ 241              		.loc 1 413 11 is_stmt 1 view .LVU71
+ 413:USB/Class/HID/Src/usbd_hid.c ****           {
+ 242              		.loc 1 413 19 is_stmt 0 view .LVU72
+ 243 00a6 4B88     		ldrh	r3, [r1, #2]
+ 244              	.LVL18:
+ 413:USB/Class/HID/Src/usbd_hid.c ****           {
+ 245              		.loc 1 413 34 view .LVU73
+ 246 00a8 1B0A     		lsrs	r3, r3, #8
+ 413:USB/Class/HID/Src/usbd_hid.c ****           {
+ 247              		.loc 1 413 14 view .LVU74
+ 248 00aa 222B     		cmp	r3, #34
+ 249 00ac 09D0     		beq	.L28
+ 418:USB/Class/HID/Src/usbd_hid.c ****           {
+ 250              		.loc 1 418 16 is_stmt 1 view .LVU75
+ 418:USB/Class/HID/Src/usbd_hid.c ****           {
+ 251              		.loc 1 418 19 is_stmt 0 view .LVU76
+ 252 00ae 212B     		cmp	r3, #33
+ 253 00b0 0DD1     		bne	.L21
+ 420:USB/Class/HID/Src/usbd_hid.c ****             len = MIN(USB_HID_DESC_SIZ, req->wLength);
+ 254              		.loc 1 420 13 is_stmt 1 view .LVU77
+ 255              	.LVL19:
+ 421:USB/Class/HID/Src/usbd_hid.c ****           }
+ 256              		.loc 1 421 13 view .LVU78
+ 421:USB/Class/HID/Src/usbd_hid.c ****           }
+ 257              		.loc 1 421 19 is_stmt 0 view .LVU79
+ 258 00b2 CA88     		ldrh	r2, [r1, #6]
+ 421:USB/Class/HID/Src/usbd_hid.c ****           }
+ 259              		.loc 1 421 17 view .LVU80
+ 260 00b4 092A     		cmp	r2, #9
+ 261 00b6 28BF     		it	cs
+ 262 00b8 0922     		movcs	r2, #9
+ 263              	.LVL20:
+ 420:USB/Class/HID/Src/usbd_hid.c ****             len = MIN(USB_HID_DESC_SIZ, req->wLength);
+ 264              		.loc 1 420 18 view .LVU81
+ 265 00ba 1A49     		ldr	r1, .L30
+ 266              	.LVL21:
+ 267              	.L20:
+ 429:USB/Class/HID/Src/usbd_hid.c ****           break;
+ 268              		.loc 1 429 11 is_stmt 1 view .LVU82
+ 429:USB/Class/HID/Src/usbd_hid.c ****           break;
+ 269              		.loc 1 429 17 is_stmt 0 view .LVU83
+ 270 00bc FFF7FEFF 		bl	USBD_CtlSendData
+ 271              	.LVL22:
+ 430:USB/Class/HID/Src/usbd_hid.c **** 
+ 272              		.loc 1 430 11 is_stmt 1 view .LVU84
+ 273 00c0 2BE0     		b	.L3
+ 274              	.LVL23:
+ 275              	.L28:
+ARM GAS  C:\Users\sapph\AppData\Local\Temp\cctkBC00.s 			page 18
+
+
+ 415:USB/Class/HID/Src/usbd_hid.c ****             pbuf = HID_MOUSE_ReportDesc;
+ 276              		.loc 1 415 13 view .LVU85
+ 415:USB/Class/HID/Src/usbd_hid.c ****             pbuf = HID_MOUSE_ReportDesc;
+ 277              		.loc 1 415 19 is_stmt 0 view .LVU86
+ 278 00c2 CA88     		ldrh	r2, [r1, #6]
+ 415:USB/Class/HID/Src/usbd_hid.c ****             pbuf = HID_MOUSE_ReportDesc;
+ 279              		.loc 1 415 17 view .LVU87
+ 280 00c4 4A2A     		cmp	r2, #74
+ 281 00c6 28BF     		it	cs
+ 282 00c8 4A22     		movcs	r2, #74
+ 283              	.LVL24:
+ 416:USB/Class/HID/Src/usbd_hid.c ****           }
+ 284              		.loc 1 416 13 is_stmt 1 view .LVU88
+ 416:USB/Class/HID/Src/usbd_hid.c ****           }
+ 285              		.loc 1 416 18 is_stmt 0 view .LVU89
+ 286 00ca 1749     		ldr	r1, .L30+4
+ 287              	.LVL25:
+ 416:USB/Class/HID/Src/usbd_hid.c ****           }
+ 288              		.loc 1 416 18 view .LVU90
+ 289 00cc F6E7     		b	.L20
+ 290              	.LVL26:
+ 291              	.L21:
+ 425:USB/Class/HID/Src/usbd_hid.c ****             ret = USBD_FAIL;
+ 292              		.loc 1 425 13 is_stmt 1 view .LVU91
+ 293 00ce FFF7FEFF 		bl	USBD_CtlError
+ 294              	.LVL27:
+ 426:USB/Class/HID/Src/usbd_hid.c ****             break;
+ 295              		.loc 1 426 13 view .LVU92
+ 427:USB/Class/HID/Src/usbd_hid.c ****           }
+ 296              		.loc 1 427 13 view .LVU93
+ 426:USB/Class/HID/Src/usbd_hid.c ****             break;
+ 297              		.loc 1 426 17 is_stmt 0 view .LVU94
+ 298 00d2 0324     		movs	r4, #3
+ 427:USB/Class/HID/Src/usbd_hid.c ****           }
+ 299              		.loc 1 427 13 view .LVU95
+ 300 00d4 21E0     		b	.L3
+ 301              	.LVL28:
+ 302              	.L15:
+ 433:USB/Class/HID/Src/usbd_hid.c ****           {
+ 303              		.loc 1 433 11 is_stmt 1 view .LVU96
+ 433:USB/Class/HID/Src/usbd_hid.c ****           {
+ 304              		.loc 1 433 19 is_stmt 0 view .LVU97
+ 305 00d6 90F89C22 		ldrb	r2, [r0, #668]	@ zero_extendqisi2
+ 306 00da D2B2     		uxtb	r2, r2
+ 433:USB/Class/HID/Src/usbd_hid.c ****           {
+ 307              		.loc 1 433 14 view .LVU98
+ 308 00dc 032A     		cmp	r2, #3
+ 309 00de 03D0     		beq	.L29
+ 439:USB/Class/HID/Src/usbd_hid.c ****             ret = USBD_FAIL;
+ 310              		.loc 1 439 13 is_stmt 1 view .LVU99
+ 311 00e0 FFF7FEFF 		bl	USBD_CtlError
+ 312              	.LVL29:
+ 440:USB/Class/HID/Src/usbd_hid.c ****           }
+ 313              		.loc 1 440 13 view .LVU100
+ 440:USB/Class/HID/Src/usbd_hid.c ****           }
+ 314              		.loc 1 440 17 is_stmt 0 view .LVU101
+ 315 00e4 0324     		movs	r4, #3
+ARM GAS  C:\Users\sapph\AppData\Local\Temp\cctkBC00.s 			page 19
+
+
+ 316 00e6 18E0     		b	.L3
+ 317              	.LVL30:
+ 318              	.L29:
+ 435:USB/Class/HID/Src/usbd_hid.c ****           }
+ 319              		.loc 1 435 13 is_stmt 1 view .LVU102
+ 435:USB/Class/HID/Src/usbd_hid.c ****           }
+ 320              		.loc 1 435 19 is_stmt 0 view .LVU103
+ 321 00e8 0122     		movs	r2, #1
+ 322 00ea 03F10801 		add	r1, r3, #8
+ 323              	.LVL31:
+ 435:USB/Class/HID/Src/usbd_hid.c ****           }
+ 324              		.loc 1 435 19 view .LVU104
+ 325 00ee FFF7FEFF 		bl	USBD_CtlSendData
+ 326              	.LVL32:
+ 435:USB/Class/HID/Src/usbd_hid.c ****           }
+ 327              		.loc 1 435 19 view .LVU105
+ 328 00f2 12E0     		b	.L3
+ 329              	.LVL33:
+ 330              	.L13:
+ 445:USB/Class/HID/Src/usbd_hid.c ****           {
+ 331              		.loc 1 445 11 is_stmt 1 view .LVU106
+ 445:USB/Class/HID/Src/usbd_hid.c ****           {
+ 332              		.loc 1 445 19 is_stmt 0 view .LVU107
+ 333 00f4 90F89C22 		ldrb	r2, [r0, #668]	@ zero_extendqisi2
+ 334 00f8 D2B2     		uxtb	r2, r2
+ 445:USB/Class/HID/Src/usbd_hid.c ****           {
+ 335              		.loc 1 445 14 view .LVU108
+ 336 00fa 032A     		cmp	r2, #3
+ 337 00fc 02D1     		bne	.L23
+ 447:USB/Class/HID/Src/usbd_hid.c ****           }
+ 338              		.loc 1 447 13 is_stmt 1 view .LVU109
+ 447:USB/Class/HID/Src/usbd_hid.c ****           }
+ 339              		.loc 1 447 32 is_stmt 0 view .LVU110
+ 340 00fe 8A78     		ldrb	r2, [r1, #2]	@ zero_extendqisi2
+ 447:USB/Class/HID/Src/usbd_hid.c ****           }
+ 341              		.loc 1 447 30 view .LVU111
+ 342 0100 9A60     		str	r2, [r3, #8]
+ 343 0102 0AE0     		b	.L3
+ 344              	.L23:
+ 451:USB/Class/HID/Src/usbd_hid.c ****             ret = USBD_FAIL;
+ 345              		.loc 1 451 13 is_stmt 1 view .LVU112
+ 346 0104 FFF7FEFF 		bl	USBD_CtlError
+ 347              	.LVL34:
+ 452:USB/Class/HID/Src/usbd_hid.c ****           }
+ 348              		.loc 1 452 13 view .LVU113
+ 452:USB/Class/HID/Src/usbd_hid.c ****           }
+ 349              		.loc 1 452 17 is_stmt 0 view .LVU114
+ 350 0108 0324     		movs	r4, #3
+ 351 010a 06E0     		b	.L3
+ 352              	.LVL35:
+ 353              	.L12:
+ 460:USB/Class/HID/Src/usbd_hid.c ****           ret = USBD_FAIL;
+ 354              		.loc 1 460 11 is_stmt 1 view .LVU115
+ 355 010c FFF7FEFF 		bl	USBD_CtlError
+ 356              	.LVL36:
+ 461:USB/Class/HID/Src/usbd_hid.c ****           break;
+ 357              		.loc 1 461 11 view .LVU116
+ARM GAS  C:\Users\sapph\AppData\Local\Temp\cctkBC00.s 			page 20
+
+
+ 462:USB/Class/HID/Src/usbd_hid.c ****       }
+ 358              		.loc 1 462 11 view .LVU117
+ 461:USB/Class/HID/Src/usbd_hid.c ****           break;
+ 359              		.loc 1 461 15 is_stmt 0 view .LVU118
+ 360 0110 0324     		movs	r4, #3
+ 462:USB/Class/HID/Src/usbd_hid.c ****       }
+ 361              		.loc 1 462 11 view .LVU119
+ 362 0112 02E0     		b	.L3
+ 363              	.LVL37:
+ 364              	.L5:
+ 467:USB/Class/HID/Src/usbd_hid.c ****       ret = USBD_FAIL;
+ 365              		.loc 1 467 7 is_stmt 1 view .LVU120
+ 366 0114 FFF7FEFF 		bl	USBD_CtlError
+ 367              	.LVL38:
+ 468:USB/Class/HID/Src/usbd_hid.c ****       break;
+ 368              		.loc 1 468 7 view .LVU121
+ 469:USB/Class/HID/Src/usbd_hid.c ****   }
+ 369              		.loc 1 469 7 view .LVU122
+ 468:USB/Class/HID/Src/usbd_hid.c ****       break;
+ 370              		.loc 1 468 11 is_stmt 0 view .LVU123
+ 371 0118 0324     		movs	r4, #3
+ 372              	.LVL39:
+ 373              	.L3:
+ 473:USB/Class/HID/Src/usbd_hid.c **** 
+ 374              		.loc 1 473 1 view .LVU124
+ 375 011a 2046     		mov	r0, r4
+ 376 011c 03B0     		add	sp, sp, #12
+ 377              		.cfi_remember_state
+ 378              		.cfi_def_cfa_offset 12
+ 379              		@ sp needed
+ 380 011e 30BD     		pop	{r4, r5, pc}
+ 381              	.LVL40:
+ 382              	.L24:
+ 383              		.cfi_restore_state
+ 367:USB/Class/HID/Src/usbd_hid.c ****   }
+ 384              		.loc 1 367 12 view .LVU125
+ 385 0120 0324     		movs	r4, #3
+ 386 0122 FAE7     		b	.L3
+ 387              	.L31:
+ 388              		.align	2
+ 389              	.L30:
+ 390 0124 00000000 		.word	USBD_HID_Desc
+ 391 0128 00000000 		.word	HID_MOUSE_ReportDesc
+ 392              		.cfi_endproc
+ 393              	.LFE166:
+ 395              		.section	.text.USBD_HID_DeInit,"ax",%progbits
+ 396              		.align	1
+ 397              		.syntax unified
+ 398              		.thumb
+ 399              		.thumb_func
+ 401              	USBD_HID_DeInit:
+ 402              	.LVL41:
+ 403              	.LFB165:
+ 327:USB/Class/HID/Src/usbd_hid.c ****   UNUSED(cfgidx);
+ 404              		.loc 1 327 1 is_stmt 1 view -0
+ 405              		.cfi_startproc
+ 406              		@ args = 0, pretend = 0, frame = 0
+ARM GAS  C:\Users\sapph\AppData\Local\Temp\cctkBC00.s 			page 21
+
+
+ 407              		@ frame_needed = 0, uses_anonymous_args = 0
+ 327:USB/Class/HID/Src/usbd_hid.c ****   UNUSED(cfgidx);
+ 408              		.loc 1 327 1 is_stmt 0 view .LVU127
+ 409 0000 38B5     		push	{r3, r4, r5, lr}
+ 410              		.cfi_def_cfa_offset 16
+ 411              		.cfi_offset 3, -16
+ 412              		.cfi_offset 4, -12
+ 413              		.cfi_offset 5, -8
+ 414              		.cfi_offset 14, -4
+ 415 0002 0446     		mov	r4, r0
+ 328:USB/Class/HID/Src/usbd_hid.c **** 
+ 416              		.loc 1 328 3 is_stmt 1 view .LVU128
+ 332:USB/Class/HID/Src/usbd_hid.c **** #endif /* USE_USBD_COMPOSITE */
+ 417              		.loc 1 332 3 view .LVU129
+ 332:USB/Class/HID/Src/usbd_hid.c **** #endif /* USE_USBD_COMPOSITE */
+ 418              		.loc 1 332 17 is_stmt 0 view .LVU130
+ 419 0004 90F8E032 		ldrb	r3, [r0, #736]	@ zero_extendqisi2
+ 420 0008 0322     		movs	r2, #3
+ 421 000a 8021     		movs	r1, #128
+ 422              	.LVL42:
+ 332:USB/Class/HID/Src/usbd_hid.c **** #endif /* USE_USBD_COMPOSITE */
+ 423              		.loc 1 332 17 view .LVU131
+ 424 000c FFF7FEFF 		bl	USBD_CoreGetEPAdd
+ 425              	.LVL43:
+ 332:USB/Class/HID/Src/usbd_hid.c **** #endif /* USE_USBD_COMPOSITE */
+ 426              		.loc 1 332 17 view .LVU132
+ 427 0010 0146     		mov	r1, r0
+ 332:USB/Class/HID/Src/usbd_hid.c **** #endif /* USE_USBD_COMPOSITE */
+ 428              		.loc 1 332 15 discriminator 1 view .LVU133
+ 429 0012 104D     		ldr	r5, .L35
+ 430 0014 2870     		strb	r0, [r5]
+ 336:USB/Class/HID/Src/usbd_hid.c ****   pdev->ep_in[HIDInEpAdd & 0xFU].is_used = 0U;
+ 431              		.loc 1 336 3 is_stmt 1 view .LVU134
+ 336:USB/Class/HID/Src/usbd_hid.c ****   pdev->ep_in[HIDInEpAdd & 0xFU].is_used = 0U;
+ 432              		.loc 1 336 9 is_stmt 0 view .LVU135
+ 433 0016 2046     		mov	r0, r4
+ 434 0018 FFF7FEFF 		bl	USBD_LL_CloseEP
+ 435              	.LVL44:
+ 337:USB/Class/HID/Src/usbd_hid.c ****   pdev->ep_in[HIDInEpAdd & 0xFU].bInterval = 0U;
+ 436              		.loc 1 337 3 is_stmt 1 view .LVU136
+ 337:USB/Class/HID/Src/usbd_hid.c ****   pdev->ep_in[HIDInEpAdd & 0xFU].bInterval = 0U;
+ 437              		.loc 1 337 26 is_stmt 0 view .LVU137
+ 438 001c 2B78     		ldrb	r3, [r5]	@ zero_extendqisi2
+ 439 001e 03F00F03 		and	r3, r3, #15
+ 337:USB/Class/HID/Src/usbd_hid.c ****   pdev->ep_in[HIDInEpAdd & 0xFU].bInterval = 0U;
+ 440              		.loc 1 337 42 view .LVU138
+ 441 0022 03EB8302 		add	r2, r3, r3, lsl #2
+ 442 0026 04EB8202 		add	r2, r4, r2, lsl #2
+ 443 002a 0021     		movs	r1, #0
+ 444 002c 9184     		strh	r1, [r2, #36]	@ movhi
+ 338:USB/Class/HID/Src/usbd_hid.c **** 
+ 445              		.loc 1 338 3 is_stmt 1 view .LVU139
+ 338:USB/Class/HID/Src/usbd_hid.c **** 
+ 446              		.loc 1 338 44 is_stmt 0 view .LVU140
+ 447 002e D184     		strh	r1, [r2, #38]	@ movhi
+ 341:USB/Class/HID/Src/usbd_hid.c ****   {
+ 448              		.loc 1 341 3 is_stmt 1 view .LVU141
+ARM GAS  C:\Users\sapph\AppData\Local\Temp\cctkBC00.s 			page 22
+
+
+ 341:USB/Class/HID/Src/usbd_hid.c ****   {
+ 449              		.loc 1 341 33 is_stmt 0 view .LVU142
+ 450 0030 D4F8E032 		ldr	r3, [r4, #736]
+ 341:USB/Class/HID/Src/usbd_hid.c ****   {
+ 451              		.loc 1 341 28 view .LVU143
+ 452 0034 B033     		adds	r3, r3, #176
+ 453 0036 04EB8303 		add	r3, r4, r3, lsl #2
+ 454 003a 5868     		ldr	r0, [r3, #4]
+ 341:USB/Class/HID/Src/usbd_hid.c ****   {
+ 455              		.loc 1 341 6 view .LVU144
+ 456 003c 40B1     		cbz	r0, .L33
+ 343:USB/Class/HID/Src/usbd_hid.c ****     pdev->pClassDataCmsit[pdev->classId] = NULL;
+ 457              		.loc 1 343 5 is_stmt 1 view .LVU145
+ 458 003e FFF7FEFF 		bl	USBD_static_free
+ 459              	.LVL45:
+ 344:USB/Class/HID/Src/usbd_hid.c ****   }
+ 460              		.loc 1 344 5 view .LVU146
+ 344:USB/Class/HID/Src/usbd_hid.c ****   }
+ 461              		.loc 1 344 31 is_stmt 0 view .LVU147
+ 462 0042 D4F8E032 		ldr	r3, [r4, #736]
+ 344:USB/Class/HID/Src/usbd_hid.c ****   }
+ 463              		.loc 1 344 42 view .LVU148
+ 464 0046 B033     		adds	r3, r3, #176
+ 465 0048 04EB8304 		add	r4, r4, r3, lsl #2
+ 466              	.LVL46:
+ 344:USB/Class/HID/Src/usbd_hid.c ****   }
+ 467              		.loc 1 344 42 view .LVU149
+ 468 004c 0023     		movs	r3, #0
+ 469 004e 6360     		str	r3, [r4, #4]
+ 470              	.L33:
+ 347:USB/Class/HID/Src/usbd_hid.c **** }
+ 471              		.loc 1 347 3 is_stmt 1 view .LVU150
+ 348:USB/Class/HID/Src/usbd_hid.c **** 
+ 472              		.loc 1 348 1 is_stmt 0 view .LVU151
+ 473 0050 0020     		movs	r0, #0
+ 474 0052 38BD     		pop	{r3, r4, r5, pc}
+ 475              	.L36:
+ 476              		.align	2
+ 477              	.L35:
+ 478 0054 00000000 		.word	HIDInEpAdd
+ 479              		.cfi_endproc
+ 480              	.LFE165:
+ 482              		.section	.text.USBD_HID_Init,"ax",%progbits
+ 483              		.align	1
+ 484              		.syntax unified
+ 485              		.thumb
+ 486              		.thumb_func
+ 488              	USBD_HID_Init:
+ 489              	.LVL47:
+ 490              	.LFB164:
+ 280:USB/Class/HID/Src/usbd_hid.c ****   UNUSED(cfgidx);
+ 491              		.loc 1 280 1 is_stmt 1 view -0
+ 492              		.cfi_startproc
+ 493              		@ args = 0, pretend = 0, frame = 0
+ 494              		@ frame_needed = 0, uses_anonymous_args = 0
+ 280:USB/Class/HID/Src/usbd_hid.c ****   UNUSED(cfgidx);
+ 495              		.loc 1 280 1 is_stmt 0 view .LVU153
+ARM GAS  C:\Users\sapph\AppData\Local\Temp\cctkBC00.s 			page 23
+
+
+ 496 0000 38B5     		push	{r3, r4, r5, lr}
+ 497              		.cfi_def_cfa_offset 16
+ 498              		.cfi_offset 3, -16
+ 499              		.cfi_offset 4, -12
+ 500              		.cfi_offset 5, -8
+ 501              		.cfi_offset 14, -4
+ 502 0002 0446     		mov	r4, r0
+ 281:USB/Class/HID/Src/usbd_hid.c **** 
+ 503              		.loc 1 281 3 is_stmt 1 view .LVU154
+ 283:USB/Class/HID/Src/usbd_hid.c **** 
+ 504              		.loc 1 283 3 view .LVU155
+ 285:USB/Class/HID/Src/usbd_hid.c **** 
+ 505              		.loc 1 285 3 view .LVU156
+ 285:USB/Class/HID/Src/usbd_hid.c **** 
+ 506              		.loc 1 285 36 is_stmt 0 view .LVU157
+ 507 0004 1020     		movs	r0, #16
+ 508              	.LVL48:
+ 285:USB/Class/HID/Src/usbd_hid.c **** 
+ 509              		.loc 1 285 36 view .LVU158
+ 510 0006 FFF7FEFF 		bl	USBD_static_malloc
+ 511              	.LVL49:
+ 287:USB/Class/HID/Src/usbd_hid.c ****   {
+ 512              		.loc 1 287 3 is_stmt 1 view .LVU159
+ 287:USB/Class/HID/Src/usbd_hid.c ****   {
+ 513              		.loc 1 287 6 is_stmt 0 view .LVU160
+ 514 000a 70B3     		cbz	r0, .L43
+ 515 000c 0546     		mov	r5, r0
+ 293:USB/Class/HID/Src/usbd_hid.c ****   pdev->pClassData = pdev->pClassDataCmsit[pdev->classId];
+ 516              		.loc 1 293 3 is_stmt 1 view .LVU161
+ 293:USB/Class/HID/Src/usbd_hid.c ****   pdev->pClassData = pdev->pClassDataCmsit[pdev->classId];
+ 517              		.loc 1 293 29 is_stmt 0 view .LVU162
+ 518 000e D4F8E032 		ldr	r3, [r4, #736]
+ 293:USB/Class/HID/Src/usbd_hid.c ****   pdev->pClassData = pdev->pClassDataCmsit[pdev->classId];
+ 519              		.loc 1 293 40 view .LVU163
+ 520 0012 03F1B002 		add	r2, r3, #176
+ 521 0016 04EB8202 		add	r2, r4, r2, lsl #2
+ 522 001a 5060     		str	r0, [r2, #4]
+ 294:USB/Class/HID/Src/usbd_hid.c **** 
+ 523              		.loc 1 294 3 is_stmt 1 view .LVU164
+ 294:USB/Class/HID/Src/usbd_hid.c **** 
+ 524              		.loc 1 294 20 is_stmt 0 view .LVU165
+ 525 001c C4F8C002 		str	r0, [r4, #704]
+ 298:USB/Class/HID/Src/usbd_hid.c **** #endif /* USE_USBD_COMPOSITE */
+ 526              		.loc 1 298 3 is_stmt 1 view .LVU166
+ 298:USB/Class/HID/Src/usbd_hid.c **** #endif /* USE_USBD_COMPOSITE */
+ 527              		.loc 1 298 17 is_stmt 0 view .LVU167
+ 528 0020 DBB2     		uxtb	r3, r3
+ 529 0022 0322     		movs	r2, #3
+ 530 0024 8021     		movs	r1, #128
+ 531 0026 2046     		mov	r0, r4
+ 532              	.LVL50:
+ 298:USB/Class/HID/Src/usbd_hid.c **** #endif /* USE_USBD_COMPOSITE */
+ 533              		.loc 1 298 17 view .LVU168
+ 534 0028 FFF7FEFF 		bl	USBD_CoreGetEPAdd
+ 535              	.LVL51:
+ 536 002c 0146     		mov	r1, r0
+ 298:USB/Class/HID/Src/usbd_hid.c **** #endif /* USE_USBD_COMPOSITE */
+ARM GAS  C:\Users\sapph\AppData\Local\Temp\cctkBC00.s 			page 24
+
+
+ 537              		.loc 1 298 15 discriminator 1 view .LVU169
+ 538 002e 184B     		ldr	r3, .L44
+ 539 0030 1870     		strb	r0, [r3]
+ 301:USB/Class/HID/Src/usbd_hid.c ****   {
+ 540              		.loc 1 301 3 is_stmt 1 view .LVU170
+ 301:USB/Class/HID/Src/usbd_hid.c ****   {
+ 541              		.loc 1 301 11 is_stmt 0 view .LVU171
+ 542 0032 237C     		ldrb	r3, [r4, #16]	@ zero_extendqisi2
+ 301:USB/Class/HID/Src/usbd_hid.c ****   {
+ 543              		.loc 1 301 6 view .LVU172
+ 544 0034 13BB     		cbnz	r3, .L40
+ 303:USB/Class/HID/Src/usbd_hid.c ****   }
+ 545              		.loc 1 303 5 is_stmt 1 view .LVU173
+ 303:USB/Class/HID/Src/usbd_hid.c ****   }
+ 546              		.loc 1 303 28 is_stmt 0 view .LVU174
+ 547 0036 00F00F03 		and	r3, r0, #15
+ 303:USB/Class/HID/Src/usbd_hid.c ****   }
+ 548              		.loc 1 303 46 view .LVU175
+ 549 003a 03EB8303 		add	r3, r3, r3, lsl #2
+ 550 003e 04EB8303 		add	r3, r4, r3, lsl #2
+ 551 0042 0722     		movs	r2, #7
+ 552 0044 DA84     		strh	r2, [r3, #38]	@ movhi
+ 553              	.L41:
+ 311:USB/Class/HID/Src/usbd_hid.c ****   pdev->ep_in[HIDInEpAdd & 0xFU].is_used = 1U;
+ 554              		.loc 1 311 3 is_stmt 1 view .LVU176
+ 311:USB/Class/HID/Src/usbd_hid.c ****   pdev->ep_in[HIDInEpAdd & 0xFU].is_used = 1U;
+ 555              		.loc 1 311 9 is_stmt 0 view .LVU177
+ 556 0046 0423     		movs	r3, #4
+ 557 0048 0322     		movs	r2, #3
+ 558 004a 2046     		mov	r0, r4
+ 559 004c FFF7FEFF 		bl	USBD_LL_OpenEP
+ 560              	.LVL52:
+ 312:USB/Class/HID/Src/usbd_hid.c **** 
+ 561              		.loc 1 312 3 is_stmt 1 view .LVU178
+ 312:USB/Class/HID/Src/usbd_hid.c **** 
+ 562              		.loc 1 312 26 is_stmt 0 view .LVU179
+ 563 0050 0F4B     		ldr	r3, .L44
+ 564 0052 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 565 0054 03F00F03 		and	r3, r3, #15
+ 312:USB/Class/HID/Src/usbd_hid.c **** 
+ 566              		.loc 1 312 42 view .LVU180
+ 567 0058 03EB8303 		add	r3, r3, r3, lsl #2
+ 568 005c 04EB8304 		add	r4, r4, r3, lsl #2
+ 569              	.LVL53:
+ 312:USB/Class/HID/Src/usbd_hid.c **** 
+ 570              		.loc 1 312 42 view .LVU181
+ 571 0060 0123     		movs	r3, #1
+ 572 0062 A384     		strh	r3, [r4, #36]	@ movhi
+ 314:USB/Class/HID/Src/usbd_hid.c **** 
+ 573              		.loc 1 314 3 is_stmt 1 view .LVU182
+ 314:USB/Class/HID/Src/usbd_hid.c **** 
+ 574              		.loc 1 314 15 is_stmt 0 view .LVU183
+ 575 0064 0020     		movs	r0, #0
+ 576 0066 2873     		strb	r0, [r5, #12]
+ 316:USB/Class/HID/Src/usbd_hid.c **** }
+ 577              		.loc 1 316 3 is_stmt 1 view .LVU184
+ 578              	.LVL54:
+ARM GAS  C:\Users\sapph\AppData\Local\Temp\cctkBC00.s 			page 25
+
+
+ 579              	.L39:
+ 317:USB/Class/HID/Src/usbd_hid.c **** 
+ 580              		.loc 1 317 1 is_stmt 0 view .LVU185
+ 581 0068 38BD     		pop	{r3, r4, r5, pc}
+ 582              	.LVL55:
+ 583              	.L43:
+ 289:USB/Class/HID/Src/usbd_hid.c ****     return (uint8_t)USBD_EMEM;
+ 584              		.loc 1 289 5 is_stmt 1 view .LVU186
+ 289:USB/Class/HID/Src/usbd_hid.c ****     return (uint8_t)USBD_EMEM;
+ 585              		.loc 1 289 31 is_stmt 0 view .LVU187
+ 586 006a D4F8E032 		ldr	r3, [r4, #736]
+ 289:USB/Class/HID/Src/usbd_hid.c ****     return (uint8_t)USBD_EMEM;
+ 587              		.loc 1 289 42 view .LVU188
+ 588 006e B033     		adds	r3, r3, #176
+ 589 0070 04EB8303 		add	r3, r4, r3, lsl #2
+ 590 0074 0022     		movs	r2, #0
+ 591 0076 5A60     		str	r2, [r3, #4]
+ 290:USB/Class/HID/Src/usbd_hid.c ****   }
+ 592              		.loc 1 290 5 is_stmt 1 view .LVU189
+ 290:USB/Class/HID/Src/usbd_hid.c ****   }
+ 593              		.loc 1 290 12 is_stmt 0 view .LVU190
+ 594 0078 0220     		movs	r0, #2
+ 595              	.LVL56:
+ 290:USB/Class/HID/Src/usbd_hid.c ****   }
+ 596              		.loc 1 290 12 view .LVU191
+ 597 007a F5E7     		b	.L39
+ 598              	.LVL57:
+ 599              	.L40:
+ 307:USB/Class/HID/Src/usbd_hid.c ****   }
+ 600              		.loc 1 307 5 is_stmt 1 view .LVU192
+ 307:USB/Class/HID/Src/usbd_hid.c ****   }
+ 601              		.loc 1 307 28 is_stmt 0 view .LVU193
+ 602 007c 00F00F03 		and	r3, r0, #15
+ 307:USB/Class/HID/Src/usbd_hid.c ****   }
+ 603              		.loc 1 307 46 view .LVU194
+ 604 0080 03EB8303 		add	r3, r3, r3, lsl #2
+ 605 0084 04EB8303 		add	r3, r4, r3, lsl #2
+ 606 0088 0A22     		movs	r2, #10
+ 607 008a DA84     		strh	r2, [r3, #38]	@ movhi
+ 608 008c DBE7     		b	.L41
+ 609              	.L45:
+ 610 008e 00BF     		.align	2
+ 611              	.L44:
+ 612 0090 00000000 		.word	HIDInEpAdd
+ 613              		.cfi_endproc
+ 614              	.LFE164:
+ 616              		.section	.text.USBD_HID_SendReport,"ax",%progbits
+ 617              		.align	1
+ 618              		.global	USBD_HID_SendReport
+ 619              		.syntax unified
+ 620              		.thumb
+ 621              		.thumb_func
+ 623              	USBD_HID_SendReport:
+ 624              	.LVL58:
+ 625              	.LFB167:
+ 486:USB/Class/HID/Src/usbd_hid.c ****   USBD_HID_HandleTypeDef *hhid = (USBD_HID_HandleTypeDef *)pdev->pClassDataCmsit[ClassId];
+ 626              		.loc 1 486 1 is_stmt 1 view -0
+ARM GAS  C:\Users\sapph\AppData\Local\Temp\cctkBC00.s 			page 26
+
+
+ 627              		.cfi_startproc
+ 628              		@ args = 0, pretend = 0, frame = 0
+ 629              		@ frame_needed = 0, uses_anonymous_args = 0
+ 486:USB/Class/HID/Src/usbd_hid.c ****   USBD_HID_HandleTypeDef *hhid = (USBD_HID_HandleTypeDef *)pdev->pClassDataCmsit[ClassId];
+ 630              		.loc 1 486 1 is_stmt 0 view .LVU196
+ 631 0000 2DE9F041 		push	{r4, r5, r6, r7, r8, lr}
+ 632              		.cfi_def_cfa_offset 24
+ 633              		.cfi_offset 4, -24
+ 634              		.cfi_offset 5, -20
+ 635              		.cfi_offset 6, -16
+ 636              		.cfi_offset 7, -12
+ 637              		.cfi_offset 8, -8
+ 638              		.cfi_offset 14, -4
+ 639 0004 0446     		mov	r4, r0
+ 487:USB/Class/HID/Src/usbd_hid.c **** #else
+ 640              		.loc 1 487 3 is_stmt 1 view .LVU197
+ 487:USB/Class/HID/Src/usbd_hid.c **** #else
+ 641              		.loc 1 487 27 is_stmt 0 view .LVU198
+ 642 0006 03F1B000 		add	r0, r3, #176
+ 643              	.LVL59:
+ 487:USB/Class/HID/Src/usbd_hid.c **** #else
+ 644              		.loc 1 487 27 view .LVU199
+ 645 000a 04EB8000 		add	r0, r4, r0, lsl #2
+ 646 000e 4768     		ldr	r7, [r0, #4]
+ 647              	.LVL60:
+ 494:USB/Class/HID/Src/usbd_hid.c ****   {
+ 648              		.loc 1 494 3 is_stmt 1 view .LVU200
+ 494:USB/Class/HID/Src/usbd_hid.c ****   {
+ 649              		.loc 1 494 6 is_stmt 0 view .LVU201
+ 650 0010 1FB3     		cbz	r7, .L48
+ 651 0012 0D46     		mov	r5, r1
+ 652 0014 1646     		mov	r6, r2
+ 501:USB/Class/HID/Src/usbd_hid.c **** #endif /* USE_USBD_COMPOSITE */
+ 653              		.loc 1 501 3 is_stmt 1 view .LVU202
+ 501:USB/Class/HID/Src/usbd_hid.c **** #endif /* USE_USBD_COMPOSITE */
+ 654              		.loc 1 501 16 is_stmt 0 view .LVU203
+ 655 0016 0322     		movs	r2, #3
+ 656              	.LVL61:
+ 501:USB/Class/HID/Src/usbd_hid.c **** #endif /* USE_USBD_COMPOSITE */
+ 657              		.loc 1 501 16 view .LVU204
+ 658 0018 8021     		movs	r1, #128
+ 659              	.LVL62:
+ 501:USB/Class/HID/Src/usbd_hid.c **** #endif /* USE_USBD_COMPOSITE */
+ 660              		.loc 1 501 16 view .LVU205
+ 661 001a 2046     		mov	r0, r4
+ 662 001c FFF7FEFF 		bl	USBD_CoreGetEPAdd
+ 663              	.LVL63:
+ 501:USB/Class/HID/Src/usbd_hid.c **** #endif /* USE_USBD_COMPOSITE */
+ 664              		.loc 1 501 14 discriminator 1 view .LVU206
+ 665 0020 0F4B     		ldr	r3, .L54
+ 666 0022 1870     		strb	r0, [r3]
+ 504:USB/Class/HID/Src/usbd_hid.c ****   {
+ 667              		.loc 1 504 3 is_stmt 1 view .LVU207
+ 504:USB/Class/HID/Src/usbd_hid.c ****   {
+ 668              		.loc 1 504 11 is_stmt 0 view .LVU208
+ 669 0024 94F89C32 		ldrb	r3, [r4, #668]	@ zero_extendqisi2
+ 670 0028 DBB2     		uxtb	r3, r3
+ARM GAS  C:\Users\sapph\AppData\Local\Temp\cctkBC00.s 			page 27
+
+
+ 504:USB/Class/HID/Src/usbd_hid.c ****   {
+ 671              		.loc 1 504 6 view .LVU209
+ 672 002a 032B     		cmp	r3, #3
+ 673 002c 04D0     		beq	.L52
+ 513:USB/Class/HID/Src/usbd_hid.c **** }
+ 674              		.loc 1 513 10 view .LVU210
+ 675 002e 4FF00008 		mov	r8, #0
+ 676              	.LVL64:
+ 677              	.L47:
+ 514:USB/Class/HID/Src/usbd_hid.c **** 
+ 678              		.loc 1 514 1 view .LVU211
+ 679 0032 4046     		mov	r0, r8
+ 680 0034 BDE8F081 		pop	{r4, r5, r6, r7, r8, pc}
+ 681              	.LVL65:
+ 682              	.L52:
+ 506:USB/Class/HID/Src/usbd_hid.c ****     {
+ 683              		.loc 1 506 5 is_stmt 1 view .LVU212
+ 506:USB/Class/HID/Src/usbd_hid.c ****     {
+ 684              		.loc 1 506 13 is_stmt 0 view .LVU213
+ 685 0038 97F80C80 		ldrb	r8, [r7, #12]	@ zero_extendqisi2
+ 506:USB/Class/HID/Src/usbd_hid.c ****     {
+ 686              		.loc 1 506 8 view .LVU214
+ 687 003c B8F1000F 		cmp	r8, #0
+ 688 0040 02D0     		beq	.L53
+ 513:USB/Class/HID/Src/usbd_hid.c **** }
+ 689              		.loc 1 513 10 view .LVU215
+ 690 0042 4FF00008 		mov	r8, #0
+ 691 0046 F4E7     		b	.L47
+ 692              	.L53:
+ 508:USB/Class/HID/Src/usbd_hid.c ****       (void)USBD_LL_Transmit(pdev, HIDInEpAdd, report, len);
+ 693              		.loc 1 508 7 is_stmt 1 view .LVU216
+ 508:USB/Class/HID/Src/usbd_hid.c ****       (void)USBD_LL_Transmit(pdev, HIDInEpAdd, report, len);
+ 694              		.loc 1 508 19 is_stmt 0 view .LVU217
+ 695 0048 0123     		movs	r3, #1
+ 696 004a 3B73     		strb	r3, [r7, #12]
+ 509:USB/Class/HID/Src/usbd_hid.c ****     }
+ 697              		.loc 1 509 7 is_stmt 1 view .LVU218
+ 509:USB/Class/HID/Src/usbd_hid.c ****     }
+ 698              		.loc 1 509 13 is_stmt 0 view .LVU219
+ 699 004c 3346     		mov	r3, r6
+ 700 004e 2A46     		mov	r2, r5
+ 701 0050 0146     		mov	r1, r0
+ 702 0052 2046     		mov	r0, r4
+ 703 0054 FFF7FEFF 		bl	USBD_LL_Transmit
+ 704              	.LVL66:
+ 705 0058 EBE7     		b	.L47
+ 706              	.LVL67:
+ 707              	.L48:
+ 496:USB/Class/HID/Src/usbd_hid.c ****   }
+ 708              		.loc 1 496 12 view .LVU220
+ 709 005a 4FF00308 		mov	r8, #3
+ 710 005e E8E7     		b	.L47
+ 711              	.L55:
+ 712              		.align	2
+ 713              	.L54:
+ 714 0060 00000000 		.word	HIDInEpAdd
+ 715              		.cfi_endproc
+ARM GAS  C:\Users\sapph\AppData\Local\Temp\cctkBC00.s 			page 28
+
+
+ 716              	.LFE167:
+ 718              		.section	.text.USBD_HID_GetPollingInterval,"ax",%progbits
+ 719              		.align	1
+ 720              		.global	USBD_HID_GetPollingInterval
+ 721              		.syntax unified
+ 722              		.thumb
+ 723              		.thumb_func
+ 725              	USBD_HID_GetPollingInterval:
+ 726              	.LVL68:
+ 727              	.LFB168:
+ 523:USB/Class/HID/Src/usbd_hid.c ****   uint32_t polling_interval;
+ 728              		.loc 1 523 1 is_stmt 1 view -0
+ 729              		.cfi_startproc
+ 730              		@ args = 0, pretend = 0, frame = 0
+ 731              		@ frame_needed = 0, uses_anonymous_args = 0
+ 732              		@ link register save eliminated.
+ 524:USB/Class/HID/Src/usbd_hid.c **** 
+ 733              		.loc 1 524 3 view .LVU222
+ 527:USB/Class/HID/Src/usbd_hid.c ****   {
+ 734              		.loc 1 527 3 view .LVU223
+ 527:USB/Class/HID/Src/usbd_hid.c ****   {
+ 735              		.loc 1 527 11 is_stmt 0 view .LVU224
+ 736 0000 037C     		ldrb	r3, [r0, #16]	@ zero_extendqisi2
+ 527:USB/Class/HID/Src/usbd_hid.c ****   {
+ 737              		.loc 1 527 6 view .LVU225
+ 738 0002 0BB9     		cbnz	r3, .L58
+ 532:USB/Class/HID/Src/usbd_hid.c ****   }
+ 739              		.loc 1 532 22 view .LVU226
+ 740 0004 0820     		movs	r0, #8
+ 741              	.LVL69:
+ 532:USB/Class/HID/Src/usbd_hid.c ****   }
+ 742              		.loc 1 532 22 view .LVU227
+ 743 0006 7047     		bx	lr
+ 744              	.LVL70:
+ 745              	.L58:
+ 538:USB/Class/HID/Src/usbd_hid.c ****   }
+ 746              		.loc 1 538 22 view .LVU228
+ 747 0008 0A20     		movs	r0, #10
+ 748              	.LVL71:
+ 541:USB/Class/HID/Src/usbd_hid.c **** }
+ 749              		.loc 1 541 3 is_stmt 1 view .LVU229
+ 542:USB/Class/HID/Src/usbd_hid.c **** 
+ 750              		.loc 1 542 1 is_stmt 0 view .LVU230
+ 751 000a 7047     		bx	lr
+ 752              		.cfi_endproc
+ 753              	.LFE168:
+ 755              		.section	.data.HIDInEpAdd,"aw"
+ 758              	HIDInEpAdd:
+ 759 0000 81       		.byte	-127
+ 760              		.section	.data.HID_MOUSE_ReportDesc,"aw"
+ 761              		.align	2
+ 764              	HID_MOUSE_ReportDesc:
+ 765 0000 05010902 		.ascii	"\005\001\011\002\241\001\011\001\241\000\005\011\031"
+ 765      A1010901 
+ 765      A1000509 
+ 765      19
+ 766 000d 01290315 		.ascii	"\001)\003\025\000%\001\225\003u\001\201\002\225\001"
+ARM GAS  C:\Users\sapph\AppData\Local\Temp\cctkBC00.s 			page 29
+
+
+ 766      00250195 
+ 766      03750181 
+ 766      029501
+ 767 001c 75058101 		.ascii	"u\005\201\001\005\001\0110\0111\0118\025\201%\177u\010"
+ 767      05010930 
+ 767      09310938 
+ 767      1581257F 
+ 767      7508
+ 768 002e 95038106 		.ascii	"\225\003\201\006\300\011<\005\377\011\001\025\000%\001"
+ 768      C0093C05 
+ 768      FF090115 
+ 768      002501
+ 769 003d 75019502 		.ascii	"u\001\225\002\261\"u\006\225\001\261\001\300"
+ 769      B1227506 
+ 769      9501B101 
+ 769      C0
+ 770              		.section	.data.USBD_HID_Desc,"aw"
+ 771              		.align	2
+ 774              	USBD_HID_Desc:
+ 775 0000 09211101 		.ascii	"\011!\021\001\000\001\"J\000"
+ 775      0001224A 
+ 775      00
+ 776              		.global	USBD_HID
+ 777              		.section	.data.USBD_HID,"aw"
+ 778              		.align	2
+ 781              	USBD_HID:
+ 782 0000 00000000 		.word	USBD_HID_Init
+ 783 0004 00000000 		.word	USBD_HID_DeInit
+ 784 0008 00000000 		.word	USBD_HID_Setup
+ 785 000c 00000000 		.word	0
+ 786 0010 00000000 		.word	0
+ 787 0014 00000000 		.word	USBD_HID_DataIn
+ 788 0018 00000000 		.word	0
+ 789 001c 00000000 		.word	0
+ 790 0020 00000000 		.word	0
+ 791 0024 00000000 		.word	0
+ 792 0028 00000000 		.word	0
+ 793 002c 00000000 		.word	0
+ 794 0030 00000000 		.word	0
+ 795 0034 00000000 		.word	0
+ 796              		.text
+ 797              	.Letext0:
+ 798              		.file 2 "C:/Users/sapph/AppData/Roaming/Code/User/globalStorage/bmd.stm32-for-vscode/@xpack-dev-to
+ 799              		.file 3 "C:/Users/sapph/AppData/Roaming/Code/User/globalStorage/bmd.stm32-for-vscode/@xpack-dev-to
+ 800              		.file 4 "USB/Core/Inc/usbd_def.h"
+ 801              		.file 5 "USB/Class/HID/Inc/usbd_hid.h"
+ 802              		.file 6 "USB/Core/Inc/usbd_core.h"
+ 803              		.file 7 "USB/Core/Inc/usbd_conf.h"
+ 804              		.file 8 "USB/Core/Inc/usbd_ctlreq.h"
+ 805              		.file 9 "USB/Core/Inc/usbd_ioreq.h"
+ARM GAS  C:\Users\sapph\AppData\Local\Temp\cctkBC00.s 			page 30
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 usbd_hid.c
+C:\Users\sapph\AppData\Local\Temp\cctkBC00.s:22     .text.USBD_HID_DataIn:00000000 $t
+C:\Users\sapph\AppData\Local\Temp\cctkBC00.s:27     .text.USBD_HID_DataIn:00000000 USBD_HID_DataIn
+C:\Users\sapph\AppData\Local\Temp\cctkBC00.s:55     .text.USBD_HID_Setup:00000000 $t
+C:\Users\sapph\AppData\Local\Temp\cctkBC00.s:60     .text.USBD_HID_Setup:00000000 USBD_HID_Setup
+C:\Users\sapph\AppData\Local\Temp\cctkBC00.s:111    .text.USBD_HID_Setup:00000034 $d
+C:\Users\sapph\AppData\Local\Temp\cctkBC00.s:121    .text.USBD_HID_Setup:0000003e $t
+C:\Users\sapph\AppData\Local\Temp\cctkBC00.s:196    .text.USBD_HID_Setup:0000007a $d
+C:\Users\sapph\AppData\Local\Temp\cctkBC00.s:208    .text.USBD_HID_Setup:00000086 $t
+C:\Users\sapph\AppData\Local\Temp\cctkBC00.s:390    .text.USBD_HID_Setup:00000124 $d
+C:\Users\sapph\AppData\Local\Temp\cctkBC00.s:774    .data.USBD_HID_Desc:00000000 USBD_HID_Desc
+C:\Users\sapph\AppData\Local\Temp\cctkBC00.s:764    .data.HID_MOUSE_ReportDesc:00000000 HID_MOUSE_ReportDesc
+C:\Users\sapph\AppData\Local\Temp\cctkBC00.s:396    .text.USBD_HID_DeInit:00000000 $t
+C:\Users\sapph\AppData\Local\Temp\cctkBC00.s:401    .text.USBD_HID_DeInit:00000000 USBD_HID_DeInit
+C:\Users\sapph\AppData\Local\Temp\cctkBC00.s:478    .text.USBD_HID_DeInit:00000054 $d
+C:\Users\sapph\AppData\Local\Temp\cctkBC00.s:758    .data.HIDInEpAdd:00000000 HIDInEpAdd
+C:\Users\sapph\AppData\Local\Temp\cctkBC00.s:483    .text.USBD_HID_Init:00000000 $t
+C:\Users\sapph\AppData\Local\Temp\cctkBC00.s:488    .text.USBD_HID_Init:00000000 USBD_HID_Init
+C:\Users\sapph\AppData\Local\Temp\cctkBC00.s:612    .text.USBD_HID_Init:00000090 $d
+C:\Users\sapph\AppData\Local\Temp\cctkBC00.s:617    .text.USBD_HID_SendReport:00000000 $t
+C:\Users\sapph\AppData\Local\Temp\cctkBC00.s:623    .text.USBD_HID_SendReport:00000000 USBD_HID_SendReport
+C:\Users\sapph\AppData\Local\Temp\cctkBC00.s:714    .text.USBD_HID_SendReport:00000060 $d
+C:\Users\sapph\AppData\Local\Temp\cctkBC00.s:719    .text.USBD_HID_GetPollingInterval:00000000 $t
+C:\Users\sapph\AppData\Local\Temp\cctkBC00.s:725    .text.USBD_HID_GetPollingInterval:00000000 USBD_HID_GetPollingInterval
+C:\Users\sapph\AppData\Local\Temp\cctkBC00.s:761    .data.HID_MOUSE_ReportDesc:00000000 $d
+C:\Users\sapph\AppData\Local\Temp\cctkBC00.s:771    .data.USBD_HID_Desc:00000000 $d
+C:\Users\sapph\AppData\Local\Temp\cctkBC00.s:781    .data.USBD_HID:00000000 USBD_HID
+C:\Users\sapph\AppData\Local\Temp\cctkBC00.s:778    .data.USBD_HID:00000000 $d
+
+UNDEFINED SYMBOLS
+USBD_CtlSendData
+USBD_CtlError
+USBD_CoreGetEPAdd
+USBD_LL_CloseEP
+USBD_static_free
+USBD_static_malloc
+USBD_LL_OpenEP
+USBD_LL_Transmit

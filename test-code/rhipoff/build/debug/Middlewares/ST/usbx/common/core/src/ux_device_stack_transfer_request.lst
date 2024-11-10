@@ -1,0 +1,320 @@
+ARM GAS  C:\Users\sapph\AppData\Local\Temp\ccpdEhFp.s 			page 1
+
+
+   1              		.cpu cortex-m33
+   2              		.arch armv8-m.main
+   3              		.fpu fpv4-sp-d16
+   4              		.arch_extension dsp
+   5              		.eabi_attribute 27, 1
+   6              		.eabi_attribute 28, 1
+   7              		.eabi_attribute 20, 1
+   8              		.eabi_attribute 21, 1
+   9              		.eabi_attribute 23, 3
+  10              		.eabi_attribute 24, 1
+  11              		.eabi_attribute 25, 1
+  12              		.eabi_attribute 26, 1
+  13              		.eabi_attribute 30, 1
+  14              		.eabi_attribute 34, 1
+  15              		.eabi_attribute 18, 4
+  16              		.file	"ux_device_stack_transfer_request.c"
+  17              		.text
+  18              	.Ltext0:
+  19              		.cfi_sections	.debug_frame
+  20              		.file 1 "Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c"
+  21              		.section	.text._ux_device_stack_transfer_request,"ax",%progbits
+  22              		.align	1
+  23              		.global	_ux_device_stack_transfer_request
+  24              		.syntax unified
+  25              		.thumb
+  26              		.thumb_func
+  28              	_ux_device_stack_transfer_request:
+  29              	.LVL0:
+  30              	.LFB3:
+   1:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c **** /**************************************************************************/
+   2:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c **** /*                                                                        */
+   3:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c **** /*       Copyright (c) Microsoft Corporation. All rights reserved.        */
+   4:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c **** /*                                                                        */
+   5:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c **** /*       This software is licensed under the Microsoft Software License   */
+   6:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c **** /*       Terms for Microsoft Azure RTOS. Full text of the license can be  */
+   7:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c **** /*       found in the LICENSE file at https://aka.ms/AzureRTOS_EULA       */
+   8:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c **** /*       and in the root directory of this software.                      */
+   9:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c **** /*                                                                        */
+  10:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c **** /**************************************************************************/
+  11:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c **** 
+  12:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c **** 
+  13:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c **** /**************************************************************************/
+  14:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c **** /**************************************************************************/
+  15:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c **** /**                                                                       */ 
+  16:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c **** /** USBX Component                                                        */ 
+  17:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c **** /**                                                                       */
+  18:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c **** /**   Device Stack                                                        */
+  19:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c **** /**                                                                       */
+  20:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c **** /**************************************************************************/
+  21:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c **** /**************************************************************************/
+  22:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c **** 
+  23:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c **** #define UX_SOURCE_CODE
+  24:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c **** 
+  25:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c **** 
+  26:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c **** /* Include necessary system files.  */
+  27:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c **** 
+  28:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c **** #include "ux_api.h"
+ARM GAS  C:\Users\sapph\AppData\Local\Temp\ccpdEhFp.s 			page 2
+
+
+  29:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c **** #include "ux_device_stack.h"
+  30:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c **** 
+  31:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c **** 
+  32:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c **** /**************************************************************************/
+  33:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c **** /*                                                                        */
+  34:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c **** /*  FUNCTION                                               RELEASE        */
+  35:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c **** /*                                                                        */
+  36:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c **** /*    _ux_device_stack_transfer_request                   PORTABLE C      */
+  37:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c **** /*                                                           6.1.10       */
+  38:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c **** /*  AUTHOR                                                                */
+  39:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c **** /*                                                                        */
+  40:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c **** /*    Chaoqiong Xiao, Microsoft Corporation                               */
+  41:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c **** /*                                                                        */
+  42:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c **** /*  DESCRIPTION                                                           */
+  43:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c **** /*                                                                        */
+  44:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c **** /*    This function performs a USB transaction. On entry the              */
+  45:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c **** /*    transfer request gives the endpoint pipe selected for this          */
+  46:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c **** /*    transaction and the parameters associated with the transfer         */
+  47:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c **** /*    (data payload, length of transaction).                              */
+  48:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c **** /*                                                                        */
+  49:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c **** /*  INPUT                                                                 */
+  50:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c **** /*                                                                        */
+  51:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c **** /*    transfer_request                      Pointer to transfer request   */
+  52:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c **** /*    slave_length                          Length returned by host       */
+  53:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c **** /*    host_length                           Length asked by host          */
+  54:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c **** /*                                                                        */
+  55:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c **** /*  OUTPUT                                                                */
+  56:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c **** /*                                                                        */
+  57:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c **** /*    Completion Status                                                   */ 
+  58:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c **** /*                                                                        */
+  59:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c **** /*  CALLS                                                                 */ 
+  60:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c **** /*                                                                        */ 
+  61:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c **** /*    (ux_slave_dcd_function)               Slave DCD dispatch function   */ 
+  62:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c **** /*    _ux_utility_delay_ms                  Delay ms                      */ 
+  63:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c **** /*                                                                        */ 
+  64:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c **** /*  CALLED BY                                                             */ 
+  65:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c **** /*                                                                        */ 
+  66:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c **** /*    Application                                                         */ 
+  67:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c **** /*    Device Stack                                                        */
+  68:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c **** /*                                                                        */ 
+  69:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c **** /*  RELEASE HISTORY                                                       */ 
+  70:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c **** /*                                                                        */ 
+  71:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c **** /*    DATE              NAME                      DESCRIPTION             */ 
+  72:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c **** /*                                                                        */ 
+  73:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c **** /*  05-19-2020     Chaoqiong Xiao           Initial Version 6.0           */
+  74:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c **** /*  09-30-2020     Chaoqiong Xiao           Modified comment(s),          */
+  75:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c **** /*                                            used UX prefix to refer to  */
+  76:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c **** /*                                            TX symbols instead of using */
+  77:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c **** /*                                            them directly,              */
+  78:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c **** /*                                            resulting in version 6.1    */
+  79:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c **** /*  01-31-2022     Chaoqiong Xiao           Modified comment(s),          */
+  80:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c **** /*                                            added standalone support,   */
+  81:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c **** /*                                            resulting in version 6.1.10 */
+  82:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c **** /*                                                                        */
+  83:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c **** /**************************************************************************/
+  84:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c **** UINT  _ux_device_stack_transfer_request(UX_SLAVE_TRANSFER *transfer_request, 
+  85:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c ****                                             ULONG slave_length, 
+ARM GAS  C:\Users\sapph\AppData\Local\Temp\ccpdEhFp.s 			page 3
+
+
+  86:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c ****                                             ULONG host_length)
+  87:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c **** {
+  31              		.loc 1 87 1 view -0
+  32              		.cfi_startproc
+  33              		@ args = 0, pretend = 0, frame = 0
+  34              		@ frame_needed = 0, uses_anonymous_args = 0
+  35              		.loc 1 87 1 is_stmt 0 view .LVU1
+  36 0000 10B5     		push	{r4, lr}
+  37              		.cfi_def_cfa_offset 8
+  38              		.cfi_offset 4, -8
+  39              		.cfi_offset 14, -4
+  40 0002 0446     		mov	r4, r0
+  88:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c **** #if defined(UX_DEVICE_STANDALONE)
+  89:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c **** UINT            status;
+  41              		.loc 1 89 1 is_stmt 1 view .LVU2
+  90:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c **** 
+  91:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c ****     /* Start a transfer request without waiting it end.  */
+  92:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c ****     UX_SLAVE_TRANSFER_STATE_RESET(transfer_request);
+  42              		.loc 1 92 5 view .LVU3
+  43 0004 0023     		movs	r3, #0
+  44 0006 0363     		str	r3, [r0, #48]
+  93:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c ****     status = _ux_device_stack_transfer_run(transfer_request, slave_length, host_length);
+  45              		.loc 1 93 5 view .LVU4
+  46              		.loc 1 93 14 is_stmt 0 view .LVU5
+  47 0008 FFF7FEFF 		bl	_ux_device_stack_transfer_run
+  48              	.LVL1:
+  94:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c ****     if (status == UX_STATE_LOCK)
+  49              		.loc 1 94 5 is_stmt 1 view .LVU6
+  50              		.loc 1 94 8 is_stmt 0 view .LVU7
+  51 000c 0628     		cmp	r0, #6
+  52 000e 05D0     		beq	.L3
+  95:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c ****         return(UX_BUSY);
+  96:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c ****     if (status < UX_STATE_NEXT)
+  53              		.loc 1 96 5 is_stmt 1 view .LVU8
+  54              		.loc 1 96 8 is_stmt 0 view .LVU9
+  55 0010 0328     		cmp	r0, #3
+  56 0012 01D9     		bls	.L6
+  97:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c ****         return(transfer_request -> ux_slave_transfer_request_completion_code);
+  98:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c **** 
+  99:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c ****     /* Started/done, things will be done in BG  */
+ 100:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c ****     return(UX_SUCCESS);
+  57              		.loc 1 100 11 view .LVU10
+  58 0014 0020     		movs	r0, #0
+  59              	.LVL2:
+  60              	.L1:
+ 101:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c **** #else
+ 102:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c **** UX_INTERRUPT_SAVE_AREA
+ 103:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c **** 
+ 104:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c **** UX_SLAVE_DCD            *dcd;
+ 105:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c **** UINT                    status;
+ 106:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c **** UX_SLAVE_ENDPOINT       *endpoint;
+ 107:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c **** ULONG                   device_state;
+ 108:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c **** 
+ 109:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c **** 
+ 110:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c ****     /* Do we have to skip this transfer?  */
+ 111:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c ****     if (transfer_request -> ux_slave_transfer_request_status_phase_ignore == UX_TRUE)
+ 112:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c ****         return(UX_SUCCESS);
+ARM GAS  C:\Users\sapph\AppData\Local\Temp\ccpdEhFp.s 			page 4
+
+
+ 113:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c **** 
+ 114:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c ****     /* Disable interrupts to prevent the disconnection ISR from preempting us
+ 115:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c ****        while we check the device state and set the transfer status.  */
+ 116:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c ****     UX_DISABLE
+ 117:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c **** 
+ 118:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c ****     /* Get the device state.  */
+ 119:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c ****     device_state =  _ux_system_slave -> ux_system_slave_device.ux_slave_device_state;
+ 120:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c **** 
+ 121:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c ****     /* We can only transfer when the device is ATTACHED, ADDRESSED OR CONFIGURED.  */
+ 122:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c ****     if ((device_state == UX_DEVICE_ATTACHED) || (device_state == UX_DEVICE_ADDRESSED)
+ 123:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c ****             || (device_state == UX_DEVICE_CONFIGURED))
+ 124:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c **** 
+ 125:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c ****         /* Set the transfer to pending.  */
+ 126:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c ****         transfer_request -> ux_slave_transfer_request_status =  UX_TRANSFER_STATUS_PENDING; 
+ 127:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c **** 
+ 128:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c ****     else
+ 129:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c ****     {
+ 130:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c **** 
+ 131:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c ****         /* The device is in an invalid state. Restore interrupts and return error.  */
+ 132:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c ****         UX_RESTORE
+ 133:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c ****         return(UX_TRANSFER_NOT_READY);
+ 134:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c ****     }
+ 135:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c **** 
+ 136:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c ****     /* Restore interrupts.  */
+ 137:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c ****     UX_RESTORE
+ 138:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c ****                     
+ 139:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c ****     /* If trace is enabled, insert this event into the trace buffer.  */
+ 140:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c ****     UX_TRACE_IN_LINE_INSERT(UX_TRACE_DEVICE_STACK_TRANSFER_REQUEST, transfer_request, 0, 0, 0, UX_T
+ 141:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c **** 
+ 142:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c ****     /* Get the pointer to the DCD.  */
+ 143:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c ****     dcd =  &_ux_system_slave -> ux_system_slave_dcd;
+ 144:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c **** 
+ 145:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c ****     /* Get the endpoint associated with this transaction.  */
+ 146:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c ****     endpoint =  transfer_request -> ux_slave_transfer_request_endpoint;
+ 147:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c ****     
+ 148:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c ****     /* If the endpoint is non Control, check the endpoint direction and set the data phase directio
+ 149:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c ****     if ((endpoint -> ux_slave_endpoint_descriptor.bmAttributes & UX_MASK_ENDPOINT_TYPE) != UX_CONTR
+ 150:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c ****     {
+ 151:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c **** 
+ 152:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c ****         /* Check if the endpoint is STALLED. In this case, we must refuse the transaction until the
+ 153:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c ****            has been reset by the host.  */
+ 154:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c ****         while (endpoint -> ux_slave_endpoint_state == UX_ENDPOINT_HALTED)
+ 155:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c **** 
+ 156:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c ****             /* Wait for 100ms for endpoint to be reset by a CLEAR_FEATURE command.  */
+ 157:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c ****             _ux_utility_delay_ms(100);
+ 158:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c **** 
+ 159:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c ****         /* Isolate the direction from the endpoint address.  */
+ 160:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c ****         if ((endpoint -> ux_slave_endpoint_descriptor.bEndpointAddress & UX_ENDPOINT_DIRECTION) == 
+ 161:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c ****             transfer_request -> ux_slave_transfer_request_phase =  UX_TRANSFER_PHASE_DATA_OUT;
+ 162:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c ****         else    
+ 163:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c ****             transfer_request -> ux_slave_transfer_request_phase =  UX_TRANSFER_PHASE_DATA_IN;
+ 164:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c ****     }    
+ 165:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c **** 
+ 166:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c ****     /* See if we need to force a zero length packet at the end of the transfer. 
+ 167:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c ****        This happens on a DATA IN and when the host requested length is not met
+ 168:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c ****        and the last packet is on a boundary. If slave_length is zero, then it is 
+ 169:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c ****        a explicit ZLP request, no need to force ZLP.  */
+ARM GAS  C:\Users\sapph\AppData\Local\Temp\ccpdEhFp.s 			page 5
+
+
+ 170:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c ****     if ((transfer_request -> ux_slave_transfer_request_phase ==  UX_TRANSFER_PHASE_DATA_OUT) &&
+ 171:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c ****         (slave_length != 0) && (host_length != slave_length) && 
+ 172:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c ****         (slave_length % endpoint -> ux_slave_endpoint_descriptor.wMaxPacketSize) == 0)
+ 173:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c ****     {
+ 174:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c **** 
+ 175:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c ****         /* If so force Zero Length Packet.  */
+ 176:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c ****         transfer_request -> ux_slave_transfer_request_force_zlp =  UX_TRUE;
+ 177:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c ****     }
+ 178:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c ****     else
+ 179:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c ****     {
+ 180:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c **** 
+ 181:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c ****         /* Condition is not met, do not force a Zero Length Packet.  */
+ 182:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c ****         transfer_request -> ux_slave_transfer_request_force_zlp =  UX_FALSE;
+ 183:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c ****     }
+ 184:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c **** 
+ 185:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c ****     /* Reset the number of bytes sent/received.  */
+ 186:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c ****     transfer_request -> ux_slave_transfer_request_actual_length =  0;
+ 187:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c **** 
+ 188:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c ****     /* Determine how many bytes to send in this transaction.  We keep track of the original
+ 189:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c ****         length and have a working length.  */
+ 190:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c ****     transfer_request -> ux_slave_transfer_request_requested_length =    slave_length;
+ 191:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c ****     transfer_request -> ux_slave_transfer_request_in_transfer_length =  slave_length;
+ 192:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c **** 
+ 193:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c ****     /* Save the buffer pointer.  */
+ 194:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c ****     transfer_request -> ux_slave_transfer_request_current_data_pointer =  
+ 195:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c ****                             transfer_request -> ux_slave_transfer_request_data_pointer;
+ 196:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c **** 
+ 197:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c ****     /* Call the DCD driver transfer function.   */
+ 198:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c ****     status =  dcd -> ux_slave_dcd_function(dcd, UX_DCD_TRANSFER_REQUEST, transfer_request);
+ 199:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c **** 
+ 200:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c ****     /* And return the status.  */
+ 201:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c ****     return(status);
+ 202:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c **** 
+ 203:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c **** #endif
+ 204:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c **** }
+  61              		.loc 1 204 1 view .LVU11
+  62 0016 10BD     		pop	{r4, pc}
+  63              	.LVL3:
+  64              	.L6:
+  97:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c ****         return(transfer_request -> ux_slave_transfer_request_completion_code);
+  65              		.loc 1 97 9 is_stmt 1 view .LVU12
+  97:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c ****         return(transfer_request -> ux_slave_transfer_request_completion_code);
+  66              		.loc 1 97 33 is_stmt 0 view .LVU13
+  67 0018 606A     		ldr	r0, [r4, #36]
+  68              	.LVL4:
+  97:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c ****         return(transfer_request -> ux_slave_transfer_request_completion_code);
+  69              		.loc 1 97 33 view .LVU14
+  70 001a FCE7     		b	.L1
+  71              	.LVL5:
+  72              	.L3:
+  95:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c ****     if (status < UX_STATE_NEXT)
+  73              		.loc 1 95 15 view .LVU15
+  74 001c FE20     		movs	r0, #254
+  75              	.LVL6:
+  95:Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c ****     if (status < UX_STATE_NEXT)
+  76              		.loc 1 95 15 view .LVU16
+  77 001e FAE7     		b	.L1
+ARM GAS  C:\Users\sapph\AppData\Local\Temp\ccpdEhFp.s 			page 6
+
+
+  78              		.cfi_endproc
+  79              	.LFE3:
+  81              		.text
+  82              	.Letext0:
+  83              		.file 2 "Middlewares/ST/usbx/ports/generic/inc/ux_port.h"
+  84              		.file 3 "Middlewares/ST/usbx/common/core/inc/ux_api.h"
+  85              		.file 4 "Middlewares/ST/usbx/common/core/inc/ux_device_stack.h"
+ARM GAS  C:\Users\sapph\AppData\Local\Temp\ccpdEhFp.s 			page 7
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 ux_device_stack_transfer_request.c
+C:\Users\sapph\AppData\Local\Temp\ccpdEhFp.s:22     .text._ux_device_stack_transfer_request:00000000 $t
+C:\Users\sapph\AppData\Local\Temp\ccpdEhFp.s:28     .text._ux_device_stack_transfer_request:00000000 _ux_device_stack_transfer_request
+
+UNDEFINED SYMBOLS
+_ux_device_stack_transfer_run

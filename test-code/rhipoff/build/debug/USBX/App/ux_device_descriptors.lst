@@ -1,0 +1,3256 @@
+ARM GAS  C:\Users\sapph\AppData\Local\Temp\ccnHyWoZ.s 			page 1
+
+
+   1              		.cpu cortex-m33
+   2              		.arch armv8-m.main
+   3              		.fpu fpv4-sp-d16
+   4              		.arch_extension dsp
+   5              		.eabi_attribute 27, 1
+   6              		.eabi_attribute 28, 1
+   7              		.eabi_attribute 20, 1
+   8              		.eabi_attribute 21, 1
+   9              		.eabi_attribute 23, 3
+  10              		.eabi_attribute 24, 1
+  11              		.eabi_attribute 25, 1
+  12              		.eabi_attribute 26, 1
+  13              		.eabi_attribute 30, 1
+  14              		.eabi_attribute 34, 1
+  15              		.eabi_attribute 18, 4
+  16              		.file	"ux_device_descriptors.c"
+  17              		.text
+  18              	.Ltext0:
+  19              		.cfi_sections	.debug_frame
+  20              		.file 1 "USBX/App/ux_device_descriptors.c"
+  21              		.section	.text.USBD_Desc_GetLen,"ax",%progbits
+  22              		.align	1
+  23              		.syntax unified
+  24              		.thumb
+  25              		.thumb_func
+  27              	USBD_Desc_GetLen:
+  28              	.LVL0:
+  29              	.LFB171:
+   1:USBX/App/ux_device_descriptors.c **** /* USER CODE BEGIN Header */
+   2:USBX/App/ux_device_descriptors.c **** /**
+   3:USBX/App/ux_device_descriptors.c ****   ******************************************************************************
+   4:USBX/App/ux_device_descriptors.c ****   * @file    ux_device_descriptors.c
+   5:USBX/App/ux_device_descriptors.c ****   * @author  MCD Application Team
+   6:USBX/App/ux_device_descriptors.c ****   * @brief   USBX Device descriptor header file
+   7:USBX/App/ux_device_descriptors.c ****   ******************************************************************************
+   8:USBX/App/ux_device_descriptors.c ****    * @attention
+   9:USBX/App/ux_device_descriptors.c ****   *
+  10:USBX/App/ux_device_descriptors.c ****   * Copyright (c) 2024 STMicroelectronics.
+  11:USBX/App/ux_device_descriptors.c ****   * All rights reserved.
+  12:USBX/App/ux_device_descriptors.c ****   *
+  13:USBX/App/ux_device_descriptors.c ****   * This software is licensed under terms that can be found in the LICENSE file
+  14:USBX/App/ux_device_descriptors.c ****   * in the root directory of this software component.
+  15:USBX/App/ux_device_descriptors.c ****   * If no LICENSE file comes with this software, it is provided AS-IS.
+  16:USBX/App/ux_device_descriptors.c ****   *
+  17:USBX/App/ux_device_descriptors.c ****   ******************************************************************************
+  18:USBX/App/ux_device_descriptors.c ****   */
+  19:USBX/App/ux_device_descriptors.c **** /* USER CODE END Header */
+  20:USBX/App/ux_device_descriptors.c **** 
+  21:USBX/App/ux_device_descriptors.c **** /* Includes ------------------------------------------------------------------*/
+  22:USBX/App/ux_device_descriptors.c **** #include "ux_device_descriptors.h"
+  23:USBX/App/ux_device_descriptors.c **** 
+  24:USBX/App/ux_device_descriptors.c **** /* Private includes ----------------------------------------------------------*/
+  25:USBX/App/ux_device_descriptors.c **** /* USER CODE BEGIN Includes */
+  26:USBX/App/ux_device_descriptors.c **** 
+  27:USBX/App/ux_device_descriptors.c **** /* USER CODE END Includes */
+  28:USBX/App/ux_device_descriptors.c **** 
+  29:USBX/App/ux_device_descriptors.c **** /* Private typedef -----------------------------------------------------------*/
+ARM GAS  C:\Users\sapph\AppData\Local\Temp\ccnHyWoZ.s 			page 2
+
+
+  30:USBX/App/ux_device_descriptors.c **** /* USER CODE BEGIN PTD */
+  31:USBX/App/ux_device_descriptors.c **** 
+  32:USBX/App/ux_device_descriptors.c **** /* USER CODE END PTD */
+  33:USBX/App/ux_device_descriptors.c **** 
+  34:USBX/App/ux_device_descriptors.c **** /* Private define ------------------------------------------------------------*/
+  35:USBX/App/ux_device_descriptors.c **** /* USER CODE BEGIN PD */
+  36:USBX/App/ux_device_descriptors.c **** 
+  37:USBX/App/ux_device_descriptors.c **** /* USER CODE END PD */
+  38:USBX/App/ux_device_descriptors.c **** 
+  39:USBX/App/ux_device_descriptors.c **** /* Private macro -------------------------------------------------------------*/
+  40:USBX/App/ux_device_descriptors.c **** /* USER CODE BEGIN PM */
+  41:USBX/App/ux_device_descriptors.c **** 
+  42:USBX/App/ux_device_descriptors.c **** /* USER CODE END PM */
+  43:USBX/App/ux_device_descriptors.c **** 
+  44:USBX/App/ux_device_descriptors.c **** /* Private variables ---------------------------------------------------------*/
+  45:USBX/App/ux_device_descriptors.c **** USBD_DevClassHandleTypeDef  USBD_Device_FS, USBD_Device_HS;
+  46:USBX/App/ux_device_descriptors.c **** 
+  47:USBX/App/ux_device_descriptors.c **** uint8_t UserClassInstance[USBD_MAX_CLASS_INTERFACES] = {
+  48:USBX/App/ux_device_descriptors.c ****   CLASS_TYPE_HID,
+  49:USBX/App/ux_device_descriptors.c **** };
+  50:USBX/App/ux_device_descriptors.c **** 
+  51:USBX/App/ux_device_descriptors.c **** uint8_t UserHIDInterface[] = {
+  52:USBX/App/ux_device_descriptors.c ****   INTERFACE_HID_KEYBOARD,
+  53:USBX/App/ux_device_descriptors.c **** };
+  54:USBX/App/ux_device_descriptors.c **** 
+  55:USBX/App/ux_device_descriptors.c **** /* The generic device descriptor buffer that will be filled by builder
+  56:USBX/App/ux_device_descriptors.c ****    Size of the buffer is the maximum possible device FS descriptor size. */
+  57:USBX/App/ux_device_descriptors.c **** #if defined ( __ICCARM__ ) /* IAR Compiler */
+  58:USBX/App/ux_device_descriptors.c **** #pragma data_alignment=4
+  59:USBX/App/ux_device_descriptors.c **** #endif /* defined ( __ICCARM__ ) */
+  60:USBX/App/ux_device_descriptors.c **** __ALIGN_BEGIN static uint8_t DevFrameWorkDesc_FS[USBD_FRAMEWORK_MAX_DESC_SZ] __ALIGN_END = {0};
+  61:USBX/App/ux_device_descriptors.c **** 
+  62:USBX/App/ux_device_descriptors.c **** /* The generic device descriptor buffer that will be filled by builder
+  63:USBX/App/ux_device_descriptors.c ****    Size of the buffer is the maximum possible device HS descriptor size. */
+  64:USBX/App/ux_device_descriptors.c **** #if defined ( __ICCARM__ ) /* IAR Compiler */
+  65:USBX/App/ux_device_descriptors.c **** #pragma data_alignment=4
+  66:USBX/App/ux_device_descriptors.c **** #endif /* defined ( __ICCARM__ ) */
+  67:USBX/App/ux_device_descriptors.c **** __ALIGN_BEGIN static uint8_t DevFrameWorkDesc_HS[USBD_FRAMEWORK_MAX_DESC_SZ] __ALIGN_END = {0};
+  68:USBX/App/ux_device_descriptors.c **** 
+  69:USBX/App/ux_device_descriptors.c **** static uint8_t *pDevFrameWorkDesc_FS = DevFrameWorkDesc_FS;
+  70:USBX/App/ux_device_descriptors.c **** 
+  71:USBX/App/ux_device_descriptors.c **** static uint8_t *pDevFrameWorkDesc_HS = DevFrameWorkDesc_HS;
+  72:USBX/App/ux_device_descriptors.c **** /* USER CODE BEGIN PV0 */
+  73:USBX/App/ux_device_descriptors.c **** 
+  74:USBX/App/ux_device_descriptors.c **** /* USER CODE END PV0 */
+  75:USBX/App/ux_device_descriptors.c **** 
+  76:USBX/App/ux_device_descriptors.c **** /* String Device Framework :
+  77:USBX/App/ux_device_descriptors.c ****  Byte 0 and 1 : Word containing the language ID : 0x0904 for US
+  78:USBX/App/ux_device_descriptors.c ****  Byte 2       : Byte containing the index of the descriptor
+  79:USBX/App/ux_device_descriptors.c ****  Byte 3       : Byte containing the length of the descriptor string
+  80:USBX/App/ux_device_descriptors.c **** */
+  81:USBX/App/ux_device_descriptors.c **** #if defined ( __ICCARM__ ) /* IAR Compiler */
+  82:USBX/App/ux_device_descriptors.c **** #pragma data_alignment=4
+  83:USBX/App/ux_device_descriptors.c **** #endif /* defined ( __ICCARM__ ) */
+  84:USBX/App/ux_device_descriptors.c **** __ALIGN_BEGIN UCHAR USBD_string_framework[USBD_STRING_FRAMEWORK_MAX_LENGTH]
+  85:USBX/App/ux_device_descriptors.c **** __ALIGN_END = {0};
+  86:USBX/App/ux_device_descriptors.c **** 
+ARM GAS  C:\Users\sapph\AppData\Local\Temp\ccnHyWoZ.s 			page 3
+
+
+  87:USBX/App/ux_device_descriptors.c **** /* Multiple languages are supported on the device, to add
+  88:USBX/App/ux_device_descriptors.c ****    a language besides English, the Unicode language code must
+  89:USBX/App/ux_device_descriptors.c ****    be appended to the language_id_framework array and the length
+  90:USBX/App/ux_device_descriptors.c ****    adjusted accordingly. */
+  91:USBX/App/ux_device_descriptors.c **** 
+  92:USBX/App/ux_device_descriptors.c **** #if defined ( __ICCARM__ ) /* IAR Compiler */
+  93:USBX/App/ux_device_descriptors.c **** #pragma data_alignment=4
+  94:USBX/App/ux_device_descriptors.c **** #endif /* defined ( __ICCARM__ ) */
+  95:USBX/App/ux_device_descriptors.c **** __ALIGN_BEGIN UCHAR USBD_language_id_framework[LANGUAGE_ID_MAX_LENGTH]
+  96:USBX/App/ux_device_descriptors.c **** __ALIGN_END = {0};
+  97:USBX/App/ux_device_descriptors.c **** 
+  98:USBX/App/ux_device_descriptors.c **** #if USBD_HID_KEYBOARD_ACTIVATED == 1U
+  99:USBX/App/ux_device_descriptors.c **** 
+ 100:USBX/App/ux_device_descriptors.c **** #if defined ( __ICCARM__ ) /* IAR Compiler */
+ 101:USBX/App/ux_device_descriptors.c **** #pragma data_alignment=4
+ 102:USBX/App/ux_device_descriptors.c **** #endif /* defined ( __ICCARM__ ) */
+ 103:USBX/App/ux_device_descriptors.c **** __ALIGN_BEGIN uint8_t USBD_HID_KEYBOARD_ReportDesc[]
+ 104:USBX/App/ux_device_descriptors.c **** __ALIGN_END =
+ 105:USBX/App/ux_device_descriptors.c **** {
+ 106:USBX/App/ux_device_descriptors.c ****   /* USER CODE BEGIN USBD_HID_KEYBOARD_ReportDesc             */
+ 107:USBX/App/ux_device_descriptors.c ****   0x05, 0x01,        /* Usage Page (Generic Desktop Ctrls)    */
+ 108:USBX/App/ux_device_descriptors.c ****   0x09, 0x06,        /* Usage (Keyboard)                      */
+ 109:USBX/App/ux_device_descriptors.c ****   0xa1, 0x01,        /* Collection (Application)              */
+ 110:USBX/App/ux_device_descriptors.c ****   0x05, 0x07,        /*   Usage (Keyboard)                    */
+ 111:USBX/App/ux_device_descriptors.c ****   0x19, 0xe0,        /*     Usage Minimum (LeftControl)       */
+ 112:USBX/App/ux_device_descriptors.c ****   0x29, 0xe7,        /*     Usage Maximum (0x03)              */
+ 113:USBX/App/ux_device_descriptors.c ****   0x15, 0x00,        /*     Logical Minimum (0)               */
+ 114:USBX/App/ux_device_descriptors.c ****   0x25, 0x01,        /*     Logical Maximum (1)               */
+ 115:USBX/App/ux_device_descriptors.c ****   0x75, 0x01,        /*     Report Size  (1)                  */
+ 116:USBX/App/ux_device_descriptors.c ****   0x95, 0x08,        /*     Report Count (8)                  */
+ 117:USBX/App/ux_device_descriptors.c ****   0x81, 0x02,        /*     Input (Data,Var,Abs)              */
+ 118:USBX/App/ux_device_descriptors.c ****   0x95, 0x01,        /*     Report Count (1)                  */
+ 119:USBX/App/ux_device_descriptors.c ****   0x75, 0x08,        /*     Report Size (8)                   */
+ 120:USBX/App/ux_device_descriptors.c ****   0x81, 0x03,        /*     Input (Const,Array,Abs)           */
+ 121:USBX/App/ux_device_descriptors.c ****   0x95, 0x06,        /*     Report Count (6)                  */
+ 122:USBX/App/ux_device_descriptors.c ****   0x75, 0x08,        /*     Report Size (8)                   */
+ 123:USBX/App/ux_device_descriptors.c ****   0x15, 0x00,        /*     Logical Minimum (0)               */
+ 124:USBX/App/ux_device_descriptors.c ****   0x25, 0x65,        /*     Logical Maximum (101)             */
+ 125:USBX/App/ux_device_descriptors.c ****   0x05, 0x07,        /*     Usage Page (Keyboard)             */
+ 126:USBX/App/ux_device_descriptors.c ****   0x19, 0x00,        /*     Logical Minimum (Reserved)        */
+ 127:USBX/App/ux_device_descriptors.c ****   0x29, 0x65,        /*     Logical Maximum (Keyboard)        */
+ 128:USBX/App/ux_device_descriptors.c ****   0x81, 0x00,        /*     Input (Data,Var,Abs)              */
+ 129:USBX/App/ux_device_descriptors.c ****   /* USER CODE END USBD_HID_KEYBOARD_ReportDesc               */
+ 130:USBX/App/ux_device_descriptors.c ****   0xc0               /* End Collection                        */
+ 131:USBX/App/ux_device_descriptors.c **** };
+ 132:USBX/App/ux_device_descriptors.c **** 
+ 133:USBX/App/ux_device_descriptors.c **** #endif /* USBD_HID_KEYBOARD_ACTIVATED == 1U */
+ 134:USBX/App/ux_device_descriptors.c **** 
+ 135:USBX/App/ux_device_descriptors.c **** /* USER CODE BEGIN PV1 */
+ 136:USBX/App/ux_device_descriptors.c **** 
+ 137:USBX/App/ux_device_descriptors.c **** /* USER CODE END PV1 */
+ 138:USBX/App/ux_device_descriptors.c **** 
+ 139:USBX/App/ux_device_descriptors.c **** /* Private function prototypes -----------------------------------------------*/
+ 140:USBX/App/ux_device_descriptors.c **** static void USBD_Desc_GetString(uint8_t *desc, uint8_t *Buffer, uint16_t *len);
+ 141:USBX/App/ux_device_descriptors.c **** static uint8_t USBD_Desc_GetLen(uint8_t *buf);
+ 142:USBX/App/ux_device_descriptors.c **** 
+ 143:USBX/App/ux_device_descriptors.c **** static uint8_t *USBD_Device_Framework_Builder(USBD_DevClassHandleTypeDef *pdev,
+ARM GAS  C:\Users\sapph\AppData\Local\Temp\ccnHyWoZ.s 			page 4
+
+
+ 144:USBX/App/ux_device_descriptors.c ****                                               uint8_t *pDevFrameWorkDesc,
+ 145:USBX/App/ux_device_descriptors.c ****                                               uint8_t *UserClassInstance,
+ 146:USBX/App/ux_device_descriptors.c ****                                               uint8_t Speed);
+ 147:USBX/App/ux_device_descriptors.c **** 
+ 148:USBX/App/ux_device_descriptors.c **** static uint8_t USBD_FrameWork_AddToConfDesc(USBD_DevClassHandleTypeDef *pdev,
+ 149:USBX/App/ux_device_descriptors.c ****                                             uint8_t Speed,
+ 150:USBX/App/ux_device_descriptors.c ****                                             uint8_t *pCmpstConfDesc);
+ 151:USBX/App/ux_device_descriptors.c **** 
+ 152:USBX/App/ux_device_descriptors.c **** static uint8_t USBD_FrameWork_AddClass(USBD_DevClassHandleTypeDef *pdev,
+ 153:USBX/App/ux_device_descriptors.c ****                                        USBD_CompositeClassTypeDef class,
+ 154:USBX/App/ux_device_descriptors.c ****                                        uint8_t cfgidx, uint8_t Speed,
+ 155:USBX/App/ux_device_descriptors.c ****                                        uint8_t *pCmpstConfDesc);
+ 156:USBX/App/ux_device_descriptors.c **** 
+ 157:USBX/App/ux_device_descriptors.c **** static uint8_t USBD_FrameWork_FindFreeIFNbr(USBD_DevClassHandleTypeDef *pdev);
+ 158:USBX/App/ux_device_descriptors.c **** 
+ 159:USBX/App/ux_device_descriptors.c **** static void USBD_FrameWork_AddConfDesc(uint32_t Conf, uint32_t *pSze);
+ 160:USBX/App/ux_device_descriptors.c **** 
+ 161:USBX/App/ux_device_descriptors.c **** static void USBD_FrameWork_AssignEp(USBD_DevClassHandleTypeDef *pdev, uint8_t Add,
+ 162:USBX/App/ux_device_descriptors.c ****                                     uint8_t Type, uint32_t Sze);
+ 163:USBX/App/ux_device_descriptors.c **** 
+ 164:USBX/App/ux_device_descriptors.c **** #if USBD_HID_CLASS_ACTIVATED == 1U
+ 165:USBX/App/ux_device_descriptors.c **** static void USBD_FrameWork_HID_Desc(USBD_DevClassHandleTypeDef *pdev,
+ 166:USBX/App/ux_device_descriptors.c ****                                     uint32_t pConf, uint32_t *Sze);
+ 167:USBX/App/ux_device_descriptors.c **** #endif /* USBD_HID_CLASS_ACTIVATED == 1U */
+ 168:USBX/App/ux_device_descriptors.c **** 
+ 169:USBX/App/ux_device_descriptors.c **** /* USER CODE BEGIN PFP */
+ 170:USBX/App/ux_device_descriptors.c **** 
+ 171:USBX/App/ux_device_descriptors.c **** /* USER CODE END PFP */
+ 172:USBX/App/ux_device_descriptors.c **** 
+ 173:USBX/App/ux_device_descriptors.c **** /* Private user code ---------------------------------------------------------*/
+ 174:USBX/App/ux_device_descriptors.c **** /* USER CODE BEGIN 0 */
+ 175:USBX/App/ux_device_descriptors.c **** 
+ 176:USBX/App/ux_device_descriptors.c **** /* USER CODE END 0 */
+ 177:USBX/App/ux_device_descriptors.c **** 
+ 178:USBX/App/ux_device_descriptors.c **** /**
+ 179:USBX/App/ux_device_descriptors.c ****   * @brief  USBD_Get_Device_Framework_Speed
+ 180:USBX/App/ux_device_descriptors.c ****   *         Return the device speed descriptor
+ 181:USBX/App/ux_device_descriptors.c ****   * @param  Speed : HIGH or FULL SPEED flag
+ 182:USBX/App/ux_device_descriptors.c ****   * @param  length : length of HIGH or FULL SPEED array
+ 183:USBX/App/ux_device_descriptors.c ****   * @retval Pointer to descriptor buffer
+ 184:USBX/App/ux_device_descriptors.c ****   */
+ 185:USBX/App/ux_device_descriptors.c **** uint8_t *USBD_Get_Device_Framework_Speed(uint8_t Speed, ULONG *Length)
+ 186:USBX/App/ux_device_descriptors.c **** {
+ 187:USBX/App/ux_device_descriptors.c ****   uint8_t *pFrameWork = NULL;
+ 188:USBX/App/ux_device_descriptors.c ****   /* USER CODE BEGIN Device_Framework0 */
+ 189:USBX/App/ux_device_descriptors.c **** 
+ 190:USBX/App/ux_device_descriptors.c ****   /* USER CODE END Device_Framework0 */
+ 191:USBX/App/ux_device_descriptors.c **** 
+ 192:USBX/App/ux_device_descriptors.c ****   if (USBD_FULL_SPEED == Speed)
+ 193:USBX/App/ux_device_descriptors.c ****   {
+ 194:USBX/App/ux_device_descriptors.c ****     USBD_Device_Framework_Builder(&USBD_Device_FS, pDevFrameWorkDesc_FS,
+ 195:USBX/App/ux_device_descriptors.c ****                                   UserClassInstance, Speed);
+ 196:USBX/App/ux_device_descriptors.c **** 
+ 197:USBX/App/ux_device_descriptors.c ****     /* Get the length of USBD_device_framework_full_speed */
+ 198:USBX/App/ux_device_descriptors.c ****     *Length = (ULONG)(USBD_Device_FS.CurrDevDescSz + USBD_Device_FS.CurrConfDescSz);
+ 199:USBX/App/ux_device_descriptors.c **** 
+ 200:USBX/App/ux_device_descriptors.c ****     pFrameWork = pDevFrameWorkDesc_FS;
+ARM GAS  C:\Users\sapph\AppData\Local\Temp\ccnHyWoZ.s 			page 5
+
+
+ 201:USBX/App/ux_device_descriptors.c ****   }
+ 202:USBX/App/ux_device_descriptors.c ****   else
+ 203:USBX/App/ux_device_descriptors.c ****   {
+ 204:USBX/App/ux_device_descriptors.c ****     USBD_Device_Framework_Builder(&USBD_Device_HS, pDevFrameWorkDesc_HS,
+ 205:USBX/App/ux_device_descriptors.c ****                                   UserClassInstance, Speed);
+ 206:USBX/App/ux_device_descriptors.c **** 
+ 207:USBX/App/ux_device_descriptors.c ****     /* Get the length of USBD_device_framework_high_speed */
+ 208:USBX/App/ux_device_descriptors.c ****     *Length = (ULONG)(USBD_Device_HS.CurrDevDescSz + USBD_Device_HS.CurrConfDescSz);
+ 209:USBX/App/ux_device_descriptors.c **** 
+ 210:USBX/App/ux_device_descriptors.c ****     pFrameWork = pDevFrameWorkDesc_HS;
+ 211:USBX/App/ux_device_descriptors.c ****   }
+ 212:USBX/App/ux_device_descriptors.c ****   /* USER CODE BEGIN Device_Framework1 */
+ 213:USBX/App/ux_device_descriptors.c **** 
+ 214:USBX/App/ux_device_descriptors.c ****   /* USER CODE END Device_Framework1 */
+ 215:USBX/App/ux_device_descriptors.c ****   return pFrameWork;
+ 216:USBX/App/ux_device_descriptors.c **** }
+ 217:USBX/App/ux_device_descriptors.c **** 
+ 218:USBX/App/ux_device_descriptors.c **** /**
+ 219:USBX/App/ux_device_descriptors.c ****   * @brief  USBD_Get_String_Framework
+ 220:USBX/App/ux_device_descriptors.c ****   *         Return the language_id_framework
+ 221:USBX/App/ux_device_descriptors.c ****   * @param  Length : Length of String_Framework
+ 222:USBX/App/ux_device_descriptors.c ****   * @retval Pointer to language_id_framework buffer
+ 223:USBX/App/ux_device_descriptors.c ****   */
+ 224:USBX/App/ux_device_descriptors.c **** uint8_t *USBD_Get_String_Framework(ULONG *Length)
+ 225:USBX/App/ux_device_descriptors.c **** {
+ 226:USBX/App/ux_device_descriptors.c ****   uint16_t len = 0U;
+ 227:USBX/App/ux_device_descriptors.c ****   uint8_t count = 0U;
+ 228:USBX/App/ux_device_descriptors.c **** 
+ 229:USBX/App/ux_device_descriptors.c ****   /* USER CODE BEGIN String_Framework0 */
+ 230:USBX/App/ux_device_descriptors.c **** 
+ 231:USBX/App/ux_device_descriptors.c ****   /* USER CODE END String_Framework0 */
+ 232:USBX/App/ux_device_descriptors.c **** 
+ 233:USBX/App/ux_device_descriptors.c ****   /* Set the Manufacturer language Id and index in USBD_string_framework */
+ 234:USBX/App/ux_device_descriptors.c ****   USBD_string_framework[count++] = USBD_LANGID_STRING & 0xFF;
+ 235:USBX/App/ux_device_descriptors.c ****   USBD_string_framework[count++] = USBD_LANGID_STRING >> 8;
+ 236:USBX/App/ux_device_descriptors.c ****   USBD_string_framework[count++] = USBD_IDX_MFC_STR;
+ 237:USBX/App/ux_device_descriptors.c **** 
+ 238:USBX/App/ux_device_descriptors.c ****   /* Set the Manufacturer string in string_framework */
+ 239:USBX/App/ux_device_descriptors.c ****   USBD_Desc_GetString((uint8_t *)USBD_MANUFACTURER_STRING, USBD_string_framework + count, &len);
+ 240:USBX/App/ux_device_descriptors.c **** 
+ 241:USBX/App/ux_device_descriptors.c ****   /* Set the Product language Id and index in USBD_string_framework */
+ 242:USBX/App/ux_device_descriptors.c ****   count += len + 1;
+ 243:USBX/App/ux_device_descriptors.c ****   USBD_string_framework[count++] = USBD_LANGID_STRING & 0xFF;
+ 244:USBX/App/ux_device_descriptors.c ****   USBD_string_framework[count++] = USBD_LANGID_STRING >> 8;
+ 245:USBX/App/ux_device_descriptors.c ****   USBD_string_framework[count++] = USBD_IDX_PRODUCT_STR;
+ 246:USBX/App/ux_device_descriptors.c **** 
+ 247:USBX/App/ux_device_descriptors.c ****   /* Set the Product string in USBD_string_framework */
+ 248:USBX/App/ux_device_descriptors.c ****   USBD_Desc_GetString((uint8_t *)USBD_PRODUCT_STRING, USBD_string_framework + count, &len);
+ 249:USBX/App/ux_device_descriptors.c **** 
+ 250:USBX/App/ux_device_descriptors.c ****   /* Set Serial language Id and index in string_framework */
+ 251:USBX/App/ux_device_descriptors.c ****   count += len + 1;
+ 252:USBX/App/ux_device_descriptors.c ****   USBD_string_framework[count++] = USBD_LANGID_STRING & 0xFF;
+ 253:USBX/App/ux_device_descriptors.c ****   USBD_string_framework[count++] = USBD_LANGID_STRING >> 8;
+ 254:USBX/App/ux_device_descriptors.c ****   USBD_string_framework[count++] = USBD_IDX_SERIAL_STR;
+ 255:USBX/App/ux_device_descriptors.c **** 
+ 256:USBX/App/ux_device_descriptors.c ****   /* Set the Serial number in USBD_string_framework */
+ 257:USBX/App/ux_device_descriptors.c ****   USBD_Desc_GetString((uint8_t *)USBD_SERIAL_NUMBER, USBD_string_framework + count, &len);
+ARM GAS  C:\Users\sapph\AppData\Local\Temp\ccnHyWoZ.s 			page 6
+
+
+ 258:USBX/App/ux_device_descriptors.c **** 
+ 259:USBX/App/ux_device_descriptors.c ****   /* USER CODE BEGIN String_Framework1 */
+ 260:USBX/App/ux_device_descriptors.c **** 
+ 261:USBX/App/ux_device_descriptors.c ****   /* USER CODE END String_Framework1 */
+ 262:USBX/App/ux_device_descriptors.c **** 
+ 263:USBX/App/ux_device_descriptors.c ****   /* Get the length of USBD_string_framework */
+ 264:USBX/App/ux_device_descriptors.c ****   *Length = strlen((const char *)USBD_string_framework);
+ 265:USBX/App/ux_device_descriptors.c **** 
+ 266:USBX/App/ux_device_descriptors.c ****   return USBD_string_framework;
+ 267:USBX/App/ux_device_descriptors.c **** }
+ 268:USBX/App/ux_device_descriptors.c **** 
+ 269:USBX/App/ux_device_descriptors.c **** /**
+ 270:USBX/App/ux_device_descriptors.c ****   * @brief  USBD_Get_Language_Id_Framework
+ 271:USBX/App/ux_device_descriptors.c ****   *         Return the language_id_framework
+ 272:USBX/App/ux_device_descriptors.c ****   * @param  Length : Length of Language_Id_Framework
+ 273:USBX/App/ux_device_descriptors.c ****   * @retval Pointer to language_id_framework buffer
+ 274:USBX/App/ux_device_descriptors.c ****   */
+ 275:USBX/App/ux_device_descriptors.c **** uint8_t *USBD_Get_Language_Id_Framework(ULONG *Length)
+ 276:USBX/App/ux_device_descriptors.c **** {
+ 277:USBX/App/ux_device_descriptors.c ****   uint8_t count = 0U;
+ 278:USBX/App/ux_device_descriptors.c **** 
+ 279:USBX/App/ux_device_descriptors.c ****   /* Set the language Id in USBD_language_id_framework */
+ 280:USBX/App/ux_device_descriptors.c ****   USBD_language_id_framework[count++] = USBD_LANGID_STRING & 0xFF;
+ 281:USBX/App/ux_device_descriptors.c ****   USBD_language_id_framework[count++] = USBD_LANGID_STRING >> 8;
+ 282:USBX/App/ux_device_descriptors.c **** 
+ 283:USBX/App/ux_device_descriptors.c ****   /* Get the length of USBD_language_id_framework */
+ 284:USBX/App/ux_device_descriptors.c ****   *Length = strlen((const char *)USBD_language_id_framework);
+ 285:USBX/App/ux_device_descriptors.c **** 
+ 286:USBX/App/ux_device_descriptors.c ****   return USBD_language_id_framework;
+ 287:USBX/App/ux_device_descriptors.c **** }
+ 288:USBX/App/ux_device_descriptors.c **** 
+ 289:USBX/App/ux_device_descriptors.c **** /**
+ 290:USBX/App/ux_device_descriptors.c ****   * @brief  USBD_Get_Interface_Number
+ 291:USBX/App/ux_device_descriptors.c ****   *         Return interface number
+ 292:USBX/App/ux_device_descriptors.c ****   * @param  class_type : Device class type
+ 293:USBX/App/ux_device_descriptors.c ****   * @param  interface_type : Device interface type
+ 294:USBX/App/ux_device_descriptors.c ****   * @retval interface number
+ 295:USBX/App/ux_device_descriptors.c ****   */
+ 296:USBX/App/ux_device_descriptors.c **** uint16_t USBD_Get_Interface_Number(uint8_t class_type, uint8_t interface_type)
+ 297:USBX/App/ux_device_descriptors.c **** {
+ 298:USBX/App/ux_device_descriptors.c ****   uint8_t itf_num = 0U;
+ 299:USBX/App/ux_device_descriptors.c ****   uint8_t idx = 0U;
+ 300:USBX/App/ux_device_descriptors.c **** 
+ 301:USBX/App/ux_device_descriptors.c ****   /* USER CODE BEGIN USBD_Get_Interface_Number0 */
+ 302:USBX/App/ux_device_descriptors.c **** 
+ 303:USBX/App/ux_device_descriptors.c ****   /* USER CODE END USBD_Get_Interface_Number0 */
+ 304:USBX/App/ux_device_descriptors.c **** 
+ 305:USBX/App/ux_device_descriptors.c ****   for(idx = 0; idx < USBD_MAX_SUPPORTED_CLASS; idx++)
+ 306:USBX/App/ux_device_descriptors.c ****   {
+ 307:USBX/App/ux_device_descriptors.c ****     if ((USBD_Device_FS.tclasslist[idx].ClassType == class_type) &&
+ 308:USBX/App/ux_device_descriptors.c ****         (USBD_Device_FS.tclasslist[idx].InterfaceType == interface_type))
+ 309:USBX/App/ux_device_descriptors.c ****     {
+ 310:USBX/App/ux_device_descriptors.c ****       itf_num = USBD_Device_FS.tclasslist[idx].Ifs[0];
+ 311:USBX/App/ux_device_descriptors.c ****     }
+ 312:USBX/App/ux_device_descriptors.c ****   }
+ 313:USBX/App/ux_device_descriptors.c **** 
+ 314:USBX/App/ux_device_descriptors.c ****   /* USER CODE BEGIN USBD_Get_Interface_Number1 */
+ARM GAS  C:\Users\sapph\AppData\Local\Temp\ccnHyWoZ.s 			page 7
+
+
+ 315:USBX/App/ux_device_descriptors.c **** 
+ 316:USBX/App/ux_device_descriptors.c ****   /* USER CODE END USBD_Get_Interface_Number1 */
+ 317:USBX/App/ux_device_descriptors.c **** 
+ 318:USBX/App/ux_device_descriptors.c ****   return itf_num;
+ 319:USBX/App/ux_device_descriptors.c **** }
+ 320:USBX/App/ux_device_descriptors.c **** 
+ 321:USBX/App/ux_device_descriptors.c **** /**
+ 322:USBX/App/ux_device_descriptors.c ****   * @brief  USBD_Get_Configuration_Number
+ 323:USBX/App/ux_device_descriptors.c ****   *         Return configuration number
+ 324:USBX/App/ux_device_descriptors.c ****   * @param  class_type : Device class type
+ 325:USBX/App/ux_device_descriptors.c ****   * @param  interface_type : Device interface type
+ 326:USBX/App/ux_device_descriptors.c ****   * @retval configuration number
+ 327:USBX/App/ux_device_descriptors.c ****   */
+ 328:USBX/App/ux_device_descriptors.c **** uint16_t USBD_Get_Configuration_Number(uint8_t class_type, uint8_t interface_type)
+ 329:USBX/App/ux_device_descriptors.c **** {
+ 330:USBX/App/ux_device_descriptors.c ****   uint8_t cfg_num = 1U;
+ 331:USBX/App/ux_device_descriptors.c **** 
+ 332:USBX/App/ux_device_descriptors.c ****   /* USER CODE BEGIN USBD_Get_CONFIGURATION_Number0 */
+ 333:USBX/App/ux_device_descriptors.c **** 
+ 334:USBX/App/ux_device_descriptors.c ****   /* USER CODE END USBD_Get_CONFIGURATION_Number0 */
+ 335:USBX/App/ux_device_descriptors.c **** 
+ 336:USBX/App/ux_device_descriptors.c ****   /* USER CODE BEGIN USBD_Get_CONFIGURATION_Number1 */
+ 337:USBX/App/ux_device_descriptors.c **** 
+ 338:USBX/App/ux_device_descriptors.c ****   /* USER CODE END USBD_Get_CONFIGURATION_Number1 */
+ 339:USBX/App/ux_device_descriptors.c **** 
+ 340:USBX/App/ux_device_descriptors.c ****   return cfg_num;
+ 341:USBX/App/ux_device_descriptors.c **** }
+ 342:USBX/App/ux_device_descriptors.c **** 
+ 343:USBX/App/ux_device_descriptors.c **** #if USBD_HID_CLASS_ACTIVATED == 1U
+ 344:USBX/App/ux_device_descriptors.c **** /**
+ 345:USBX/App/ux_device_descriptors.c ****   * @brief  USBD_HID_ReportDesc
+ 346:USBX/App/ux_device_descriptors.c ****   *         Return the device HID Report Descriptor
+ 347:USBX/App/ux_device_descriptors.c ****   * @param  hid_type : HID Device type
+ 348:USBX/App/ux_device_descriptors.c ****   * @retval Pointer to HID Report Descriptor buffer
+ 349:USBX/App/ux_device_descriptors.c ****   */
+ 350:USBX/App/ux_device_descriptors.c **** uint8_t *USBD_HID_ReportDesc(uint8_t hid_type)
+ 351:USBX/App/ux_device_descriptors.c **** {
+ 352:USBX/App/ux_device_descriptors.c ****   uint8_t *pHidReportDesc = NULL;
+ 353:USBX/App/ux_device_descriptors.c **** 
+ 354:USBX/App/ux_device_descriptors.c ****   /* USER CODE BEGIN HidReportDesc0 */
+ 355:USBX/App/ux_device_descriptors.c **** 
+ 356:USBX/App/ux_device_descriptors.c ****   /* USER CODE END HidReportDesc0 */
+ 357:USBX/App/ux_device_descriptors.c **** 
+ 358:USBX/App/ux_device_descriptors.c ****   switch(hid_type)
+ 359:USBX/App/ux_device_descriptors.c ****   {
+ 360:USBX/App/ux_device_descriptors.c ****     case INTERFACE_HID_KEYBOARD:
+ 361:USBX/App/ux_device_descriptors.c ****       pHidReportDesc = USBD_HID_KEYBOARD_ReportDesc;
+ 362:USBX/App/ux_device_descriptors.c ****       break;
+ 363:USBX/App/ux_device_descriptors.c ****     default:
+ 364:USBX/App/ux_device_descriptors.c ****       break;
+ 365:USBX/App/ux_device_descriptors.c ****   }
+ 366:USBX/App/ux_device_descriptors.c **** 
+ 367:USBX/App/ux_device_descriptors.c ****   /* USER CODE BEGIN HidReportDesc1 */
+ 368:USBX/App/ux_device_descriptors.c **** 
+ 369:USBX/App/ux_device_descriptors.c ****   /* USER CODE END HidReportDesc1 */
+ 370:USBX/App/ux_device_descriptors.c **** 
+ 371:USBX/App/ux_device_descriptors.c ****   return pHidReportDesc;
+ARM GAS  C:\Users\sapph\AppData\Local\Temp\ccnHyWoZ.s 			page 8
+
+
+ 372:USBX/App/ux_device_descriptors.c **** }
+ 373:USBX/App/ux_device_descriptors.c **** 
+ 374:USBX/App/ux_device_descriptors.c **** /**
+ 375:USBX/App/ux_device_descriptors.c ****   * @brief  USBD_HID_ReportDesc_length
+ 376:USBX/App/ux_device_descriptors.c ****   *         Return the device HID Report Descriptor
+ 377:USBX/App/ux_device_descriptors.c ****   * @param  hid_type : HID Device type
+ 378:USBX/App/ux_device_descriptors.c ****   * @retval Size of HID Report Descriptor buffer
+ 379:USBX/App/ux_device_descriptors.c ****   */
+ 380:USBX/App/ux_device_descriptors.c **** uint16_t USBD_HID_ReportDesc_length(uint8_t hid_type)
+ 381:USBX/App/ux_device_descriptors.c **** {
+ 382:USBX/App/ux_device_descriptors.c ****   uint16_t ReportDesc_Size = 0;
+ 383:USBX/App/ux_device_descriptors.c **** 
+ 384:USBX/App/ux_device_descriptors.c ****   /* USER CODE BEGIN ReportDesc_Size0 */
+ 385:USBX/App/ux_device_descriptors.c **** 
+ 386:USBX/App/ux_device_descriptors.c ****   /* USER CODE END ReportDesc_Size0 */
+ 387:USBX/App/ux_device_descriptors.c **** 
+ 388:USBX/App/ux_device_descriptors.c ****   switch(hid_type)
+ 389:USBX/App/ux_device_descriptors.c ****   {
+ 390:USBX/App/ux_device_descriptors.c ****     case INTERFACE_HID_KEYBOARD:
+ 391:USBX/App/ux_device_descriptors.c ****       ReportDesc_Size = sizeof(USBD_HID_KEYBOARD_ReportDesc);
+ 392:USBX/App/ux_device_descriptors.c ****       break;
+ 393:USBX/App/ux_device_descriptors.c ****     default:
+ 394:USBX/App/ux_device_descriptors.c ****       break;
+ 395:USBX/App/ux_device_descriptors.c ****   }
+ 396:USBX/App/ux_device_descriptors.c **** 
+ 397:USBX/App/ux_device_descriptors.c ****   /* USER CODE BEGIN ReportDesc_Size1 */
+ 398:USBX/App/ux_device_descriptors.c **** 
+ 399:USBX/App/ux_device_descriptors.c ****   /* USER CODE END ReportDesc_Size1 */
+ 400:USBX/App/ux_device_descriptors.c **** 
+ 401:USBX/App/ux_device_descriptors.c ****   return ReportDesc_Size;
+ 402:USBX/App/ux_device_descriptors.c **** }
+ 403:USBX/App/ux_device_descriptors.c **** #endif /* USBD_HID_CLASS_ACTIVATED == 1U */
+ 404:USBX/App/ux_device_descriptors.c **** 
+ 405:USBX/App/ux_device_descriptors.c **** /**
+ 406:USBX/App/ux_device_descriptors.c ****   * @brief  USBD_Desc_GetString
+ 407:USBX/App/ux_device_descriptors.c ****   *         Convert ASCII string into Unicode one
+ 408:USBX/App/ux_device_descriptors.c ****   * @param  desc : descriptor buffer
+ 409:USBX/App/ux_device_descriptors.c ****   * @param  Unicode : Formatted string buffer (Unicode)
+ 410:USBX/App/ux_device_descriptors.c ****   * @param  len : descriptor length
+ 411:USBX/App/ux_device_descriptors.c ****   * @retval None
+ 412:USBX/App/ux_device_descriptors.c ****   */
+ 413:USBX/App/ux_device_descriptors.c **** static void USBD_Desc_GetString(uint8_t *desc, uint8_t *unicode, uint16_t *len)
+ 414:USBX/App/ux_device_descriptors.c **** {
+ 415:USBX/App/ux_device_descriptors.c ****   uint8_t idx = 0U;
+ 416:USBX/App/ux_device_descriptors.c ****   uint8_t *pdesc;
+ 417:USBX/App/ux_device_descriptors.c **** 
+ 418:USBX/App/ux_device_descriptors.c ****   if (desc == NULL)
+ 419:USBX/App/ux_device_descriptors.c ****   {
+ 420:USBX/App/ux_device_descriptors.c ****     return;
+ 421:USBX/App/ux_device_descriptors.c ****   }
+ 422:USBX/App/ux_device_descriptors.c **** 
+ 423:USBX/App/ux_device_descriptors.c ****   pdesc = desc;
+ 424:USBX/App/ux_device_descriptors.c ****   *len = (uint16_t)USBD_Desc_GetLen(pdesc);
+ 425:USBX/App/ux_device_descriptors.c **** 
+ 426:USBX/App/ux_device_descriptors.c ****   unicode[idx++] = *(uint8_t *)len;
+ 427:USBX/App/ux_device_descriptors.c **** 
+ 428:USBX/App/ux_device_descriptors.c ****   while (*pdesc != (uint8_t)'\0')
+ARM GAS  C:\Users\sapph\AppData\Local\Temp\ccnHyWoZ.s 			page 9
+
+
+ 429:USBX/App/ux_device_descriptors.c ****   {
+ 430:USBX/App/ux_device_descriptors.c ****     unicode[idx++] = *pdesc;
+ 431:USBX/App/ux_device_descriptors.c ****     pdesc++;
+ 432:USBX/App/ux_device_descriptors.c ****   }
+ 433:USBX/App/ux_device_descriptors.c **** }
+ 434:USBX/App/ux_device_descriptors.c **** 
+ 435:USBX/App/ux_device_descriptors.c **** /**
+ 436:USBX/App/ux_device_descriptors.c ****   * @brief  USBD_Desc_GetLen
+ 437:USBX/App/ux_device_descriptors.c ****   *         return the string length
+ 438:USBX/App/ux_device_descriptors.c ****   * @param  buf : pointer to the ASCII string buffer
+ 439:USBX/App/ux_device_descriptors.c ****   * @retval string length
+ 440:USBX/App/ux_device_descriptors.c ****   */
+ 441:USBX/App/ux_device_descriptors.c **** static uint8_t USBD_Desc_GetLen(uint8_t *buf)
+ 442:USBX/App/ux_device_descriptors.c **** {
+  30              		.loc 1 442 1 view -0
+  31              		.cfi_startproc
+  32              		@ args = 0, pretend = 0, frame = 0
+  33              		@ frame_needed = 0, uses_anonymous_args = 0
+  34              		@ link register save eliminated.
+  35              		.loc 1 442 1 is_stmt 0 view .LVU1
+  36 0000 0346     		mov	r3, r0
+ 443:USBX/App/ux_device_descriptors.c ****   uint8_t  len = 0U;
+  37              		.loc 1 443 3 is_stmt 1 view .LVU2
+  38              	.LVL1:
+ 444:USBX/App/ux_device_descriptors.c ****   uint8_t *pbuff = buf;
+  39              		.loc 1 444 3 view .LVU3
+ 445:USBX/App/ux_device_descriptors.c **** 
+ 446:USBX/App/ux_device_descriptors.c ****   while (*pbuff != (uint8_t)'\0')
+  40              		.loc 1 446 3 view .LVU4
+ 443:USBX/App/ux_device_descriptors.c ****   uint8_t *pbuff = buf;
+  41              		.loc 1 443 12 is_stmt 0 view .LVU5
+  42 0002 0020     		movs	r0, #0
+  43              	.LVL2:
+  44              		.loc 1 446 9 view .LVU6
+  45 0004 02E0     		b	.L2
+  46              	.LVL3:
+  47              	.L3:
+ 447:USBX/App/ux_device_descriptors.c ****   {
+ 448:USBX/App/ux_device_descriptors.c ****     len++;
+  48              		.loc 1 448 5 is_stmt 1 view .LVU7
+  49              		.loc 1 448 8 is_stmt 0 view .LVU8
+  50 0006 0130     		adds	r0, r0, #1
+  51              	.LVL4:
+  52              		.loc 1 448 8 view .LVU9
+  53 0008 C0B2     		uxtb	r0, r0
+  54              	.LVL5:
+ 449:USBX/App/ux_device_descriptors.c ****     pbuff++;
+  55              		.loc 1 449 5 is_stmt 1 view .LVU10
+  56              		.loc 1 449 10 is_stmt 0 view .LVU11
+  57 000a 0133     		adds	r3, r3, #1
+  58              	.LVL6:
+  59              	.L2:
+ 446:USBX/App/ux_device_descriptors.c ****   {
+  60              		.loc 1 446 17 is_stmt 1 view .LVU12
+ 446:USBX/App/ux_device_descriptors.c ****   {
+  61              		.loc 1 446 10 is_stmt 0 view .LVU13
+  62 000c 1A78     		ldrb	r2, [r3]	@ zero_extendqisi2
+ARM GAS  C:\Users\sapph\AppData\Local\Temp\ccnHyWoZ.s 			page 10
+
+
+ 446:USBX/App/ux_device_descriptors.c ****   {
+  63              		.loc 1 446 17 view .LVU14
+  64 000e 002A     		cmp	r2, #0
+  65 0010 F9D1     		bne	.L3
+ 450:USBX/App/ux_device_descriptors.c ****   }
+ 451:USBX/App/ux_device_descriptors.c **** 
+ 452:USBX/App/ux_device_descriptors.c ****   return len;
+  66              		.loc 1 452 3 is_stmt 1 view .LVU15
+ 453:USBX/App/ux_device_descriptors.c **** }
+  67              		.loc 1 453 1 is_stmt 0 view .LVU16
+  68 0012 7047     		bx	lr
+  69              		.cfi_endproc
+  70              	.LFE171:
+  72              		.section	.text.USBD_Desc_GetString,"ax",%progbits
+  73              		.align	1
+  74              		.syntax unified
+  75              		.thumb
+  76              		.thumb_func
+  78              	USBD_Desc_GetString:
+  79              	.LVL7:
+  80              	.LFB170:
+ 414:USBX/App/ux_device_descriptors.c ****   uint8_t idx = 0U;
+  81              		.loc 1 414 1 is_stmt 1 view -0
+  82              		.cfi_startproc
+  83              		@ args = 0, pretend = 0, frame = 0
+  84              		@ frame_needed = 0, uses_anonymous_args = 0
+ 415:USBX/App/ux_device_descriptors.c ****   uint8_t *pdesc;
+  85              		.loc 1 415 3 view .LVU18
+ 416:USBX/App/ux_device_descriptors.c **** 
+  86              		.loc 1 416 3 view .LVU19
+ 418:USBX/App/ux_device_descriptors.c ****   {
+  87              		.loc 1 418 3 view .LVU20
+ 418:USBX/App/ux_device_descriptors.c ****   {
+  88              		.loc 1 418 6 is_stmt 0 view .LVU21
+  89 0000 88B1     		cbz	r0, .L9
+ 414:USBX/App/ux_device_descriptors.c ****   uint8_t idx = 0U;
+  90              		.loc 1 414 1 view .LVU22
+  91 0002 70B5     		push	{r4, r5, r6, lr}
+  92              		.cfi_def_cfa_offset 16
+  93              		.cfi_offset 4, -16
+  94              		.cfi_offset 5, -12
+  95              		.cfi_offset 6, -8
+  96              		.cfi_offset 14, -4
+  97 0004 0D46     		mov	r5, r1
+  98 0006 1646     		mov	r6, r2
+  99 0008 0446     		mov	r4, r0
+ 423:USBX/App/ux_device_descriptors.c ****   *len = (uint16_t)USBD_Desc_GetLen(pdesc);
+ 100              		.loc 1 423 3 is_stmt 1 view .LVU23
+ 101              	.LVL8:
+ 424:USBX/App/ux_device_descriptors.c **** 
+ 102              		.loc 1 424 3 view .LVU24
+ 424:USBX/App/ux_device_descriptors.c **** 
+ 103              		.loc 1 424 20 is_stmt 0 view .LVU25
+ 104 000a FFF7FEFF 		bl	USBD_Desc_GetLen
+ 105              	.LVL9:
+ 424:USBX/App/ux_device_descriptors.c **** 
+ 106              		.loc 1 424 8 discriminator 1 view .LVU26
+ARM GAS  C:\Users\sapph\AppData\Local\Temp\ccnHyWoZ.s 			page 11
+
+
+ 107 000e 3080     		strh	r0, [r6]	@ movhi
+ 426:USBX/App/ux_device_descriptors.c **** 
+ 108              		.loc 1 426 3 is_stmt 1 view .LVU27
+ 109              	.LVL10:
+ 426:USBX/App/ux_device_descriptors.c **** 
+ 110              		.loc 1 426 18 is_stmt 0 view .LVU28
+ 111 0010 2870     		strb	r0, [r5]
+ 428:USBX/App/ux_device_descriptors.c ****   {
+ 112              		.loc 1 428 3 is_stmt 1 view .LVU29
+ 426:USBX/App/ux_device_descriptors.c **** 
+ 113              		.loc 1 426 14 is_stmt 0 view .LVU30
+ 114 0012 0122     		movs	r2, #1
+ 428:USBX/App/ux_device_descriptors.c ****   {
+ 115              		.loc 1 428 9 view .LVU31
+ 116 0014 03E0     		b	.L6
+ 117              	.LVL11:
+ 118              	.L7:
+ 430:USBX/App/ux_device_descriptors.c ****     pdesc++;
+ 119              		.loc 1 430 5 is_stmt 1 view .LVU32
+ 430:USBX/App/ux_device_descriptors.c ****     pdesc++;
+ 120              		.loc 1 430 16 is_stmt 0 view .LVU33
+ 121 0016 501C     		adds	r0, r2, #1
+ 122              	.LVL12:
+ 430:USBX/App/ux_device_descriptors.c ****     pdesc++;
+ 123              		.loc 1 430 20 view .LVU34
+ 124 0018 AB54     		strb	r3, [r5, r2]
+ 431:USBX/App/ux_device_descriptors.c ****   }
+ 125              		.loc 1 431 5 is_stmt 1 view .LVU35
+ 431:USBX/App/ux_device_descriptors.c ****   }
+ 126              		.loc 1 431 10 is_stmt 0 view .LVU36
+ 127 001a 0134     		adds	r4, r4, #1
+ 128              	.LVL13:
+ 430:USBX/App/ux_device_descriptors.c ****     pdesc++;
+ 129              		.loc 1 430 16 view .LVU37
+ 130 001c C2B2     		uxtb	r2, r0
+ 131              	.LVL14:
+ 132              	.L6:
+ 428:USBX/App/ux_device_descriptors.c ****   {
+ 133              		.loc 1 428 17 is_stmt 1 view .LVU38
+ 428:USBX/App/ux_device_descriptors.c ****   {
+ 134              		.loc 1 428 10 is_stmt 0 view .LVU39
+ 135 001e 2378     		ldrb	r3, [r4]	@ zero_extendqisi2
+ 428:USBX/App/ux_device_descriptors.c ****   {
+ 136              		.loc 1 428 17 view .LVU40
+ 137 0020 002B     		cmp	r3, #0
+ 138 0022 F8D1     		bne	.L7
+ 433:USBX/App/ux_device_descriptors.c **** 
+ 139              		.loc 1 433 1 view .LVU41
+ 140 0024 70BD     		pop	{r4, r5, r6, pc}
+ 141              	.LVL15:
+ 142              	.L9:
+ 143              		.cfi_def_cfa_offset 0
+ 144              		.cfi_restore 4
+ 145              		.cfi_restore 5
+ 146              		.cfi_restore 6
+ 147              		.cfi_restore 14
+ 433:USBX/App/ux_device_descriptors.c **** 
+ARM GAS  C:\Users\sapph\AppData\Local\Temp\ccnHyWoZ.s 			page 12
+
+
+ 148              		.loc 1 433 1 view .LVU42
+ 149 0026 7047     		bx	lr
+ 150              		.cfi_endproc
+ 151              	.LFE170:
+ 153              		.section	.text.USBD_FrameWork_FindFreeIFNbr,"ax",%progbits
+ 154              		.align	1
+ 155              		.syntax unified
+ 156              		.thumb
+ 157              		.thumb_func
+ 159              	USBD_FrameWork_FindFreeIFNbr:
+ 160              	.LVL16:
+ 161              	.LFB175:
+ 454:USBX/App/ux_device_descriptors.c **** 
+ 455:USBX/App/ux_device_descriptors.c **** /**
+ 456:USBX/App/ux_device_descriptors.c ****   * @brief  USBD_Device_Framework_Builder
+ 457:USBX/App/ux_device_descriptors.c ****   *         Device Framework builder
+ 458:USBX/App/ux_device_descriptors.c ****   * @param  pdev: device instance
+ 459:USBX/App/ux_device_descriptors.c ****   * @param  pDevFrameWorkDesc: Pointer to the device framework descriptor
+ 460:USBX/App/ux_device_descriptors.c ****   * @param  UserClassInstance: type of the class to be added
+ 461:USBX/App/ux_device_descriptors.c ****   * @param  Speed: Speed parameter HS or FS
+ 462:USBX/App/ux_device_descriptors.c ****   * @retval status
+ 463:USBX/App/ux_device_descriptors.c ****   */
+ 464:USBX/App/ux_device_descriptors.c **** static uint8_t *USBD_Device_Framework_Builder(USBD_DevClassHandleTypeDef *pdev,
+ 465:USBX/App/ux_device_descriptors.c ****                                               uint8_t *pDevFrameWorkDesc,
+ 466:USBX/App/ux_device_descriptors.c ****                                               uint8_t *UserClassInstance,
+ 467:USBX/App/ux_device_descriptors.c ****                                               uint8_t Speed)
+ 468:USBX/App/ux_device_descriptors.c **** {
+ 469:USBX/App/ux_device_descriptors.c ****   static USBD_DeviceDescTypedef   *pDevDesc;
+ 470:USBX/App/ux_device_descriptors.c ****   static USBD_DevQualiDescTypedef *pDevQualDesc;
+ 471:USBX/App/ux_device_descriptors.c ****   uint8_t Idx_Instance = 0U;
+ 472:USBX/App/ux_device_descriptors.c **** 
+ 473:USBX/App/ux_device_descriptors.c ****   /* Set Dev and conf descriptors size to 0 */
+ 474:USBX/App/ux_device_descriptors.c ****   pdev->CurrConfDescSz = 0U;
+ 475:USBX/App/ux_device_descriptors.c ****   pdev->CurrDevDescSz = 0U;
+ 476:USBX/App/ux_device_descriptors.c **** 
+ 477:USBX/App/ux_device_descriptors.c ****   /* Set the pointer to the device descriptor area*/
+ 478:USBX/App/ux_device_descriptors.c ****   pDevDesc = (USBD_DeviceDescTypedef *)pDevFrameWorkDesc;
+ 479:USBX/App/ux_device_descriptors.c **** 
+ 480:USBX/App/ux_device_descriptors.c ****   /* Start building the generic device descriptor common part */
+ 481:USBX/App/ux_device_descriptors.c ****   pDevDesc->bLength = (uint8_t)sizeof(USBD_DeviceDescTypedef);
+ 482:USBX/App/ux_device_descriptors.c ****   pDevDesc->bDescriptorType = UX_DEVICE_DESCRIPTOR_ITEM;
+ 483:USBX/App/ux_device_descriptors.c ****   pDevDesc->bcdUSB = USB_BCDUSB;
+ 484:USBX/App/ux_device_descriptors.c ****   pDevDesc->bDeviceClass = 0x00;
+ 485:USBX/App/ux_device_descriptors.c ****   pDevDesc->bDeviceSubClass = 0x00;
+ 486:USBX/App/ux_device_descriptors.c ****   pDevDesc->bDeviceProtocol = 0x00;
+ 487:USBX/App/ux_device_descriptors.c ****   pDevDesc->bMaxPacketSize = USBD_MAX_EP0_SIZE;
+ 488:USBX/App/ux_device_descriptors.c ****   pDevDesc->idVendor = USBD_VID;
+ 489:USBX/App/ux_device_descriptors.c ****   pDevDesc->idProduct = USBD_PID;
+ 490:USBX/App/ux_device_descriptors.c ****   pDevDesc->bcdDevice = 0x0200;
+ 491:USBX/App/ux_device_descriptors.c ****   pDevDesc->iManufacturer = USBD_IDX_MFC_STR;
+ 492:USBX/App/ux_device_descriptors.c ****   pDevDesc->iProduct = USBD_IDX_PRODUCT_STR;
+ 493:USBX/App/ux_device_descriptors.c ****   pDevDesc->iSerialNumber = USBD_IDX_SERIAL_STR;
+ 494:USBX/App/ux_device_descriptors.c ****   pDevDesc->bNumConfigurations = USBD_MAX_NUM_CONFIGURATION;
+ 495:USBX/App/ux_device_descriptors.c ****   pdev->CurrDevDescSz += (uint32_t)sizeof(USBD_DeviceDescTypedef);
+ 496:USBX/App/ux_device_descriptors.c **** 
+ 497:USBX/App/ux_device_descriptors.c ****   /* Check if USBx is in high speed mode to add qualifier descriptor */
+ 498:USBX/App/ux_device_descriptors.c ****   if (Speed == USBD_HIGH_SPEED)
+ARM GAS  C:\Users\sapph\AppData\Local\Temp\ccnHyWoZ.s 			page 13
+
+
+ 499:USBX/App/ux_device_descriptors.c ****   {
+ 500:USBX/App/ux_device_descriptors.c ****     pDevQualDesc = (USBD_DevQualiDescTypedef *)(pDevFrameWorkDesc + pdev->CurrDevDescSz);
+ 501:USBX/App/ux_device_descriptors.c ****     pDevQualDesc->bLength = (uint8_t)sizeof(USBD_DevQualiDescTypedef);
+ 502:USBX/App/ux_device_descriptors.c ****     pDevQualDesc->bDescriptorType = UX_DEVICE_QUALIFIER_DESCRIPTOR_ITEM;
+ 503:USBX/App/ux_device_descriptors.c ****     pDevQualDesc->bcdDevice = 0x0200;
+ 504:USBX/App/ux_device_descriptors.c ****     pDevQualDesc->Class = 0x00;
+ 505:USBX/App/ux_device_descriptors.c ****     pDevQualDesc->SubClass = 0x00;
+ 506:USBX/App/ux_device_descriptors.c ****     pDevQualDesc->Protocol = 0x00;
+ 507:USBX/App/ux_device_descriptors.c ****     pDevQualDesc->bMaxPacketSize = 0x40;
+ 508:USBX/App/ux_device_descriptors.c ****     pDevQualDesc->bNumConfigurations = 0x01;
+ 509:USBX/App/ux_device_descriptors.c ****     pDevQualDesc->bReserved = 0x00;
+ 510:USBX/App/ux_device_descriptors.c ****     pdev->CurrDevDescSz += (uint32_t)sizeof(USBD_DevQualiDescTypedef);
+ 511:USBX/App/ux_device_descriptors.c ****   }
+ 512:USBX/App/ux_device_descriptors.c **** 
+ 513:USBX/App/ux_device_descriptors.c ****   /* Build the device framework */
+ 514:USBX/App/ux_device_descriptors.c ****   while (Idx_Instance < USBD_MAX_SUPPORTED_CLASS)
+ 515:USBX/App/ux_device_descriptors.c ****   {
+ 516:USBX/App/ux_device_descriptors.c ****     if ((pdev->classId < USBD_MAX_SUPPORTED_CLASS) &&
+ 517:USBX/App/ux_device_descriptors.c ****         (pdev->NumClasses < USBD_MAX_SUPPORTED_CLASS) &&
+ 518:USBX/App/ux_device_descriptors.c ****         (UserClassInstance[Idx_Instance] != CLASS_TYPE_NONE))
+ 519:USBX/App/ux_device_descriptors.c ****     {
+ 520:USBX/App/ux_device_descriptors.c ****       /* Call the composite class builder */
+ 521:USBX/App/ux_device_descriptors.c ****       (void)USBD_FrameWork_AddClass(pdev,
+ 522:USBX/App/ux_device_descriptors.c ****                                     (USBD_CompositeClassTypeDef)UserClassInstance[Idx_Instance],
+ 523:USBX/App/ux_device_descriptors.c ****                                     0, Speed,
+ 524:USBX/App/ux_device_descriptors.c ****                                     (pDevFrameWorkDesc + pdev->CurrDevDescSz));
+ 525:USBX/App/ux_device_descriptors.c **** 
+ 526:USBX/App/ux_device_descriptors.c ****       /* Increment the ClassId for the next occurrence */
+ 527:USBX/App/ux_device_descriptors.c ****       pdev->classId ++;
+ 528:USBX/App/ux_device_descriptors.c ****       pdev->NumClasses ++;
+ 529:USBX/App/ux_device_descriptors.c ****     }
+ 530:USBX/App/ux_device_descriptors.c **** 
+ 531:USBX/App/ux_device_descriptors.c ****     Idx_Instance++;
+ 532:USBX/App/ux_device_descriptors.c ****   }
+ 533:USBX/App/ux_device_descriptors.c **** 
+ 534:USBX/App/ux_device_descriptors.c ****   /* Check if there is a composite class and update device class */
+ 535:USBX/App/ux_device_descriptors.c ****   if (pdev->NumClasses > 1)
+ 536:USBX/App/ux_device_descriptors.c ****   {
+ 537:USBX/App/ux_device_descriptors.c ****     pDevDesc->bDeviceClass = 0xEF;
+ 538:USBX/App/ux_device_descriptors.c ****     pDevDesc->bDeviceSubClass = 0x02;
+ 539:USBX/App/ux_device_descriptors.c ****     pDevDesc->bDeviceProtocol = 0x01;
+ 540:USBX/App/ux_device_descriptors.c ****   }
+ 541:USBX/App/ux_device_descriptors.c ****   else
+ 542:USBX/App/ux_device_descriptors.c ****   {
+ 543:USBX/App/ux_device_descriptors.c ****     /* Check if the CDC ACM class is set and update device class */
+ 544:USBX/App/ux_device_descriptors.c ****     if (UserClassInstance[0] == CLASS_TYPE_CDC_ACM)
+ 545:USBX/App/ux_device_descriptors.c ****     {
+ 546:USBX/App/ux_device_descriptors.c ****       pDevDesc->bDeviceClass = 0x02;
+ 547:USBX/App/ux_device_descriptors.c ****       pDevDesc->bDeviceSubClass = 0x02;
+ 548:USBX/App/ux_device_descriptors.c ****       pDevDesc->bDeviceProtocol = 0x00;
+ 549:USBX/App/ux_device_descriptors.c ****     }
+ 550:USBX/App/ux_device_descriptors.c ****   }
+ 551:USBX/App/ux_device_descriptors.c **** 
+ 552:USBX/App/ux_device_descriptors.c ****   return pDevFrameWorkDesc;
+ 553:USBX/App/ux_device_descriptors.c **** }
+ 554:USBX/App/ux_device_descriptors.c **** 
+ 555:USBX/App/ux_device_descriptors.c **** /**
+ARM GAS  C:\Users\sapph\AppData\Local\Temp\ccnHyWoZ.s 			page 14
+
+
+ 556:USBX/App/ux_device_descriptors.c ****   * @brief  USBD_FrameWork_AddClass
+ 557:USBX/App/ux_device_descriptors.c ****   *         Register a class in the class builder
+ 558:USBX/App/ux_device_descriptors.c ****   * @param  pdev: device instance
+ 559:USBX/App/ux_device_descriptors.c ****   * @param  class: type of the class to be added (from USBD_CompositeClassTypeDef)
+ 560:USBX/App/ux_device_descriptors.c ****   * @param  cfgidx: configuration index
+ 561:USBX/App/ux_device_descriptors.c ****   * @param  speed: device speed
+ 562:USBX/App/ux_device_descriptors.c ****   * @param  pCmpstConfDesc: to composite device configuration descriptor
+ 563:USBX/App/ux_device_descriptors.c ****   * @retval status
+ 564:USBX/App/ux_device_descriptors.c ****   */
+ 565:USBX/App/ux_device_descriptors.c **** uint8_t  USBD_FrameWork_AddClass(USBD_DevClassHandleTypeDef *pdev,
+ 566:USBX/App/ux_device_descriptors.c ****                                  USBD_CompositeClassTypeDef class,
+ 567:USBX/App/ux_device_descriptors.c ****                                  uint8_t cfgidx, uint8_t Speed,
+ 568:USBX/App/ux_device_descriptors.c ****                                  uint8_t *pCmpstConfDesc)
+ 569:USBX/App/ux_device_descriptors.c **** {
+ 570:USBX/App/ux_device_descriptors.c **** 
+ 571:USBX/App/ux_device_descriptors.c ****   static uint8_t interface_idx = 0U;
+ 572:USBX/App/ux_device_descriptors.c **** 
+ 573:USBX/App/ux_device_descriptors.c ****   if ((pdev->classId < USBD_MAX_SUPPORTED_CLASS) &&
+ 574:USBX/App/ux_device_descriptors.c ****       (pdev->tclasslist[pdev->classId].Active == 0U))
+ 575:USBX/App/ux_device_descriptors.c ****   {
+ 576:USBX/App/ux_device_descriptors.c ****     /* Store the class parameters in the global tab */
+ 577:USBX/App/ux_device_descriptors.c ****     pdev->tclasslist[pdev->classId].ClassId = pdev->classId;
+ 578:USBX/App/ux_device_descriptors.c ****     pdev->tclasslist[pdev->classId].Active = 1U;
+ 579:USBX/App/ux_device_descriptors.c ****     pdev->tclasslist[pdev->classId].ClassType = class;
+ 580:USBX/App/ux_device_descriptors.c **** 
+ 581:USBX/App/ux_device_descriptors.c ****     if (class == CLASS_TYPE_HID)
+ 582:USBX/App/ux_device_descriptors.c ****     {
+ 583:USBX/App/ux_device_descriptors.c ****       pdev->tclasslist[pdev->classId].InterfaceType = UserHIDInterface[interface_idx];
+ 584:USBX/App/ux_device_descriptors.c **** 
+ 585:USBX/App/ux_device_descriptors.c ****       interface_idx++;
+ 586:USBX/App/ux_device_descriptors.c **** 
+ 587:USBX/App/ux_device_descriptors.c ****       if (interface_idx == sizeof(UserHIDInterface))
+ 588:USBX/App/ux_device_descriptors.c ****       {
+ 589:USBX/App/ux_device_descriptors.c ****         interface_idx = 0U;
+ 590:USBX/App/ux_device_descriptors.c ****       }
+ 591:USBX/App/ux_device_descriptors.c ****     }
+ 592:USBX/App/ux_device_descriptors.c **** 
+ 593:USBX/App/ux_device_descriptors.c ****     /* Call configuration descriptor builder and endpoint configuration builder */
+ 594:USBX/App/ux_device_descriptors.c ****     if (USBD_FrameWork_AddToConfDesc(pdev, Speed, pCmpstConfDesc) != UX_SUCCESS)
+ 595:USBX/App/ux_device_descriptors.c ****     {
+ 596:USBX/App/ux_device_descriptors.c ****       return UX_ERROR;
+ 597:USBX/App/ux_device_descriptors.c ****     }
+ 598:USBX/App/ux_device_descriptors.c ****   }
+ 599:USBX/App/ux_device_descriptors.c **** 
+ 600:USBX/App/ux_device_descriptors.c ****   UNUSED(cfgidx);
+ 601:USBX/App/ux_device_descriptors.c **** 
+ 602:USBX/App/ux_device_descriptors.c ****   return UX_SUCCESS;
+ 603:USBX/App/ux_device_descriptors.c **** }
+ 604:USBX/App/ux_device_descriptors.c **** 
+ 605:USBX/App/ux_device_descriptors.c **** /**
+ 606:USBX/App/ux_device_descriptors.c ****   * @brief  USBD_FrameWork_AddToConfDesc
+ 607:USBX/App/ux_device_descriptors.c ****   *         Add a new class to the configuration descriptor
+ 608:USBX/App/ux_device_descriptors.c ****   * @param  pdev: device instance
+ 609:USBX/App/ux_device_descriptors.c ****   * @param  Speed: device speed
+ 610:USBX/App/ux_device_descriptors.c ****   * @param  pCmpstConfDesc: to composite device configuration descriptor
+ 611:USBX/App/ux_device_descriptors.c ****   * @retval status
+ 612:USBX/App/ux_device_descriptors.c ****   */
+ARM GAS  C:\Users\sapph\AppData\Local\Temp\ccnHyWoZ.s 			page 15
+
+
+ 613:USBX/App/ux_device_descriptors.c **** uint8_t  USBD_FrameWork_AddToConfDesc(USBD_DevClassHandleTypeDef *pdev, uint8_t Speed,
+ 614:USBX/App/ux_device_descriptors.c ****                                       uint8_t *pCmpstConfDesc)
+ 615:USBX/App/ux_device_descriptors.c **** {
+ 616:USBX/App/ux_device_descriptors.c ****   uint8_t interface = 0U;
+ 617:USBX/App/ux_device_descriptors.c **** 
+ 618:USBX/App/ux_device_descriptors.c ****   /* USER CODE BEGIN FrameWork_AddToConfDesc_0 */
+ 619:USBX/App/ux_device_descriptors.c **** 
+ 620:USBX/App/ux_device_descriptors.c ****   /* USER CODE END FrameWork_AddToConfDesc_0 */
+ 621:USBX/App/ux_device_descriptors.c **** 
+ 622:USBX/App/ux_device_descriptors.c ****   /* The USB drivers do not set the speed value, so set it here before starting */
+ 623:USBX/App/ux_device_descriptors.c ****   pdev->Speed = Speed;
+ 624:USBX/App/ux_device_descriptors.c **** 
+ 625:USBX/App/ux_device_descriptors.c ****   /* start building the config descriptor common part */
+ 626:USBX/App/ux_device_descriptors.c ****   if (pdev->classId == 0U)
+ 627:USBX/App/ux_device_descriptors.c ****   {
+ 628:USBX/App/ux_device_descriptors.c ****     /* Add configuration and IAD descriptors */
+ 629:USBX/App/ux_device_descriptors.c ****     USBD_FrameWork_AddConfDesc((uint32_t)pCmpstConfDesc, &pdev->CurrConfDescSz);
+ 630:USBX/App/ux_device_descriptors.c ****   }
+ 631:USBX/App/ux_device_descriptors.c **** 
+ 632:USBX/App/ux_device_descriptors.c ****   switch (pdev->tclasslist[pdev->classId].ClassType)
+ 633:USBX/App/ux_device_descriptors.c ****   {
+ 634:USBX/App/ux_device_descriptors.c **** 
+ 635:USBX/App/ux_device_descriptors.c **** #if USBD_HID_CLASS_ACTIVATED == 1U
+ 636:USBX/App/ux_device_descriptors.c **** 
+ 637:USBX/App/ux_device_descriptors.c ****     case CLASS_TYPE_HID:
+ 638:USBX/App/ux_device_descriptors.c **** 
+ 639:USBX/App/ux_device_descriptors.c ****       switch(pdev->tclasslist[pdev->classId].InterfaceType)
+ 640:USBX/App/ux_device_descriptors.c ****       {
+ 641:USBX/App/ux_device_descriptors.c **** 
+ 642:USBX/App/ux_device_descriptors.c **** #if USBD_HID_KEYBOARD_ACTIVATED == 1U
+ 643:USBX/App/ux_device_descriptors.c **** 
+ 644:USBX/App/ux_device_descriptors.c ****         case INTERFACE_HID_KEYBOARD:
+ 645:USBX/App/ux_device_descriptors.c **** 
+ 646:USBX/App/ux_device_descriptors.c ****           /* Find the first available interface slot and Assign number of interfaces */
+ 647:USBX/App/ux_device_descriptors.c ****           interface = USBD_FrameWork_FindFreeIFNbr(pdev);
+ 648:USBX/App/ux_device_descriptors.c ****           pdev->tclasslist[pdev->classId].NumIf = 1U;
+ 649:USBX/App/ux_device_descriptors.c ****           pdev->tclasslist[pdev->classId].Ifs[0] = interface;
+ 650:USBX/App/ux_device_descriptors.c **** 
+ 651:USBX/App/ux_device_descriptors.c ****           /* Assign endpoint numbers */
+ 652:USBX/App/ux_device_descriptors.c ****           pdev->tclasslist[pdev->classId].NumEps = 1U; /* EP_IN */
+ 653:USBX/App/ux_device_descriptors.c **** 
+ 654:USBX/App/ux_device_descriptors.c ****           /* Check the current speed to assign endpoint IN */
+ 655:USBX/App/ux_device_descriptors.c ****           if (pdev->Speed == USBD_HIGH_SPEED)
+ 656:USBX/App/ux_device_descriptors.c ****           {
+ 657:USBX/App/ux_device_descriptors.c ****             /* Assign IN Endpoint */
+ 658:USBX/App/ux_device_descriptors.c ****             USBD_FrameWork_AssignEp(pdev, USBD_HID_KEYBOARD_EPIN_ADDR,
+ 659:USBX/App/ux_device_descriptors.c ****                                     USBD_EP_TYPE_INTR, USBD_HID_KEYBOARD_EPIN_HS_MPS);
+ 660:USBX/App/ux_device_descriptors.c ****           }
+ 661:USBX/App/ux_device_descriptors.c ****           else
+ 662:USBX/App/ux_device_descriptors.c ****           {
+ 663:USBX/App/ux_device_descriptors.c ****             /* Assign IN Endpoint */
+ 664:USBX/App/ux_device_descriptors.c ****             USBD_FrameWork_AssignEp(pdev, USBD_HID_KEYBOARD_EPIN_ADDR,
+ 665:USBX/App/ux_device_descriptors.c ****                                     USBD_EP_TYPE_INTR, USBD_HID_KEYBOARD_EPIN_FS_MPS);
+ 666:USBX/App/ux_device_descriptors.c ****           }
+ 667:USBX/App/ux_device_descriptors.c **** 
+ 668:USBX/App/ux_device_descriptors.c ****           /* Configure and Append the Descriptor */
+ 669:USBX/App/ux_device_descriptors.c ****           USBD_FrameWork_HID_Desc(pdev, (uint32_t)pCmpstConfDesc, &pdev->CurrConfDescSz);
+ARM GAS  C:\Users\sapph\AppData\Local\Temp\ccnHyWoZ.s 			page 16
+
+
+ 670:USBX/App/ux_device_descriptors.c **** 
+ 671:USBX/App/ux_device_descriptors.c ****           break;
+ 672:USBX/App/ux_device_descriptors.c **** 
+ 673:USBX/App/ux_device_descriptors.c **** #endif /* USBD_HID_KEYBOARD_ACTIVATED == 1U */
+ 674:USBX/App/ux_device_descriptors.c **** 
+ 675:USBX/App/ux_device_descriptors.c ****         default:
+ 676:USBX/App/ux_device_descriptors.c ****           break;
+ 677:USBX/App/ux_device_descriptors.c ****       }
+ 678:USBX/App/ux_device_descriptors.c **** 
+ 679:USBX/App/ux_device_descriptors.c ****       break;
+ 680:USBX/App/ux_device_descriptors.c **** #endif /* USBD_HID_CLASS_ACTIVATED == 1U */
+ 681:USBX/App/ux_device_descriptors.c ****     /* USER CODE BEGIN FrameWork_AddToConfDesc_1 */
+ 682:USBX/App/ux_device_descriptors.c **** 
+ 683:USBX/App/ux_device_descriptors.c ****     /* USER CODE END FrameWork_AddToConfDesc_1 */
+ 684:USBX/App/ux_device_descriptors.c **** 
+ 685:USBX/App/ux_device_descriptors.c ****     default:
+ 686:USBX/App/ux_device_descriptors.c ****       /* USER CODE BEGIN FrameWork_AddToConfDesc_2 */
+ 687:USBX/App/ux_device_descriptors.c **** 
+ 688:USBX/App/ux_device_descriptors.c ****       /* USER CODE END FrameWork_AddToConfDesc_2 */
+ 689:USBX/App/ux_device_descriptors.c ****       break;
+ 690:USBX/App/ux_device_descriptors.c ****   }
+ 691:USBX/App/ux_device_descriptors.c **** 
+ 692:USBX/App/ux_device_descriptors.c ****   return UX_SUCCESS;
+ 693:USBX/App/ux_device_descriptors.c **** }
+ 694:USBX/App/ux_device_descriptors.c **** 
+ 695:USBX/App/ux_device_descriptors.c **** /**
+ 696:USBX/App/ux_device_descriptors.c ****   * @brief  USBD_FrameWork_FindFreeIFNbr
+ 697:USBX/App/ux_device_descriptors.c ****   *         Find the first interface available slot
+ 698:USBX/App/ux_device_descriptors.c ****   * @param  pdev: device instance
+ 699:USBX/App/ux_device_descriptors.c ****   * @retval The interface number to be used
+ 700:USBX/App/ux_device_descriptors.c ****   */
+ 701:USBX/App/ux_device_descriptors.c **** static uint8_t USBD_FrameWork_FindFreeIFNbr(USBD_DevClassHandleTypeDef *pdev)
+ 702:USBX/App/ux_device_descriptors.c **** {
+ 162              		.loc 1 702 1 is_stmt 1 view -0
+ 163              		.cfi_startproc
+ 164              		@ args = 0, pretend = 0, frame = 0
+ 165              		@ frame_needed = 0, uses_anonymous_args = 0
+ 166              		@ link register save eliminated.
+ 703:USBX/App/ux_device_descriptors.c ****   uint32_t idx = 0U;
+ 167              		.loc 1 703 3 view .LVU44
+ 704:USBX/App/ux_device_descriptors.c **** 
+ 705:USBX/App/ux_device_descriptors.c ****   /* Unroll all already activated classes */
+ 706:USBX/App/ux_device_descriptors.c ****   for (uint32_t i = 0U; i < pdev->NumClasses; i++)
+ 168              		.loc 1 706 3 view .LVU45
+ 169              	.LBB2:
+ 170              		.loc 1 706 8 view .LVU46
+ 171              		.loc 1 706 17 is_stmt 0 view .LVU47
+ 172 0000 4FF0000C 		mov	ip, #0
+ 173              	.LBE2:
+ 703:USBX/App/ux_device_descriptors.c ****   uint32_t idx = 0U;
+ 174              		.loc 1 703 12 view .LVU48
+ 175 0004 6146     		mov	r1, ip
+ 176              	.LBB5:
+ 177              		.loc 1 706 3 view .LVU49
+ 178 0006 09E0     		b	.L13
+ 179              	.LVL17:
+ 180              	.L14:
+ARM GAS  C:\Users\sapph\AppData\Local\Temp\ccnHyWoZ.s 			page 17
+
+
+ 181              	.LBB3:
+ 707:USBX/App/ux_device_descriptors.c ****   {
+ 708:USBX/App/ux_device_descriptors.c ****     /* Unroll each class interfaces */
+ 709:USBX/App/ux_device_descriptors.c ****     for (uint32_t j = 0U; j < pdev->tclasslist[i].NumIf; j++)
+ 710:USBX/App/ux_device_descriptors.c ****     {
+ 711:USBX/App/ux_device_descriptors.c ****       /* Increment the interface counter index */
+ 712:USBX/App/ux_device_descriptors.c ****       idx++;
+ 182              		.loc 1 712 7 is_stmt 1 view .LVU50
+ 183              		.loc 1 712 10 is_stmt 0 view .LVU51
+ 184 0008 0131     		adds	r1, r1, #1
+ 185              	.LVL18:
+ 709:USBX/App/ux_device_descriptors.c ****     {
+ 186              		.loc 1 709 59 is_stmt 1 discriminator 3 view .LVU52
+ 187 000a 0132     		adds	r2, r2, #1
+ 188              	.LVL19:
+ 189              	.L15:
+ 709:USBX/App/ux_device_descriptors.c ****     {
+ 190              		.loc 1 709 29 discriminator 1 view .LVU53
+ 709:USBX/App/ux_device_descriptors.c ****     {
+ 191              		.loc 1 709 50 is_stmt 0 discriminator 1 view .LVU54
+ 192 000c 5C23     		movs	r3, #92
+ 193 000e 03FB0C03 		mla	r3, r3, ip, r0
+ 194 0012 1B6A     		ldr	r3, [r3, #32]
+ 709:USBX/App/ux_device_descriptors.c ****     {
+ 195              		.loc 1 709 29 discriminator 1 view .LVU55
+ 196 0014 9342     		cmp	r3, r2
+ 197 0016 F7D8     		bhi	.L14
+ 709:USBX/App/ux_device_descriptors.c ****     {
+ 198              		.loc 1 709 29 discriminator 1 view .LVU56
+ 199              	.LBE3:
+ 706:USBX/App/ux_device_descriptors.c ****   {
+ 200              		.loc 1 706 48 is_stmt 1 discriminator 2 view .LVU57
+ 201 0018 0CF1010C 		add	ip, ip, #1
+ 202              	.LVL20:
+ 203              	.L13:
+ 706:USBX/App/ux_device_descriptors.c ****   {
+ 204              		.loc 1 706 27 discriminator 1 view .LVU58
+ 706:USBX/App/ux_device_descriptors.c ****   {
+ 205              		.loc 1 706 33 is_stmt 0 discriminator 1 view .LVU59
+ 206 001c 8368     		ldr	r3, [r0, #8]
+ 706:USBX/App/ux_device_descriptors.c ****   {
+ 207              		.loc 1 706 27 discriminator 1 view .LVU60
+ 208 001e 6345     		cmp	r3, ip
+ 209 0020 01D9     		bls	.L17
+ 210              	.LBB4:
+ 709:USBX/App/ux_device_descriptors.c ****     {
+ 211              		.loc 1 709 19 view .LVU61
+ 212 0022 0022     		movs	r2, #0
+ 213 0024 F2E7     		b	.L15
+ 214              	.L17:
+ 215              	.LBE4:
+ 216              	.LBE5:
+ 713:USBX/App/ux_device_descriptors.c ****     }
+ 714:USBX/App/ux_device_descriptors.c ****   }
+ 715:USBX/App/ux_device_descriptors.c **** 
+ 716:USBX/App/ux_device_descriptors.c ****   /* Return the first available interface slot */
+ 717:USBX/App/ux_device_descriptors.c ****   return (uint8_t)idx;
+ARM GAS  C:\Users\sapph\AppData\Local\Temp\ccnHyWoZ.s 			page 18
+
+
+ 217              		.loc 1 717 3 is_stmt 1 view .LVU62
+ 718:USBX/App/ux_device_descriptors.c **** }
+ 218              		.loc 1 718 1 is_stmt 0 view .LVU63
+ 219 0026 C8B2     		uxtb	r0, r1
+ 220              	.LVL21:
+ 221              		.loc 1 718 1 view .LVU64
+ 222 0028 7047     		bx	lr
+ 223              		.cfi_endproc
+ 224              	.LFE175:
+ 226              		.section	.text.USBD_FrameWork_AddConfDesc,"ax",%progbits
+ 227              		.align	1
+ 228              		.syntax unified
+ 229              		.thumb
+ 230              		.thumb_func
+ 232              	USBD_FrameWork_AddConfDesc:
+ 233              	.LVL22:
+ 234              	.LFB176:
+ 719:USBX/App/ux_device_descriptors.c **** 
+ 720:USBX/App/ux_device_descriptors.c **** /**
+ 721:USBX/App/ux_device_descriptors.c ****   * @brief  USBD_FrameWork_AddConfDesc
+ 722:USBX/App/ux_device_descriptors.c ****   *         Add a new class to the configuration descriptor
+ 723:USBX/App/ux_device_descriptors.c ****   * @param  Conf: configuration descriptor
+ 724:USBX/App/ux_device_descriptors.c ****   * @param  pSze: pointer to the configuration descriptor size
+ 725:USBX/App/ux_device_descriptors.c ****   * @retval none
+ 726:USBX/App/ux_device_descriptors.c ****   */
+ 727:USBX/App/ux_device_descriptors.c **** static void  USBD_FrameWork_AddConfDesc(uint32_t Conf, uint32_t *pSze)
+ 728:USBX/App/ux_device_descriptors.c **** {
+ 235              		.loc 1 728 1 is_stmt 1 view -0
+ 236              		.cfi_startproc
+ 237              		@ args = 0, pretend = 0, frame = 0
+ 238              		@ frame_needed = 0, uses_anonymous_args = 0
+ 239              		@ link register save eliminated.
+ 729:USBX/App/ux_device_descriptors.c ****   /* Intermediate variable to comply with MISRA-C Rule 11.3 */
+ 730:USBX/App/ux_device_descriptors.c ****   USBD_ConfigDescTypedef *ptr = (USBD_ConfigDescTypedef *)Conf;
+ 240              		.loc 1 730 3 view .LVU66
+ 731:USBX/App/ux_device_descriptors.c **** 
+ 732:USBX/App/ux_device_descriptors.c ****   ptr->bLength = (uint8_t)sizeof(USBD_ConfigDescTypedef);
+ 241              		.loc 1 732 3 view .LVU67
+ 242              		.loc 1 732 16 is_stmt 0 view .LVU68
+ 243 0000 0923     		movs	r3, #9
+ 244 0002 0370     		strb	r3, [r0]
+ 733:USBX/App/ux_device_descriptors.c ****   ptr->bDescriptorType = USB_DESC_TYPE_CONFIGURATION;
+ 245              		.loc 1 733 3 is_stmt 1 view .LVU69
+ 246              		.loc 1 733 24 is_stmt 0 view .LVU70
+ 247 0004 0223     		movs	r3, #2
+ 248 0006 4370     		strb	r3, [r0, #1]
+ 734:USBX/App/ux_device_descriptors.c ****   ptr->wDescriptorLength = 0U;
+ 249              		.loc 1 734 3 is_stmt 1 view .LVU71
+ 250              		.loc 1 734 26 is_stmt 0 view .LVU72
+ 251 0008 0023     		movs	r3, #0
+ 252 000a 8370     		strb	r3, [r0, #2]
+ 253 000c C370     		strb	r3, [r0, #3]
+ 735:USBX/App/ux_device_descriptors.c ****   ptr->bNumInterfaces = 0U;
+ 254              		.loc 1 735 3 is_stmt 1 view .LVU73
+ 255              		.loc 1 735 23 is_stmt 0 view .LVU74
+ 256 000e 0371     		strb	r3, [r0, #4]
+ 736:USBX/App/ux_device_descriptors.c ****   ptr->bConfigurationValue = 1U;
+ARM GAS  C:\Users\sapph\AppData\Local\Temp\ccnHyWoZ.s 			page 19
+
+
+ 257              		.loc 1 736 3 is_stmt 1 view .LVU75
+ 258              		.loc 1 736 28 is_stmt 0 view .LVU76
+ 259 0010 0122     		movs	r2, #1
+ 260 0012 4271     		strb	r2, [r0, #5]
+ 737:USBX/App/ux_device_descriptors.c ****   ptr->iConfiguration = USBD_CONFIG_STR_DESC_IDX;
+ 261              		.loc 1 737 3 is_stmt 1 view .LVU77
+ 262              		.loc 1 737 23 is_stmt 0 view .LVU78
+ 263 0014 8371     		strb	r3, [r0, #6]
+ 738:USBX/App/ux_device_descriptors.c ****   ptr->bmAttributes = USBD_CONFIG_BMATTRIBUTES;
+ 264              		.loc 1 738 3 is_stmt 1 view .LVU79
+ 265              		.loc 1 738 21 is_stmt 0 view .LVU80
+ 266 0016 C023     		movs	r3, #192
+ 267 0018 C371     		strb	r3, [r0, #7]
+ 739:USBX/App/ux_device_descriptors.c ****   ptr->bMaxPower = USBD_CONFIG_MAXPOWER;
+ 268              		.loc 1 739 3 is_stmt 1 view .LVU81
+ 269              		.loc 1 739 18 is_stmt 0 view .LVU82
+ 270 001a 1923     		movs	r3, #25
+ 271 001c 0372     		strb	r3, [r0, #8]
+ 740:USBX/App/ux_device_descriptors.c ****   *pSze += sizeof(USBD_ConfigDescTypedef);
+ 272              		.loc 1 740 3 is_stmt 1 view .LVU83
+ 273 001e 0B68     		ldr	r3, [r1]
+ 274              		.loc 1 740 9 is_stmt 0 view .LVU84
+ 275 0020 0933     		adds	r3, r3, #9
+ 276 0022 0B60     		str	r3, [r1]
+ 741:USBX/App/ux_device_descriptors.c **** }
+ 277              		.loc 1 741 1 view .LVU85
+ 278 0024 7047     		bx	lr
+ 279              		.cfi_endproc
+ 280              	.LFE176:
+ 282              		.section	.text.USBD_FrameWork_AssignEp,"ax",%progbits
+ 283              		.align	1
+ 284              		.syntax unified
+ 285              		.thumb
+ 286              		.thumb_func
+ 288              	USBD_FrameWork_AssignEp:
+ 289              	.LVL23:
+ 290              	.LFB177:
+ 742:USBX/App/ux_device_descriptors.c **** 
+ 743:USBX/App/ux_device_descriptors.c **** /**
+ 744:USBX/App/ux_device_descriptors.c ****   * @brief  USBD_FrameWork_AssignEp
+ 745:USBX/App/ux_device_descriptors.c ****   *         Assign and endpoint
+ 746:USBX/App/ux_device_descriptors.c ****   * @param  pdev: device instance
+ 747:USBX/App/ux_device_descriptors.c ****   * @param  Add: Endpoint address
+ 748:USBX/App/ux_device_descriptors.c ****   * @param  Type: Endpoint type
+ 749:USBX/App/ux_device_descriptors.c ****   * @param  Sze: Endpoint max packet size
+ 750:USBX/App/ux_device_descriptors.c ****   * @retval none
+ 751:USBX/App/ux_device_descriptors.c ****   */
+ 752:USBX/App/ux_device_descriptors.c **** static void  USBD_FrameWork_AssignEp(USBD_DevClassHandleTypeDef *pdev,
+ 753:USBX/App/ux_device_descriptors.c ****                                      uint8_t Add, uint8_t Type, uint32_t Sze)
+ 754:USBX/App/ux_device_descriptors.c **** {
+ 291              		.loc 1 754 1 is_stmt 1 view -0
+ 292              		.cfi_startproc
+ 293              		@ args = 0, pretend = 0, frame = 0
+ 294              		@ frame_needed = 0, uses_anonymous_args = 0
+ 295              		.loc 1 754 1 is_stmt 0 view .LVU87
+ 296 0000 30B5     		push	{r4, r5, lr}
+ 297              		.cfi_def_cfa_offset 12
+ARM GAS  C:\Users\sapph\AppData\Local\Temp\ccnHyWoZ.s 			page 20
+
+
+ 298              		.cfi_offset 4, -12
+ 299              		.cfi_offset 5, -8
+ 300              		.cfi_offset 14, -4
+ 755:USBX/App/ux_device_descriptors.c ****   uint32_t idx = 0U;
+ 301              		.loc 1 755 3 is_stmt 1 view .LVU88
+ 302              	.LVL24:
+ 756:USBX/App/ux_device_descriptors.c **** 
+ 757:USBX/App/ux_device_descriptors.c ****   /* Find the first available endpoint slot */
+ 758:USBX/App/ux_device_descriptors.c ****   while (((idx < (pdev->tclasslist[pdev->classId]).NumEps) && \
+ 303              		.loc 1 758 3 view .LVU89
+ 755:USBX/App/ux_device_descriptors.c ****   uint32_t idx = 0U;
+ 304              		.loc 1 755 12 is_stmt 0 view .LVU90
+ 305 0002 4FF0000E 		mov	lr, #0
+ 306              		.loc 1 758 9 view .LVU91
+ 307 0006 01E0     		b	.L20
+ 308              	.LVL25:
+ 309              	.L22:
+ 759:USBX/App/ux_device_descriptors.c ****           ((pdev->tclasslist[pdev->classId].Eps[idx].is_used) != 0U)))
+ 760:USBX/App/ux_device_descriptors.c ****   {
+ 761:USBX/App/ux_device_descriptors.c ****     /* Increment the index */
+ 762:USBX/App/ux_device_descriptors.c ****     idx++;
+ 310              		.loc 1 762 5 is_stmt 1 view .LVU92
+ 311              		.loc 1 762 8 is_stmt 0 view .LVU93
+ 312 0008 0EF1010E 		add	lr, lr, #1
+ 313              	.LVL26:
+ 314              	.L20:
+ 758:USBX/App/ux_device_descriptors.c ****           ((pdev->tclasslist[pdev->classId].Eps[idx].is_used) != 0U)))
+ 315              		.loc 1 758 60 is_stmt 1 view .LVU94
+ 758:USBX/App/ux_device_descriptors.c ****           ((pdev->tclasslist[pdev->classId].Eps[idx].is_used) != 0U)))
+ 316              		.loc 1 758 40 is_stmt 0 view .LVU95
+ 317 000c 4568     		ldr	r5, [r0, #4]
+ 758:USBX/App/ux_device_descriptors.c ****           ((pdev->tclasslist[pdev->classId].Eps[idx].is_used) != 0U)))
+ 318              		.loc 1 758 51 view .LVU96
+ 319 000e 4FF05C0C 		mov	ip, #92
+ 320 0012 0CFB050C 		mla	ip, ip, r5, r0
+ 321 0016 DCF81C40 		ldr	r4, [ip, #28]
+ 758:USBX/App/ux_device_descriptors.c ****           ((pdev->tclasslist[pdev->classId].Eps[idx].is_used) != 0U)))
+ 322              		.loc 1 758 60 view .LVU97
+ 323 001a 7445     		cmp	r4, lr
+ 324 001c 0CD9     		bls	.L21
+ 759:USBX/App/ux_device_descriptors.c ****           ((pdev->tclasslist[pdev->classId].Eps[idx].is_used) != 0U)))
+ 325              		.loc 1 759 53 view .LVU98
+ 326 001e 0EEB4E04 		add	r4, lr, lr, lsl #1
+ 327 0022 4FF05C0C 		mov	ip, #92
+ 328 0026 0CFB05FC 		mul	ip, ip, r5
+ 329 002a 0CEB440C 		add	ip, ip, r4, lsl #1
+ 330 002e 8444     		add	ip, ip, r0
+ 331 0030 9CF82840 		ldrb	r4, [ip, #40]	@ zero_extendqisi2
+ 758:USBX/App/ux_device_descriptors.c ****           ((pdev->tclasslist[pdev->classId].Eps[idx].is_used) != 0U)))
+ 332              		.loc 1 758 60 discriminator 1 view .LVU99
+ 333 0034 002C     		cmp	r4, #0
+ 334 0036 E7D1     		bne	.L22
+ 335              	.L21:
+ 763:USBX/App/ux_device_descriptors.c ****   }
+ 764:USBX/App/ux_device_descriptors.c **** 
+ 765:USBX/App/ux_device_descriptors.c ****   /* Configure the endpoint */
+ 766:USBX/App/ux_device_descriptors.c ****   pdev->tclasslist[pdev->classId].Eps[idx].add = Add;
+ARM GAS  C:\Users\sapph\AppData\Local\Temp\ccnHyWoZ.s 			page 21
+
+
+ 336              		.loc 1 766 3 is_stmt 1 view .LVU100
+ 337              		.loc 1 766 48 is_stmt 0 view .LVU101
+ 338 0038 0EEB4E04 		add	r4, lr, lr, lsl #1
+ 339 003c 4FF05C0C 		mov	ip, #92
+ 340 0040 0CFB05F5 		mul	r5, ip, r5
+ 341 0044 05EB4404 		add	r4, r5, r4, lsl #1
+ 342 0048 0444     		add	r4, r4, r0
+ 343 004a 84F82410 		strb	r1, [r4, #36]
+ 767:USBX/App/ux_device_descriptors.c ****   pdev->tclasslist[pdev->classId].Eps[idx].type = Type;
+ 344              		.loc 1 767 3 is_stmt 1 view .LVU102
+ 345              		.loc 1 767 49 is_stmt 0 view .LVU103
+ 346 004e 84F82520 		strb	r2, [r4, #37]
+ 768:USBX/App/ux_device_descriptors.c ****   pdev->tclasslist[pdev->classId].Eps[idx].size = (uint16_t) Sze;
+ 347              		.loc 1 768 3 is_stmt 1 view .LVU104
+ 348              		.loc 1 768 49 is_stmt 0 view .LVU105
+ 349 0052 E384     		strh	r3, [r4, #38]	@ movhi
+ 769:USBX/App/ux_device_descriptors.c ****   pdev->tclasslist[pdev->classId].Eps[idx].is_used = 1U;
+ 350              		.loc 1 769 3 is_stmt 1 view .LVU106
+ 351              		.loc 1 769 52 is_stmt 0 view .LVU107
+ 352 0054 0EEB4E0E 		add	lr, lr, lr, lsl #1
+ 353              	.LVL27:
+ 354              		.loc 1 769 52 view .LVU108
+ 355 0058 0123     		movs	r3, #1
+ 356              	.LVL28:
+ 357              		.loc 1 769 52 view .LVU109
+ 358 005a 84F82830 		strb	r3, [r4, #40]
+ 770:USBX/App/ux_device_descriptors.c **** }
+ 359              		.loc 1 770 1 view .LVU110
+ 360 005e 30BD     		pop	{r4, r5, pc}
+ 361              		.cfi_endproc
+ 362              	.LFE177:
+ 364              		.section	.rodata.USBD_Get_String_Framework.str1.4,"aMS",%progbits,1
+ 365              		.align	2
+ 366              	.LC0:
+ 367 0000 53544D69 		.ascii	"STMicroelectronics\000"
+ 367      63726F65 
+ 367      6C656374 
+ 367      726F6E69 
+ 367      637300
+ 368 0013 00       		.align	2
+ 369              	.LC1:
+ 370 0014 53544D33 		.ascii	"STM32 USB Device\000"
+ 370      32205553 
+ 370      42204465 
+ 370      76696365 
+ 370      00
+ 371 0025 000000   		.align	2
+ 372              	.LC2:
+ 373 0028 30303030 		.ascii	"000000000001\000"
+ 373      30303030 
+ 373      30303031 
+ 373      00
+ 374              		.section	.text.USBD_Get_String_Framework,"ax",%progbits
+ 375              		.align	1
+ 376              		.global	USBD_Get_String_Framework
+ 377              		.syntax unified
+ 378              		.thumb
+ARM GAS  C:\Users\sapph\AppData\Local\Temp\ccnHyWoZ.s 			page 22
+
+
+ 379              		.thumb_func
+ 381              	USBD_Get_String_Framework:
+ 382              	.LVL29:
+ 383              	.LFB164:
+ 225:USBX/App/ux_device_descriptors.c ****   uint16_t len = 0U;
+ 384              		.loc 1 225 1 is_stmt 1 view -0
+ 385              		.cfi_startproc
+ 386              		@ args = 0, pretend = 0, frame = 8
+ 387              		@ frame_needed = 0, uses_anonymous_args = 0
+ 225:USBX/App/ux_device_descriptors.c ****   uint16_t len = 0U;
+ 388              		.loc 1 225 1 is_stmt 0 view .LVU112
+ 389 0000 2DE9F041 		push	{r4, r5, r6, r7, r8, lr}
+ 390              		.cfi_def_cfa_offset 24
+ 391              		.cfi_offset 4, -24
+ 392              		.cfi_offset 5, -20
+ 393              		.cfi_offset 6, -16
+ 394              		.cfi_offset 7, -12
+ 395              		.cfi_offset 8, -8
+ 396              		.cfi_offset 14, -4
+ 397 0004 82B0     		sub	sp, sp, #8
+ 398              		.cfi_def_cfa_offset 32
+ 399 0006 0646     		mov	r6, r0
+ 226:USBX/App/ux_device_descriptors.c ****   uint8_t count = 0U;
+ 400              		.loc 1 226 3 is_stmt 1 view .LVU113
+ 226:USBX/App/ux_device_descriptors.c ****   uint8_t count = 0U;
+ 401              		.loc 1 226 12 is_stmt 0 view .LVU114
+ 402 0008 0023     		movs	r3, #0
+ 403 000a ADF80630 		strh	r3, [sp, #6]	@ movhi
+ 227:USBX/App/ux_device_descriptors.c **** 
+ 404              		.loc 1 227 3 is_stmt 1 view .LVU115
+ 405              	.LVL30:
+ 234:USBX/App/ux_device_descriptors.c ****   USBD_string_framework[count++] = USBD_LANGID_STRING >> 8;
+ 406              		.loc 1 234 3 view .LVU116
+ 234:USBX/App/ux_device_descriptors.c ****   USBD_string_framework[count++] = USBD_LANGID_STRING >> 8;
+ 407              		.loc 1 234 34 is_stmt 0 view .LVU117
+ 408 000e 214D     		ldr	r5, .L26
+ 409 0010 4FF00908 		mov	r8, #9
+ 410 0014 85F80080 		strb	r8, [r5]
+ 235:USBX/App/ux_device_descriptors.c ****   USBD_string_framework[count++] = USBD_IDX_MFC_STR;
+ 411              		.loc 1 235 3 is_stmt 1 view .LVU118
+ 412              	.LVL31:
+ 235:USBX/App/ux_device_descriptors.c ****   USBD_string_framework[count++] = USBD_IDX_MFC_STR;
+ 413              		.loc 1 235 34 is_stmt 0 view .LVU119
+ 414 0018 0427     		movs	r7, #4
+ 415 001a 6F70     		strb	r7, [r5, #1]
+ 236:USBX/App/ux_device_descriptors.c **** 
+ 416              		.loc 1 236 3 is_stmt 1 view .LVU120
+ 417              	.LVL32:
+ 236:USBX/App/ux_device_descriptors.c **** 
+ 418              		.loc 1 236 34 is_stmt 0 view .LVU121
+ 419 001c 0123     		movs	r3, #1
+ 420 001e AB70     		strb	r3, [r5, #2]
+ 239:USBX/App/ux_device_descriptors.c **** 
+ 421              		.loc 1 239 3 is_stmt 1 view .LVU122
+ 422 0020 0DF10602 		add	r2, sp, #6
+ 423 0024 E91C     		adds	r1, r5, #3
+ 424 0026 1C48     		ldr	r0, .L26+4
+ARM GAS  C:\Users\sapph\AppData\Local\Temp\ccnHyWoZ.s 			page 23
+
+
+ 425              	.LVL33:
+ 239:USBX/App/ux_device_descriptors.c **** 
+ 426              		.loc 1 239 3 is_stmt 0 view .LVU123
+ 427 0028 FFF7FEFF 		bl	USBD_Desc_GetString
+ 428              	.LVL34:
+ 242:USBX/App/ux_device_descriptors.c ****   USBD_string_framework[count++] = USBD_LANGID_STRING & 0xFF;
+ 429              		.loc 1 242 3 is_stmt 1 view .LVU124
+ 242:USBX/App/ux_device_descriptors.c ****   USBD_string_framework[count++] = USBD_LANGID_STRING & 0xFF;
+ 430              		.loc 1 242 9 is_stmt 0 view .LVU125
+ 431 002c 9DF80610 		ldrb	r1, [sp, #6]	@ zero_extendqisi2
+ 432 0030 CB19     		adds	r3, r1, r7
+ 433 0032 DBB2     		uxtb	r3, r3
+ 434              	.LVL35:
+ 243:USBX/App/ux_device_descriptors.c ****   USBD_string_framework[count++] = USBD_LANGID_STRING >> 8;
+ 435              		.loc 1 243 3 is_stmt 1 view .LVU126
+ 243:USBX/App/ux_device_descriptors.c ****   USBD_string_framework[count++] = USBD_LANGID_STRING >> 8;
+ 436              		.loc 1 243 30 is_stmt 0 view .LVU127
+ 437 0034 4A1D     		adds	r2, r1, #5
+ 438 0036 D2B2     		uxtb	r2, r2
+ 439              	.LVL36:
+ 243:USBX/App/ux_device_descriptors.c ****   USBD_string_framework[count++] = USBD_LANGID_STRING >> 8;
+ 440              		.loc 1 243 34 view .LVU128
+ 441 0038 05F80380 		strb	r8, [r5, r3]
+ 244:USBX/App/ux_device_descriptors.c ****   USBD_string_framework[count++] = USBD_IDX_PRODUCT_STR;
+ 442              		.loc 1 244 3 is_stmt 1 view .LVU129
+ 244:USBX/App/ux_device_descriptors.c ****   USBD_string_framework[count++] = USBD_IDX_PRODUCT_STR;
+ 443              		.loc 1 244 30 is_stmt 0 view .LVU130
+ 444 003c 8B1D     		adds	r3, r1, #6
+ 445 003e DBB2     		uxtb	r3, r3
+ 446              	.LVL37:
+ 244:USBX/App/ux_device_descriptors.c ****   USBD_string_framework[count++] = USBD_IDX_PRODUCT_STR;
+ 447              		.loc 1 244 34 view .LVU131
+ 448 0040 AF54     		strb	r7, [r5, r2]
+ 245:USBX/App/ux_device_descriptors.c **** 
+ 449              		.loc 1 245 3 is_stmt 1 view .LVU132
+ 245:USBX/App/ux_device_descriptors.c **** 
+ 450              		.loc 1 245 30 is_stmt 0 view .LVU133
+ 451 0042 0731     		adds	r1, r1, #7
+ 452 0044 CCB2     		uxtb	r4, r1
+ 453              	.LVL38:
+ 245:USBX/App/ux_device_descriptors.c **** 
+ 454              		.loc 1 245 34 view .LVU134
+ 455 0046 0222     		movs	r2, #2
+ 456 0048 EA54     		strb	r2, [r5, r3]
+ 248:USBX/App/ux_device_descriptors.c **** 
+ 457              		.loc 1 248 3 is_stmt 1 view .LVU135
+ 458 004a 0DF10602 		add	r2, sp, #6
+ 459 004e 2919     		adds	r1, r5, r4
+ 460 0050 1248     		ldr	r0, .L26+8
+ 461 0052 FFF7FEFF 		bl	USBD_Desc_GetString
+ 462              	.LVL39:
+ 251:USBX/App/ux_device_descriptors.c ****   USBD_string_framework[count++] = USBD_LANGID_STRING & 0xFF;
+ 463              		.loc 1 251 3 view .LVU136
+ 251:USBX/App/ux_device_descriptors.c ****   USBD_string_framework[count++] = USBD_LANGID_STRING & 0xFF;
+ 464              		.loc 1 251 9 is_stmt 0 view .LVU137
+ 465 0056 BDF80630 		ldrh	r3, [sp, #6]
+ 466 005a E118     		adds	r1, r4, r3
+ARM GAS  C:\Users\sapph\AppData\Local\Temp\ccnHyWoZ.s 			page 24
+
+
+ 467 005c C9B2     		uxtb	r1, r1
+ 468 005e 4B1C     		adds	r3, r1, #1
+ 469 0060 DBB2     		uxtb	r3, r3
+ 470              	.LVL40:
+ 252:USBX/App/ux_device_descriptors.c ****   USBD_string_framework[count++] = USBD_LANGID_STRING >> 8;
+ 471              		.loc 1 252 3 is_stmt 1 view .LVU138
+ 252:USBX/App/ux_device_descriptors.c ****   USBD_string_framework[count++] = USBD_LANGID_STRING >> 8;
+ 472              		.loc 1 252 30 is_stmt 0 view .LVU139
+ 473 0062 8A1C     		adds	r2, r1, #2
+ 474 0064 D2B2     		uxtb	r2, r2
+ 475              	.LVL41:
+ 252:USBX/App/ux_device_descriptors.c ****   USBD_string_framework[count++] = USBD_LANGID_STRING >> 8;
+ 476              		.loc 1 252 34 view .LVU140
+ 477 0066 05F80380 		strb	r8, [r5, r3]
+ 253:USBX/App/ux_device_descriptors.c ****   USBD_string_framework[count++] = USBD_IDX_SERIAL_STR;
+ 478              		.loc 1 253 3 is_stmt 1 view .LVU141
+ 253:USBX/App/ux_device_descriptors.c ****   USBD_string_framework[count++] = USBD_IDX_SERIAL_STR;
+ 479              		.loc 1 253 30 is_stmt 0 view .LVU142
+ 480 006a CB1C     		adds	r3, r1, #3
+ 481 006c DBB2     		uxtb	r3, r3
+ 482              	.LVL42:
+ 253:USBX/App/ux_device_descriptors.c ****   USBD_string_framework[count++] = USBD_IDX_SERIAL_STR;
+ 483              		.loc 1 253 34 view .LVU143
+ 484 006e AF54     		strb	r7, [r5, r2]
+ 254:USBX/App/ux_device_descriptors.c **** 
+ 485              		.loc 1 254 3 is_stmt 1 view .LVU144
+ 254:USBX/App/ux_device_descriptors.c **** 
+ 486              		.loc 1 254 30 is_stmt 0 view .LVU145
+ 487 0070 3944     		add	r1, r1, r7
+ 488              	.LVL43:
+ 254:USBX/App/ux_device_descriptors.c **** 
+ 489              		.loc 1 254 34 view .LVU146
+ 490 0072 0322     		movs	r2, #3
+ 491 0074 EA54     		strb	r2, [r5, r3]
+ 257:USBX/App/ux_device_descriptors.c **** 
+ 492              		.loc 1 257 3 is_stmt 1 view .LVU147
+ 493 0076 0DF10602 		add	r2, sp, #6
+ 494 007a 55FA81F1 		uxtab	r1, r5, r1
+ 495              	.LVL44:
+ 257:USBX/App/ux_device_descriptors.c **** 
+ 496              		.loc 1 257 3 is_stmt 0 view .LVU148
+ 497 007e 0848     		ldr	r0, .L26+12
+ 498 0080 FFF7FEFF 		bl	USBD_Desc_GetString
+ 499              	.LVL45:
+ 264:USBX/App/ux_device_descriptors.c **** 
+ 500              		.loc 1 264 3 is_stmt 1 view .LVU149
+ 264:USBX/App/ux_device_descriptors.c **** 
+ 501              		.loc 1 264 13 is_stmt 0 view .LVU150
+ 502 0084 2846     		mov	r0, r5
+ 503 0086 FFF7FEFF 		bl	strlen
+ 504              	.LVL46:
+ 264:USBX/App/ux_device_descriptors.c **** 
+ 505              		.loc 1 264 11 discriminator 1 view .LVU151
+ 506 008a 3060     		str	r0, [r6]
+ 266:USBX/App/ux_device_descriptors.c **** }
+ 507              		.loc 1 266 3 is_stmt 1 view .LVU152
+ 267:USBX/App/ux_device_descriptors.c **** 
+ARM GAS  C:\Users\sapph\AppData\Local\Temp\ccnHyWoZ.s 			page 25
+
+
+ 508              		.loc 1 267 1 is_stmt 0 view .LVU153
+ 509 008c 2846     		mov	r0, r5
+ 510 008e 02B0     		add	sp, sp, #8
+ 511              		.cfi_def_cfa_offset 24
+ 512              		@ sp needed
+ 513 0090 BDE8F081 		pop	{r4, r5, r6, r7, r8, pc}
+ 514              	.LVL47:
+ 515              	.L27:
+ 267:USBX/App/ux_device_descriptors.c **** 
+ 516              		.loc 1 267 1 view .LVU154
+ 517              		.align	2
+ 518              	.L26:
+ 519 0094 00000000 		.word	USBD_string_framework
+ 520 0098 00000000 		.word	.LC0
+ 521 009c 14000000 		.word	.LC1
+ 522 00a0 28000000 		.word	.LC2
+ 523              		.cfi_endproc
+ 524              	.LFE164:
+ 526              		.section	.text.USBD_Get_Language_Id_Framework,"ax",%progbits
+ 527              		.align	1
+ 528              		.global	USBD_Get_Language_Id_Framework
+ 529              		.syntax unified
+ 530              		.thumb
+ 531              		.thumb_func
+ 533              	USBD_Get_Language_Id_Framework:
+ 534              	.LVL48:
+ 535              	.LFB165:
+ 276:USBX/App/ux_device_descriptors.c ****   uint8_t count = 0U;
+ 536              		.loc 1 276 1 is_stmt 1 view -0
+ 537              		.cfi_startproc
+ 538              		@ args = 0, pretend = 0, frame = 0
+ 539              		@ frame_needed = 0, uses_anonymous_args = 0
+ 276:USBX/App/ux_device_descriptors.c ****   uint8_t count = 0U;
+ 540              		.loc 1 276 1 is_stmt 0 view .LVU156
+ 541 0000 38B5     		push	{r3, r4, r5, lr}
+ 542              		.cfi_def_cfa_offset 16
+ 543              		.cfi_offset 3, -16
+ 544              		.cfi_offset 4, -12
+ 545              		.cfi_offset 5, -8
+ 546              		.cfi_offset 14, -4
+ 547 0002 0546     		mov	r5, r0
+ 277:USBX/App/ux_device_descriptors.c **** 
+ 548              		.loc 1 277 3 is_stmt 1 view .LVU157
+ 549              	.LVL49:
+ 280:USBX/App/ux_device_descriptors.c ****   USBD_language_id_framework[count++] = USBD_LANGID_STRING >> 8;
+ 550              		.loc 1 280 3 view .LVU158
+ 280:USBX/App/ux_device_descriptors.c ****   USBD_language_id_framework[count++] = USBD_LANGID_STRING >> 8;
+ 551              		.loc 1 280 39 is_stmt 0 view .LVU159
+ 552 0004 054C     		ldr	r4, .L30
+ 553 0006 0923     		movs	r3, #9
+ 554 0008 2370     		strb	r3, [r4]
+ 281:USBX/App/ux_device_descriptors.c **** 
+ 555              		.loc 1 281 3 is_stmt 1 view .LVU160
+ 556              	.LVL50:
+ 281:USBX/App/ux_device_descriptors.c **** 
+ 557              		.loc 1 281 39 is_stmt 0 view .LVU161
+ 558 000a 0423     		movs	r3, #4
+ARM GAS  C:\Users\sapph\AppData\Local\Temp\ccnHyWoZ.s 			page 26
+
+
+ 559 000c 6370     		strb	r3, [r4, #1]
+ 284:USBX/App/ux_device_descriptors.c **** 
+ 560              		.loc 1 284 3 is_stmt 1 view .LVU162
+ 284:USBX/App/ux_device_descriptors.c **** 
+ 561              		.loc 1 284 13 is_stmt 0 view .LVU163
+ 562 000e 2046     		mov	r0, r4
+ 563              	.LVL51:
+ 284:USBX/App/ux_device_descriptors.c **** 
+ 564              		.loc 1 284 13 view .LVU164
+ 565 0010 FFF7FEFF 		bl	strlen
+ 566              	.LVL52:
+ 284:USBX/App/ux_device_descriptors.c **** 
+ 567              		.loc 1 284 11 discriminator 1 view .LVU165
+ 568 0014 2860     		str	r0, [r5]
+ 286:USBX/App/ux_device_descriptors.c **** }
+ 569              		.loc 1 286 3 is_stmt 1 view .LVU166
+ 287:USBX/App/ux_device_descriptors.c **** 
+ 570              		.loc 1 287 1 is_stmt 0 view .LVU167
+ 571 0016 2046     		mov	r0, r4
+ 572 0018 38BD     		pop	{r3, r4, r5, pc}
+ 573              	.LVL53:
+ 574              	.L31:
+ 287:USBX/App/ux_device_descriptors.c **** 
+ 575              		.loc 1 287 1 view .LVU168
+ 576 001a 00BF     		.align	2
+ 577              	.L30:
+ 578 001c 00000000 		.word	USBD_language_id_framework
+ 579              		.cfi_endproc
+ 580              	.LFE165:
+ 582              		.section	.text.USBD_Get_Interface_Number,"ax",%progbits
+ 583              		.align	1
+ 584              		.global	USBD_Get_Interface_Number
+ 585              		.syntax unified
+ 586              		.thumb
+ 587              		.thumb_func
+ 589              	USBD_Get_Interface_Number:
+ 590              	.LVL54:
+ 591              	.LFB166:
+ 297:USBX/App/ux_device_descriptors.c ****   uint8_t itf_num = 0U;
+ 592              		.loc 1 297 1 is_stmt 1 view -0
+ 593              		.cfi_startproc
+ 594              		@ args = 0, pretend = 0, frame = 0
+ 595              		@ frame_needed = 0, uses_anonymous_args = 0
+ 297:USBX/App/ux_device_descriptors.c ****   uint8_t itf_num = 0U;
+ 596              		.loc 1 297 1 is_stmt 0 view .LVU170
+ 597 0000 8446     		mov	ip, r0
+ 298:USBX/App/ux_device_descriptors.c ****   uint8_t idx = 0U;
+ 598              		.loc 1 298 3 is_stmt 1 view .LVU171
+ 599              	.LVL55:
+ 299:USBX/App/ux_device_descriptors.c **** 
+ 600              		.loc 1 299 3 view .LVU172
+ 305:USBX/App/ux_device_descriptors.c ****   {
+ 601              		.loc 1 305 3 view .LVU173
+ 305:USBX/App/ux_device_descriptors.c ****   {
+ 602              		.loc 1 305 11 is_stmt 0 view .LVU174
+ 603 0002 0023     		movs	r3, #0
+ 298:USBX/App/ux_device_descriptors.c ****   uint8_t idx = 0U;
+ARM GAS  C:\Users\sapph\AppData\Local\Temp\ccnHyWoZ.s 			page 27
+
+
+ 604              		.loc 1 298 11 view .LVU175
+ 605 0004 1846     		mov	r0, r3
+ 606              	.LVL56:
+ 305:USBX/App/ux_device_descriptors.c ****   {
+ 607              		.loc 1 305 20 is_stmt 1 discriminator 1 view .LVU176
+ 608 0006 022B     		cmp	r3, #2
+ 609 0008 1AD8     		bhi	.L40
+ 297:USBX/App/ux_device_descriptors.c ****   uint8_t itf_num = 0U;
+ 610              		.loc 1 297 1 is_stmt 0 view .LVU177
+ 611 000a 10B5     		push	{r4, lr}
+ 612              		.cfi_def_cfa_offset 8
+ 613              		.cfi_offset 4, -8
+ 614              		.cfi_offset 14, -4
+ 615 000c 03E0     		b	.L35
+ 616              	.LVL57:
+ 617              	.L34:
+ 305:USBX/App/ux_device_descriptors.c ****   {
+ 618              		.loc 1 305 51 is_stmt 1 discriminator 2 view .LVU178
+ 619 000e 0133     		adds	r3, r3, #1
+ 620              	.LVL58:
+ 305:USBX/App/ux_device_descriptors.c ****   {
+ 621              		.loc 1 305 51 is_stmt 0 discriminator 2 view .LVU179
+ 622 0010 DBB2     		uxtb	r3, r3
+ 623              	.LVL59:
+ 305:USBX/App/ux_device_descriptors.c ****   {
+ 624              		.loc 1 305 20 is_stmt 1 discriminator 1 view .LVU180
+ 625 0012 022B     		cmp	r3, #2
+ 626 0014 13D8     		bhi	.L41
+ 627              	.LVL60:
+ 628              	.L35:
+ 307:USBX/App/ux_device_descriptors.c ****         (USBD_Device_FS.tclasslist[idx].InterfaceType == interface_type))
+ 629              		.loc 1 307 5 view .LVU181
+ 307:USBX/App/ux_device_descriptors.c ****         (USBD_Device_FS.tclasslist[idx].InterfaceType == interface_type))
+ 630              		.loc 1 307 40 is_stmt 0 view .LVU182
+ 631 0016 0B4A     		ldr	r2, .L42
+ 632 0018 4FF05C0E 		mov	lr, #92
+ 633 001c 0EFB0322 		mla	r2, lr, r3, r2
+ 634 0020 127B     		ldrb	r2, [r2, #12]	@ zero_extendqisi2
+ 307:USBX/App/ux_device_descriptors.c ****         (USBD_Device_FS.tclasslist[idx].InterfaceType == interface_type))
+ 635              		.loc 1 307 8 view .LVU183
+ 636 0022 6245     		cmp	r2, ip
+ 637 0024 F3D1     		bne	.L34
+ 308:USBX/App/ux_device_descriptors.c ****     {
+ 638              		.loc 1 308 40 view .LVU184
+ 639 0026 074A     		ldr	r2, .L42
+ 640 0028 0EFB0322 		mla	r2, lr, r3, r2
+ 641 002c 127D     		ldrb	r2, [r2, #20]	@ zero_extendqisi2
+ 307:USBX/App/ux_device_descriptors.c ****         (USBD_Device_FS.tclasslist[idx].InterfaceType == interface_type))
+ 642              		.loc 1 307 66 discriminator 1 view .LVU185
+ 643 002e 8A42     		cmp	r2, r1
+ 644 0030 EDD1     		bne	.L34
+ 310:USBX/App/ux_device_descriptors.c ****     }
+ 645              		.loc 1 310 7 is_stmt 1 view .LVU186
+ 310:USBX/App/ux_device_descriptors.c ****     }
+ 646              		.loc 1 310 15 is_stmt 0 view .LVU187
+ 647 0032 044A     		ldr	r2, .L42
+ 648 0034 0EFB0322 		mla	r2, lr, r3, r2
+ARM GAS  C:\Users\sapph\AppData\Local\Temp\ccnHyWoZ.s 			page 28
+
+
+ 649 0038 92F85A00 		ldrb	r0, [r2, #90]	@ zero_extendqisi2
+ 650              	.LVL61:
+ 310:USBX/App/ux_device_descriptors.c ****     }
+ 651              		.loc 1 310 15 view .LVU188
+ 652 003c E7E7     		b	.L34
+ 653              	.L41:
+ 318:USBX/App/ux_device_descriptors.c **** }
+ 654              		.loc 1 318 3 is_stmt 1 view .LVU189
+ 319:USBX/App/ux_device_descriptors.c **** 
+ 655              		.loc 1 319 1 is_stmt 0 view .LVU190
+ 656 003e 10BD     		pop	{r4, pc}
+ 657              	.LVL62:
+ 658              	.L40:
+ 659              		.cfi_def_cfa_offset 0
+ 660              		.cfi_restore 4
+ 661              		.cfi_restore 14
+ 319:USBX/App/ux_device_descriptors.c **** 
+ 662              		.loc 1 319 1 view .LVU191
+ 663 0040 7047     		bx	lr
+ 664              	.L43:
+ 665 0042 00BF     		.align	2
+ 666              	.L42:
+ 667 0044 00000000 		.word	USBD_Device_FS
+ 668              		.cfi_endproc
+ 669              	.LFE166:
+ 671              		.section	.text.USBD_Get_Configuration_Number,"ax",%progbits
+ 672              		.align	1
+ 673              		.global	USBD_Get_Configuration_Number
+ 674              		.syntax unified
+ 675              		.thumb
+ 676              		.thumb_func
+ 678              	USBD_Get_Configuration_Number:
+ 679              	.LVL63:
+ 680              	.LFB167:
+ 329:USBX/App/ux_device_descriptors.c ****   uint8_t cfg_num = 1U;
+ 681              		.loc 1 329 1 is_stmt 1 view -0
+ 682              		.cfi_startproc
+ 683              		@ args = 0, pretend = 0, frame = 0
+ 684              		@ frame_needed = 0, uses_anonymous_args = 0
+ 685              		@ link register save eliminated.
+ 330:USBX/App/ux_device_descriptors.c **** 
+ 686              		.loc 1 330 3 view .LVU193
+ 340:USBX/App/ux_device_descriptors.c **** }
+ 687              		.loc 1 340 3 view .LVU194
+ 341:USBX/App/ux_device_descriptors.c **** 
+ 688              		.loc 1 341 1 is_stmt 0 view .LVU195
+ 689 0000 0120     		movs	r0, #1
+ 690              	.LVL64:
+ 341:USBX/App/ux_device_descriptors.c **** 
+ 691              		.loc 1 341 1 view .LVU196
+ 692 0002 7047     		bx	lr
+ 693              		.cfi_endproc
+ 694              	.LFE167:
+ 696              		.section	.text.USBD_HID_ReportDesc,"ax",%progbits
+ 697              		.align	1
+ 698              		.global	USBD_HID_ReportDesc
+ 699              		.syntax unified
+ARM GAS  C:\Users\sapph\AppData\Local\Temp\ccnHyWoZ.s 			page 29
+
+
+ 700              		.thumb
+ 701              		.thumb_func
+ 703              	USBD_HID_ReportDesc:
+ 704              	.LVL65:
+ 705              	.LFB168:
+ 351:USBX/App/ux_device_descriptors.c ****   uint8_t *pHidReportDesc = NULL;
+ 706              		.loc 1 351 1 is_stmt 1 view -0
+ 707              		.cfi_startproc
+ 708              		@ args = 0, pretend = 0, frame = 0
+ 709              		@ frame_needed = 0, uses_anonymous_args = 0
+ 710              		@ link register save eliminated.
+ 352:USBX/App/ux_device_descriptors.c **** 
+ 711              		.loc 1 352 3 view .LVU198
+ 358:USBX/App/ux_device_descriptors.c ****   {
+ 712              		.loc 1 358 3 view .LVU199
+ 713 0000 0128     		cmp	r0, #1
+ 714 0002 01D1     		bne	.L48
+ 361:USBX/App/ux_device_descriptors.c ****       break;
+ 715              		.loc 1 361 22 is_stmt 0 view .LVU200
+ 716 0004 0148     		ldr	r0, .L49
+ 717              	.LVL66:
+ 371:USBX/App/ux_device_descriptors.c **** }
+ 718              		.loc 1 371 3 is_stmt 1 view .LVU201
+ 372:USBX/App/ux_device_descriptors.c **** 
+ 719              		.loc 1 372 1 is_stmt 0 view .LVU202
+ 720 0006 7047     		bx	lr
+ 721              	.LVL67:
+ 722              	.L48:
+ 352:USBX/App/ux_device_descriptors.c **** 
+ 723              		.loc 1 352 12 view .LVU203
+ 724 0008 0020     		movs	r0, #0
+ 725              	.LVL68:
+ 352:USBX/App/ux_device_descriptors.c **** 
+ 726              		.loc 1 352 12 view .LVU204
+ 727 000a 7047     		bx	lr
+ 728              	.L50:
+ 729              		.align	2
+ 730              	.L49:
+ 731 000c 00000000 		.word	USBD_HID_KEYBOARD_ReportDesc
+ 732              		.cfi_endproc
+ 733              	.LFE168:
+ 735              		.section	.text.USBD_HID_ReportDesc_length,"ax",%progbits
+ 736              		.align	1
+ 737              		.global	USBD_HID_ReportDesc_length
+ 738              		.syntax unified
+ 739              		.thumb
+ 740              		.thumb_func
+ 742              	USBD_HID_ReportDesc_length:
+ 743              	.LVL69:
+ 744              	.LFB169:
+ 381:USBX/App/ux_device_descriptors.c ****   uint16_t ReportDesc_Size = 0;
+ 745              		.loc 1 381 1 is_stmt 1 view -0
+ 746              		.cfi_startproc
+ 747              		@ args = 0, pretend = 0, frame = 0
+ 748              		@ frame_needed = 0, uses_anonymous_args = 0
+ 749              		@ link register save eliminated.
+ 382:USBX/App/ux_device_descriptors.c **** 
+ARM GAS  C:\Users\sapph\AppData\Local\Temp\ccnHyWoZ.s 			page 30
+
+
+ 750              		.loc 1 382 3 view .LVU206
+ 388:USBX/App/ux_device_descriptors.c ****   {
+ 751              		.loc 1 388 3 view .LVU207
+ 752 0000 0128     		cmp	r0, #1
+ 753 0002 01D0     		beq	.L53
+ 382:USBX/App/ux_device_descriptors.c **** 
+ 754              		.loc 1 382 12 is_stmt 0 view .LVU208
+ 755 0004 0020     		movs	r0, #0
+ 756              	.LVL70:
+ 382:USBX/App/ux_device_descriptors.c **** 
+ 757              		.loc 1 382 12 view .LVU209
+ 758 0006 7047     		bx	lr
+ 759              	.LVL71:
+ 760              	.L53:
+ 391:USBX/App/ux_device_descriptors.c ****       break;
+ 761              		.loc 1 391 23 view .LVU210
+ 762 0008 2D20     		movs	r0, #45
+ 763              	.LVL72:
+ 401:USBX/App/ux_device_descriptors.c **** }
+ 764              		.loc 1 401 3 is_stmt 1 view .LVU211
+ 402:USBX/App/ux_device_descriptors.c **** #endif /* USBD_HID_CLASS_ACTIVATED == 1U */
+ 765              		.loc 1 402 1 is_stmt 0 view .LVU212
+ 766 000a 7047     		bx	lr
+ 767              		.cfi_endproc
+ 768              	.LFE169:
+ 770              		.section	.text.USBD_FrameWork_HID_Desc,"ax",%progbits
+ 771              		.align	1
+ 772              		.syntax unified
+ 773              		.thumb
+ 774              		.thumb_func
+ 776              	USBD_FrameWork_HID_Desc:
+ 777              	.LVL73:
+ 778              	.LFB178:
+ 771:USBX/App/ux_device_descriptors.c **** 
+ 772:USBX/App/ux_device_descriptors.c **** #if USBD_HID_CLASS_ACTIVATED == 1U
+ 773:USBX/App/ux_device_descriptors.c **** /**
+ 774:USBX/App/ux_device_descriptors.c ****   * @brief  USBD_FrameWork_HID_Desc
+ 775:USBX/App/ux_device_descriptors.c ****   *         Configure and Append the HID Descriptor
+ 776:USBX/App/ux_device_descriptors.c ****   * @param  pdev: device instance
+ 777:USBX/App/ux_device_descriptors.c ****   * @param  pConf: Configuration descriptor pointer
+ 778:USBX/App/ux_device_descriptors.c ****   * @param  Sze: pointer to the current configuration descriptor size
+ 779:USBX/App/ux_device_descriptors.c ****   * @retval None
+ 780:USBX/App/ux_device_descriptors.c ****   */
+ 781:USBX/App/ux_device_descriptors.c **** static void  USBD_FrameWork_HID_Desc(USBD_DevClassHandleTypeDef *pdev,
+ 782:USBX/App/ux_device_descriptors.c ****                                      uint32_t pConf, uint32_t *Sze)
+ 783:USBX/App/ux_device_descriptors.c **** {
+ 779              		.loc 1 783 1 is_stmt 1 view -0
+ 780              		.cfi_startproc
+ 781              		@ args = 0, pretend = 0, frame = 0
+ 782              		@ frame_needed = 0, uses_anonymous_args = 0
+ 783              		.loc 1 783 1 is_stmt 0 view .LVU214
+ 784 0000 F8B5     		push	{r3, r4, r5, r6, r7, lr}
+ 785              		.cfi_def_cfa_offset 24
+ 786              		.cfi_offset 3, -24
+ 787              		.cfi_offset 4, -20
+ 788              		.cfi_offset 5, -16
+ 789              		.cfi_offset 6, -12
+ARM GAS  C:\Users\sapph\AppData\Local\Temp\ccnHyWoZ.s 			page 31
+
+
+ 790              		.cfi_offset 7, -8
+ 791              		.cfi_offset 14, -4
+ 792 0002 0D46     		mov	r5, r1
+ 793 0004 1646     		mov	r6, r2
+ 784:USBX/App/ux_device_descriptors.c ****   static USBD_IfDescTypedef       *pIfDesc;
+ 794              		.loc 1 784 3 is_stmt 1 view .LVU215
+ 785:USBX/App/ux_device_descriptors.c ****   static USBD_EpDescTypedef       *pEpDesc;
+ 795              		.loc 1 785 3 view .LVU216
+ 786:USBX/App/ux_device_descriptors.c ****   static USBD_HIDDescTypedef      *pHidDesc;
+ 796              		.loc 1 786 3 view .LVU217
+ 787:USBX/App/ux_device_descriptors.c **** 
+ 788:USBX/App/ux_device_descriptors.c ****   switch(pdev->tclasslist[pdev->classId].InterfaceType)
+ 797              		.loc 1 788 3 view .LVU218
+ 798              		.loc 1 788 31 is_stmt 0 view .LVU219
+ 799 0006 4368     		ldr	r3, [r0, #4]
+ 800              		.loc 1 788 41 view .LVU220
+ 801 0008 5C22     		movs	r2, #92
+ 802              	.LVL74:
+ 803              		.loc 1 788 41 view .LVU221
+ 804 000a 02FB0303 		mla	r3, r2, r3, r0
+ 805 000e 1B7D     		ldrb	r3, [r3, #20]	@ zero_extendqisi2
+ 806              		.loc 1 788 3 view .LVU222
+ 807 0010 012B     		cmp	r3, #1
+ 808 0012 05D0     		beq	.L62
+ 809              	.LVL75:
+ 810              	.L55:
+ 789:USBX/App/ux_device_descriptors.c ****   {
+ 790:USBX/App/ux_device_descriptors.c **** 
+ 791:USBX/App/ux_device_descriptors.c **** #if USBD_HID_KEYBOARD_ACTIVATED == 1U
+ 792:USBX/App/ux_device_descriptors.c ****     case INTERFACE_HID_KEYBOARD:
+ 793:USBX/App/ux_device_descriptors.c **** 
+ 794:USBX/App/ux_device_descriptors.c ****       /* Append HID Interface descriptor to Configuration descriptor */
+ 795:USBX/App/ux_device_descriptors.c ****       __USBD_FRAMEWORK_SET_IF(pdev->tclasslist[pdev->classId].Ifs[0], 0U,
+ 796:USBX/App/ux_device_descriptors.c ****                               (uint8_t)(pdev->tclasslist[pdev->classId].NumEps),
+ 797:USBX/App/ux_device_descriptors.c ****                               UX_DEVICE_CLASS_HID_CLASS,
+ 798:USBX/App/ux_device_descriptors.c ****                               0x01U, INTERFACE_HID_KEYBOARD, 0U);
+ 799:USBX/App/ux_device_descriptors.c **** 
+ 800:USBX/App/ux_device_descriptors.c ****       /* Append HID Functional descriptor to Configuration descriptor */
+ 801:USBX/App/ux_device_descriptors.c ****       pHidDesc = ((USBD_HIDDescTypedef *)(pConf + *Sze));
+ 802:USBX/App/ux_device_descriptors.c ****       pHidDesc->bLength = (uint8_t)sizeof(USBD_HIDDescTypedef);
+ 803:USBX/App/ux_device_descriptors.c ****       pHidDesc->bDescriptorType = UX_DEVICE_CLASS_HID_DESCRIPTOR_HID;
+ 804:USBX/App/ux_device_descriptors.c ****       pHidDesc->bcdHID = 0x0111U;
+ 805:USBX/App/ux_device_descriptors.c ****       pHidDesc->bCountryCode = 0x00U;
+ 806:USBX/App/ux_device_descriptors.c ****       pHidDesc->bNumDescriptors = 0x01U;
+ 807:USBX/App/ux_device_descriptors.c ****       pHidDesc->bHIDDescriptorType = 0x22U;
+ 808:USBX/App/ux_device_descriptors.c ****       pHidDesc->wDescriptorLength = USBD_HID_ReportDesc_length(INTERFACE_HID_KEYBOARD);
+ 809:USBX/App/ux_device_descriptors.c ****       *Sze += (uint32_t)sizeof(USBD_HIDDescTypedef);
+ 810:USBX/App/ux_device_descriptors.c **** 
+ 811:USBX/App/ux_device_descriptors.c ****       if (pdev->Speed == USBD_HIGH_SPEED)
+ 812:USBX/App/ux_device_descriptors.c ****       {
+ 813:USBX/App/ux_device_descriptors.c ****         /* Append Endpoint descriptor to Configuration descriptor */
+ 814:USBX/App/ux_device_descriptors.c ****         __USBD_FRAMEWORK_SET_EP(pdev->tclasslist[pdev->classId].Eps[0].add,
+ 815:USBX/App/ux_device_descriptors.c ****                                 USBD_EP_TYPE_INTR,
+ 816:USBX/App/ux_device_descriptors.c ****                                 (uint16_t)pdev->tclasslist[pdev->classId].Eps[0].size,
+ 817:USBX/App/ux_device_descriptors.c ****                                 USBD_HID_KEYBOARD_EPIN_HS_BINTERVAL,
+ 818:USBX/App/ux_device_descriptors.c ****                                 USBD_HID_KEYBOARD_EPIN_FS_BINTERVAL);
+ 819:USBX/App/ux_device_descriptors.c ****       }
+ARM GAS  C:\Users\sapph\AppData\Local\Temp\ccnHyWoZ.s 			page 32
+
+
+ 820:USBX/App/ux_device_descriptors.c ****       else
+ 821:USBX/App/ux_device_descriptors.c ****       {
+ 822:USBX/App/ux_device_descriptors.c ****         /* Append Endpoint descriptor to Configuration descriptor */
+ 823:USBX/App/ux_device_descriptors.c ****         __USBD_FRAMEWORK_SET_EP(pdev->tclasslist[pdev->classId].Eps[0].add,
+ 824:USBX/App/ux_device_descriptors.c ****                                 USBD_EP_TYPE_INTR,
+ 825:USBX/App/ux_device_descriptors.c ****                                 (uint16_t)pdev->tclasslist[pdev->classId].Eps[0].size,
+ 826:USBX/App/ux_device_descriptors.c ****                                 USBD_HID_KEYBOARD_EPIN_HS_BINTERVAL,
+ 827:USBX/App/ux_device_descriptors.c ****                                 USBD_HID_KEYBOARD_EPIN_FS_BINTERVAL);
+ 828:USBX/App/ux_device_descriptors.c ****       }
+ 829:USBX/App/ux_device_descriptors.c **** 
+ 830:USBX/App/ux_device_descriptors.c ****       break;
+ 831:USBX/App/ux_device_descriptors.c **** 
+ 832:USBX/App/ux_device_descriptors.c **** #endif /* USBD_HID_KEYBOARD_ACTIVATED == 1U */
+ 833:USBX/App/ux_device_descriptors.c **** 
+ 834:USBX/App/ux_device_descriptors.c ****     default:
+ 835:USBX/App/ux_device_descriptors.c ****       break;
+ 836:USBX/App/ux_device_descriptors.c ****   }
+ 837:USBX/App/ux_device_descriptors.c **** 
+ 838:USBX/App/ux_device_descriptors.c ****   /* Update Config Descriptor and IAD descriptor */
+ 839:USBX/App/ux_device_descriptors.c ****   ((USBD_ConfigDescTypedef *)pConf)->bNumInterfaces += 1U;
+ 811              		.loc 1 839 3 is_stmt 1 view .LVU223
+ 812              		.loc 1 839 36 is_stmt 0 view .LVU224
+ 813 0014 2B79     		ldrb	r3, [r5, #4]	@ zero_extendqisi2
+ 814              		.loc 1 839 53 view .LVU225
+ 815 0016 0133     		adds	r3, r3, #1
+ 816 0018 2B71     		strb	r3, [r5, #4]
+ 840:USBX/App/ux_device_descriptors.c ****   ((USBD_ConfigDescTypedef *)pConf)->wDescriptorLength = *Sze;
+ 817              		.loc 1 840 3 is_stmt 1 view .LVU226
+ 818              		.loc 1 840 58 is_stmt 0 view .LVU227
+ 819 001a 3368     		ldr	r3, [r6]
+ 820              		.loc 1 840 56 view .LVU228
+ 821 001c 6B80     		strh	r3, [r5, #2]	@ unaligned
+ 841:USBX/App/ux_device_descriptors.c **** 
+ 842:USBX/App/ux_device_descriptors.c **** }
+ 822              		.loc 1 842 1 view .LVU229
+ 823 001e F8BD     		pop	{r3, r4, r5, r6, r7, pc}
+ 824              	.LVL76:
+ 825              	.L62:
+ 826              		.loc 1 842 1 view .LVU230
+ 827 0020 0446     		mov	r4, r0
+ 795:USBX/App/ux_device_descriptors.c ****                               (uint8_t)(pdev->tclasslist[pdev->classId].NumEps),
+ 828              		.loc 1 795 7 is_stmt 1 view .LVU231
+ 795:USBX/App/ux_device_descriptors.c ****                               (uint8_t)(pdev->tclasslist[pdev->classId].NumEps),
+ 829              		.loc 1 795 7 view .LVU232
+ 830 0022 3268     		ldr	r2, [r6]
+ 831 0024 5318     		adds	r3, r2, r1
+ 832 0026 3C49     		ldr	r1, .L66
+ 833              	.LVL77:
+ 795:USBX/App/ux_device_descriptors.c ****                               (uint8_t)(pdev->tclasslist[pdev->classId].NumEps),
+ 834              		.loc 1 795 7 is_stmt 0 view .LVU233
+ 835 0028 0B60     		str	r3, [r1]
+ 795:USBX/App/ux_device_descriptors.c ****                               (uint8_t)(pdev->tclasslist[pdev->classId].NumEps),
+ 836              		.loc 1 795 7 is_stmt 1 view .LVU234
+ 837 002a 4FF0090C 		mov	ip, #9
+ 838 002e 02F805C0 		strb	ip, [r2, r5]
+ 795:USBX/App/ux_device_descriptors.c ****                               (uint8_t)(pdev->tclasslist[pdev->classId].NumEps),
+ 839              		.loc 1 795 7 view .LVU235
+ARM GAS  C:\Users\sapph\AppData\Local\Temp\ccnHyWoZ.s 			page 33
+
+
+ 840 0032 0422     		movs	r2, #4
+ 841 0034 5A70     		strb	r2, [r3, #1]
+ 795:USBX/App/ux_device_descriptors.c ****                               (uint8_t)(pdev->tclasslist[pdev->classId].NumEps),
+ 842              		.loc 1 795 7 view .LVU236
+ 843 0036 4268     		ldr	r2, [r0, #4]
+ 844 0038 5C20     		movs	r0, #92
+ 845              	.LVL78:
+ 795:USBX/App/ux_device_descriptors.c ****                               (uint8_t)(pdev->tclasslist[pdev->classId].NumEps),
+ 846              		.loc 1 795 7 is_stmt 0 view .LVU237
+ 847 003a 00FB0242 		mla	r2, r0, r2, r4
+ 848 003e 92F85A20 		ldrb	r2, [r2, #90]	@ zero_extendqisi2
+ 849 0042 9A70     		strb	r2, [r3, #2]
+ 795:USBX/App/ux_device_descriptors.c ****                               (uint8_t)(pdev->tclasslist[pdev->classId].NumEps),
+ 850              		.loc 1 795 7 is_stmt 1 view .LVU238
+ 851 0044 0022     		movs	r2, #0
+ 852 0046 DA70     		strb	r2, [r3, #3]
+ 795:USBX/App/ux_device_descriptors.c ****                               (uint8_t)(pdev->tclasslist[pdev->classId].NumEps),
+ 853              		.loc 1 795 7 view .LVU239
+ 854 0048 6168     		ldr	r1, [r4, #4]
+ 855 004a 00FB0141 		mla	r1, r0, r1, r4
+ 856 004e 097F     		ldrb	r1, [r1, #28]	@ zero_extendqisi2
+ 857 0050 1971     		strb	r1, [r3, #4]
+ 795:USBX/App/ux_device_descriptors.c ****                               (uint8_t)(pdev->tclasslist[pdev->classId].NumEps),
+ 858              		.loc 1 795 7 view .LVU240
+ 859 0052 0321     		movs	r1, #3
+ 860 0054 5971     		strb	r1, [r3, #5]
+ 795:USBX/App/ux_device_descriptors.c ****                               (uint8_t)(pdev->tclasslist[pdev->classId].NumEps),
+ 861              		.loc 1 795 7 view .LVU241
+ 862 0056 0120     		movs	r0, #1
+ 863 0058 9871     		strb	r0, [r3, #6]
+ 795:USBX/App/ux_device_descriptors.c ****                               (uint8_t)(pdev->tclasslist[pdev->classId].NumEps),
+ 864              		.loc 1 795 7 view .LVU242
+ 865 005a D871     		strb	r0, [r3, #7]
+ 795:USBX/App/ux_device_descriptors.c ****                               (uint8_t)(pdev->tclasslist[pdev->classId].NumEps),
+ 866              		.loc 1 795 7 view .LVU243
+ 867 005c 1A72     		strb	r2, [r3, #8]
+ 795:USBX/App/ux_device_descriptors.c ****                               (uint8_t)(pdev->tclasslist[pdev->classId].NumEps),
+ 868              		.loc 1 795 7 view .LVU244
+ 869 005e 3368     		ldr	r3, [r6]
+ 870 0060 6344     		add	r3, r3, ip
+ 871 0062 3360     		str	r3, [r6]
+ 795:USBX/App/ux_device_descriptors.c ****                               (uint8_t)(pdev->tclasslist[pdev->classId].NumEps),
+ 872              		.loc 1 795 7 view .LVU245
+ 801:USBX/App/ux_device_descriptors.c ****       pHidDesc->bLength = (uint8_t)sizeof(USBD_HIDDescTypedef);
+ 873              		.loc 1 801 7 view .LVU246
+ 801:USBX/App/ux_device_descriptors.c ****       pHidDesc->bLength = (uint8_t)sizeof(USBD_HIDDescTypedef);
+ 874              		.loc 1 801 49 is_stmt 0 view .LVU247
+ 875 0064 5F19     		adds	r7, r3, r5
+ 801:USBX/App/ux_device_descriptors.c ****       pHidDesc->bLength = (uint8_t)sizeof(USBD_HIDDescTypedef);
+ 876              		.loc 1 801 16 view .LVU248
+ 877 0066 2D49     		ldr	r1, .L66+4
+ 878 0068 0F60     		str	r7, [r1]
+ 802:USBX/App/ux_device_descriptors.c ****       pHidDesc->bDescriptorType = UX_DEVICE_CLASS_HID_DESCRIPTOR_HID;
+ 879              		.loc 1 802 7 is_stmt 1 view .LVU249
+ 802:USBX/App/ux_device_descriptors.c ****       pHidDesc->bDescriptorType = UX_DEVICE_CLASS_HID_DESCRIPTOR_HID;
+ 880              		.loc 1 802 25 is_stmt 0 view .LVU250
+ 881 006a 03F805C0 		strb	ip, [r3, r5]
+ARM GAS  C:\Users\sapph\AppData\Local\Temp\ccnHyWoZ.s 			page 34
+
+
+ 803:USBX/App/ux_device_descriptors.c ****       pHidDesc->bcdHID = 0x0111U;
+ 882              		.loc 1 803 7 is_stmt 1 view .LVU251
+ 803:USBX/App/ux_device_descriptors.c ****       pHidDesc->bcdHID = 0x0111U;
+ 883              		.loc 1 803 33 is_stmt 0 view .LVU252
+ 884 006e 2123     		movs	r3, #33
+ 885 0070 7B70     		strb	r3, [r7, #1]
+ 804:USBX/App/ux_device_descriptors.c ****       pHidDesc->bCountryCode = 0x00U;
+ 886              		.loc 1 804 7 is_stmt 1 view .LVU253
+ 804:USBX/App/ux_device_descriptors.c ****       pHidDesc->bCountryCode = 0x00U;
+ 887              		.loc 1 804 24 is_stmt 0 view .LVU254
+ 888 0072 1123     		movs	r3, #17
+ 889 0074 BB70     		strb	r3, [r7, #2]
+ 890 0076 F870     		strb	r0, [r7, #3]
+ 805:USBX/App/ux_device_descriptors.c ****       pHidDesc->bNumDescriptors = 0x01U;
+ 891              		.loc 1 805 7 is_stmt 1 view .LVU255
+ 805:USBX/App/ux_device_descriptors.c ****       pHidDesc->bNumDescriptors = 0x01U;
+ 892              		.loc 1 805 30 is_stmt 0 view .LVU256
+ 893 0078 3A71     		strb	r2, [r7, #4]
+ 806:USBX/App/ux_device_descriptors.c ****       pHidDesc->bHIDDescriptorType = 0x22U;
+ 894              		.loc 1 806 7 is_stmt 1 view .LVU257
+ 806:USBX/App/ux_device_descriptors.c ****       pHidDesc->bHIDDescriptorType = 0x22U;
+ 895              		.loc 1 806 33 is_stmt 0 view .LVU258
+ 896 007a 7871     		strb	r0, [r7, #5]
+ 807:USBX/App/ux_device_descriptors.c ****       pHidDesc->wDescriptorLength = USBD_HID_ReportDesc_length(INTERFACE_HID_KEYBOARD);
+ 897              		.loc 1 807 7 is_stmt 1 view .LVU259
+ 807:USBX/App/ux_device_descriptors.c ****       pHidDesc->wDescriptorLength = USBD_HID_ReportDesc_length(INTERFACE_HID_KEYBOARD);
+ 898              		.loc 1 807 36 is_stmt 0 view .LVU260
+ 899 007c 2223     		movs	r3, #34
+ 900 007e BB71     		strb	r3, [r7, #6]
+ 808:USBX/App/ux_device_descriptors.c ****       *Sze += (uint32_t)sizeof(USBD_HIDDescTypedef);
+ 901              		.loc 1 808 7 is_stmt 1 view .LVU261
+ 808:USBX/App/ux_device_descriptors.c ****       *Sze += (uint32_t)sizeof(USBD_HIDDescTypedef);
+ 902              		.loc 1 808 37 is_stmt 0 view .LVU262
+ 903 0080 FFF7FEFF 		bl	USBD_HID_ReportDesc_length
+ 904              	.LVL79:
+ 808:USBX/App/ux_device_descriptors.c ****       *Sze += (uint32_t)sizeof(USBD_HIDDescTypedef);
+ 905              		.loc 1 808 35 discriminator 1 view .LVU263
+ 906 0084 A7F80700 		strh	r0, [r7, #7]	@ unaligned
+ 809:USBX/App/ux_device_descriptors.c **** 
+ 907              		.loc 1 809 7 is_stmt 1 view .LVU264
+ 908 0088 3368     		ldr	r3, [r6]
+ 809:USBX/App/ux_device_descriptors.c **** 
+ 909              		.loc 1 809 12 is_stmt 0 view .LVU265
+ 910 008a 0933     		adds	r3, r3, #9
+ 911 008c 3360     		str	r3, [r6]
+ 811:USBX/App/ux_device_descriptors.c ****       {
+ 912              		.loc 1 811 7 is_stmt 1 view .LVU266
+ 811:USBX/App/ux_device_descriptors.c ****       {
+ 913              		.loc 1 811 15 is_stmt 0 view .LVU267
+ 914 008e 2278     		ldrb	r2, [r4]	@ zero_extendqisi2
+ 811:USBX/App/ux_device_descriptors.c ****       {
+ 915              		.loc 1 811 10 view .LVU268
+ 916 0090 012A     		cmp	r2, #1
+ 917 0092 1DD0     		beq	.L63
+ 823:USBX/App/ux_device_descriptors.c ****                                 USBD_EP_TYPE_INTR,
+ 918              		.loc 1 823 9 is_stmt 1 view .LVU269
+ 823:USBX/App/ux_device_descriptors.c ****                                 USBD_EP_TYPE_INTR,
+ARM GAS  C:\Users\sapph\AppData\Local\Temp\ccnHyWoZ.s 			page 35
+
+
+ 919              		.loc 1 823 9 view .LVU270
+ 920 0094 5A19     		adds	r2, r3, r5
+ 921 0096 2249     		ldr	r1, .L66+8
+ 922 0098 0A60     		str	r2, [r1]
+ 823:USBX/App/ux_device_descriptors.c ****                                 USBD_EP_TYPE_INTR,
+ 923              		.loc 1 823 9 view .LVU271
+ 924 009a 0721     		movs	r1, #7
+ 925 009c 5955     		strb	r1, [r3, r5]
+ 823:USBX/App/ux_device_descriptors.c ****                                 USBD_EP_TYPE_INTR,
+ 926              		.loc 1 823 9 view .LVU272
+ 927 009e 0523     		movs	r3, #5
+ 928 00a0 5370     		strb	r3, [r2, #1]
+ 823:USBX/App/ux_device_descriptors.c ****                                 USBD_EP_TYPE_INTR,
+ 929              		.loc 1 823 9 view .LVU273
+ 930 00a2 6368     		ldr	r3, [r4, #4]
+ 931 00a4 5C21     		movs	r1, #92
+ 932 00a6 01FB0343 		mla	r3, r1, r3, r4
+ 933 00aa 93F82430 		ldrb	r3, [r3, #36]	@ zero_extendqisi2
+ 934 00ae 9370     		strb	r3, [r2, #2]
+ 823:USBX/App/ux_device_descriptors.c ****                                 USBD_EP_TYPE_INTR,
+ 935              		.loc 1 823 9 view .LVU274
+ 936 00b0 0323     		movs	r3, #3
+ 937 00b2 D370     		strb	r3, [r2, #3]
+ 823:USBX/App/ux_device_descriptors.c ****                                 USBD_EP_TYPE_INTR,
+ 938              		.loc 1 823 9 view .LVU275
+ 939 00b4 6368     		ldr	r3, [r4, #4]
+ 940 00b6 01FB0343 		mla	r3, r1, r3, r4
+ 941 00ba DB8C     		ldrh	r3, [r3, #38]
+ 942 00bc 9380     		strh	r3, [r2, #4]	@ unaligned
+ 823:USBX/App/ux_device_descriptors.c ****                                 USBD_EP_TYPE_INTR,
+ 943              		.loc 1 823 9 view .LVU276
+ 944 00be 2378     		ldrb	r3, [r4]	@ zero_extendqisi2
+ 945 00c0 012B     		cmp	r3, #1
+ 946 00c2 26D0     		beq	.L64
+ 823:USBX/App/ux_device_descriptors.c ****                                 USBD_EP_TYPE_INTR,
+ 947              		.loc 1 823 9 discriminator 2 view .LVU277
+ 948 00c4 0523     		movs	r3, #5
+ 949 00c6 9371     		strb	r3, [r2, #6]
+ 950              	.L60:
+ 823:USBX/App/ux_device_descriptors.c ****                                 USBD_EP_TYPE_INTR,
+ 951              		.loc 1 823 9 discriminator 4 view .LVU278
+ 952 00c8 3368     		ldr	r3, [r6]
+ 953 00ca 0733     		adds	r3, r3, #7
+ 954 00cc 3360     		str	r3, [r6]
+ 955 00ce A1E7     		b	.L55
+ 956              	.L63:
+ 814:USBX/App/ux_device_descriptors.c ****                                 USBD_EP_TYPE_INTR,
+ 957              		.loc 1 814 9 view .LVU279
+ 814:USBX/App/ux_device_descriptors.c ****                                 USBD_EP_TYPE_INTR,
+ 958              		.loc 1 814 9 view .LVU280
+ 959 00d0 5A19     		adds	r2, r3, r5
+ 960 00d2 1349     		ldr	r1, .L66+8
+ 961 00d4 0A60     		str	r2, [r1]
+ 814:USBX/App/ux_device_descriptors.c ****                                 USBD_EP_TYPE_INTR,
+ 962              		.loc 1 814 9 view .LVU281
+ 963 00d6 0721     		movs	r1, #7
+ 964 00d8 5955     		strb	r1, [r3, r5]
+ARM GAS  C:\Users\sapph\AppData\Local\Temp\ccnHyWoZ.s 			page 36
+
+
+ 814:USBX/App/ux_device_descriptors.c ****                                 USBD_EP_TYPE_INTR,
+ 965              		.loc 1 814 9 view .LVU282
+ 966 00da 0523     		movs	r3, #5
+ 967 00dc 5370     		strb	r3, [r2, #1]
+ 814:USBX/App/ux_device_descriptors.c ****                                 USBD_EP_TYPE_INTR,
+ 968              		.loc 1 814 9 view .LVU283
+ 969 00de 6368     		ldr	r3, [r4, #4]
+ 970 00e0 5C21     		movs	r1, #92
+ 971 00e2 01FB0343 		mla	r3, r1, r3, r4
+ 972 00e6 93F82430 		ldrb	r3, [r3, #36]	@ zero_extendqisi2
+ 973 00ea 9370     		strb	r3, [r2, #2]
+ 814:USBX/App/ux_device_descriptors.c ****                                 USBD_EP_TYPE_INTR,
+ 974              		.loc 1 814 9 view .LVU284
+ 975 00ec 0323     		movs	r3, #3
+ 976 00ee D370     		strb	r3, [r2, #3]
+ 814:USBX/App/ux_device_descriptors.c ****                                 USBD_EP_TYPE_INTR,
+ 977              		.loc 1 814 9 view .LVU285
+ 978 00f0 6368     		ldr	r3, [r4, #4]
+ 979 00f2 01FB0343 		mla	r3, r1, r3, r4
+ 980 00f6 DB8C     		ldrh	r3, [r3, #38]
+ 981 00f8 9380     		strh	r3, [r2, #4]	@ unaligned
+ 814:USBX/App/ux_device_descriptors.c ****                                 USBD_EP_TYPE_INTR,
+ 982              		.loc 1 814 9 view .LVU286
+ 983 00fa 2378     		ldrb	r3, [r4]	@ zero_extendqisi2
+ 984 00fc 012B     		cmp	r3, #1
+ 985 00fe 05D0     		beq	.L65
+ 814:USBX/App/ux_device_descriptors.c ****                                 USBD_EP_TYPE_INTR,
+ 986              		.loc 1 814 9 discriminator 2 view .LVU287
+ 987 0100 0523     		movs	r3, #5
+ 988 0102 9371     		strb	r3, [r2, #6]
+ 989              	.L58:
+ 814:USBX/App/ux_device_descriptors.c ****                                 USBD_EP_TYPE_INTR,
+ 990              		.loc 1 814 9 discriminator 4 view .LVU288
+ 991 0104 3368     		ldr	r3, [r6]
+ 992 0106 0733     		adds	r3, r3, #7
+ 993 0108 3360     		str	r3, [r6]
+ 814:USBX/App/ux_device_descriptors.c ****                                 USBD_EP_TYPE_INTR,
+ 994              		.loc 1 814 9 discriminator 4 view .LVU289
+ 995 010a 83E7     		b	.L55
+ 996              	.L65:
+ 814:USBX/App/ux_device_descriptors.c ****                                 USBD_EP_TYPE_INTR,
+ 997              		.loc 1 814 9 discriminator 1 view .LVU290
+ 998 010c 0523     		movs	r3, #5
+ 999 010e 9371     		strb	r3, [r2, #6]
+ 1000 0110 F8E7     		b	.L58
+ 1001              	.L64:
+ 823:USBX/App/ux_device_descriptors.c ****                                 USBD_EP_TYPE_INTR,
+ 1002              		.loc 1 823 9 discriminator 1 view .LVU291
+ 1003 0112 0523     		movs	r3, #5
+ 1004 0114 9371     		strb	r3, [r2, #6]
+ 1005 0116 D7E7     		b	.L60
+ 1006              	.L67:
+ 1007              		.align	2
+ 1008              	.L66:
+ 1009 0118 00000000 		.word	pIfDesc.2
+ 1010 011c 00000000 		.word	pHidDesc.1
+ 1011 0120 00000000 		.word	pEpDesc.0
+ARM GAS  C:\Users\sapph\AppData\Local\Temp\ccnHyWoZ.s 			page 37
+
+
+ 1012              		.cfi_endproc
+ 1013              	.LFE178:
+ 1015              		.section	.text.USBD_FrameWork_AddToConfDesc,"ax",%progbits
+ 1016              		.align	1
+ 1017              		.syntax unified
+ 1018              		.thumb
+ 1019              		.thumb_func
+ 1021              	USBD_FrameWork_AddToConfDesc:
+ 1022              	.LVL80:
+ 1023              	.LFB174:
+ 615:USBX/App/ux_device_descriptors.c ****   uint8_t interface = 0U;
+ 1024              		.loc 1 615 1 view -0
+ 1025              		.cfi_startproc
+ 1026              		@ args = 0, pretend = 0, frame = 0
+ 1027              		@ frame_needed = 0, uses_anonymous_args = 0
+ 615:USBX/App/ux_device_descriptors.c ****   uint8_t interface = 0U;
+ 1028              		.loc 1 615 1 is_stmt 0 view .LVU293
+ 1029 0000 70B5     		push	{r4, r5, r6, lr}
+ 1030              		.cfi_def_cfa_offset 16
+ 1031              		.cfi_offset 4, -16
+ 1032              		.cfi_offset 5, -12
+ 1033              		.cfi_offset 6, -8
+ 1034              		.cfi_offset 14, -4
+ 1035 0002 0446     		mov	r4, r0
+ 1036 0004 1546     		mov	r5, r2
+ 616:USBX/App/ux_device_descriptors.c **** 
+ 1037              		.loc 1 616 3 is_stmt 1 view .LVU294
+ 1038              	.LVL81:
+ 623:USBX/App/ux_device_descriptors.c **** 
+ 1039              		.loc 1 623 3 view .LVU295
+ 623:USBX/App/ux_device_descriptors.c **** 
+ 1040              		.loc 1 623 15 is_stmt 0 view .LVU296
+ 1041 0006 0170     		strb	r1, [r0]
+ 626:USBX/App/ux_device_descriptors.c ****   {
+ 1042              		.loc 1 626 3 is_stmt 1 view .LVU297
+ 626:USBX/App/ux_device_descriptors.c ****   {
+ 1043              		.loc 1 626 11 is_stmt 0 view .LVU298
+ 1044 0008 4368     		ldr	r3, [r0, #4]
+ 626:USBX/App/ux_device_descriptors.c ****   {
+ 1045              		.loc 1 626 6 view .LVU299
+ 1046 000a 43B1     		cbz	r3, .L74
+ 1047              	.LVL82:
+ 1048              	.L69:
+ 632:USBX/App/ux_device_descriptors.c ****   {
+ 1049              		.loc 1 632 3 is_stmt 1 view .LVU300
+ 632:USBX/App/ux_device_descriptors.c ****   {
+ 1050              		.loc 1 632 32 is_stmt 0 view .LVU301
+ 1051 000c 6668     		ldr	r6, [r4, #4]
+ 632:USBX/App/ux_device_descriptors.c ****   {
+ 1052              		.loc 1 632 42 view .LVU302
+ 1053 000e 5C23     		movs	r3, #92
+ 1054 0010 03FB0643 		mla	r3, r3, r6, r4
+ 1055 0014 1B7B     		ldrb	r3, [r3, #12]	@ zero_extendqisi2
+ 632:USBX/App/ux_device_descriptors.c ****   {
+ 1056              		.loc 1 632 3 view .LVU303
+ 1057 0016 012B     		cmp	r3, #1
+ 1058 0018 07D0     		beq	.L75
+ARM GAS  C:\Users\sapph\AppData\Local\Temp\ccnHyWoZ.s 			page 38
+
+
+ 1059              	.LVL83:
+ 1060              	.L70:
+ 692:USBX/App/ux_device_descriptors.c **** }
+ 1061              		.loc 1 692 3 is_stmt 1 view .LVU304
+ 693:USBX/App/ux_device_descriptors.c **** 
+ 1062              		.loc 1 693 1 is_stmt 0 view .LVU305
+ 1063 001a 0020     		movs	r0, #0
+ 1064 001c 70BD     		pop	{r4, r5, r6, pc}
+ 1065              	.LVL84:
+ 1066              	.L74:
+ 629:USBX/App/ux_device_descriptors.c ****   }
+ 1067              		.loc 1 629 5 is_stmt 1 view .LVU306
+ 1068 001e 00F59271 		add	r1, r0, #292
+ 1069              	.LVL85:
+ 629:USBX/App/ux_device_descriptors.c ****   }
+ 1070              		.loc 1 629 5 is_stmt 0 view .LVU307
+ 1071 0022 1046     		mov	r0, r2
+ 1072              	.LVL86:
+ 629:USBX/App/ux_device_descriptors.c ****   }
+ 1073              		.loc 1 629 5 view .LVU308
+ 1074 0024 FFF7FEFF 		bl	USBD_FrameWork_AddConfDesc
+ 1075              	.LVL87:
+ 629:USBX/App/ux_device_descriptors.c ****   }
+ 1076              		.loc 1 629 5 view .LVU309
+ 1077 0028 F0E7     		b	.L69
+ 1078              	.L75:
+ 639:USBX/App/ux_device_descriptors.c ****       {
+ 1079              		.loc 1 639 7 is_stmt 1 view .LVU310
+ 639:USBX/App/ux_device_descriptors.c ****       {
+ 1080              		.loc 1 639 45 is_stmt 0 view .LVU311
+ 1081 002a 5C23     		movs	r3, #92
+ 1082 002c 03FB0643 		mla	r3, r3, r6, r4
+ 1083 0030 1B7D     		ldrb	r3, [r3, #20]	@ zero_extendqisi2
+ 639:USBX/App/ux_device_descriptors.c ****       {
+ 1084              		.loc 1 639 7 view .LVU312
+ 1085 0032 012B     		cmp	r3, #1
+ 1086 0034 F1D1     		bne	.L70
+ 647:USBX/App/ux_device_descriptors.c ****           pdev->tclasslist[pdev->classId].NumIf = 1U;
+ 1087              		.loc 1 647 11 is_stmt 1 view .LVU313
+ 647:USBX/App/ux_device_descriptors.c ****           pdev->tclasslist[pdev->classId].NumIf = 1U;
+ 1088              		.loc 1 647 23 is_stmt 0 view .LVU314
+ 1089 0036 2046     		mov	r0, r4
+ 1090 0038 FFF7FEFF 		bl	USBD_FrameWork_FindFreeIFNbr
+ 1091              	.LVL88:
+ 648:USBX/App/ux_device_descriptors.c ****           pdev->tclasslist[pdev->classId].Ifs[0] = interface;
+ 1092              		.loc 1 648 11 is_stmt 1 view .LVU315
+ 648:USBX/App/ux_device_descriptors.c ****           pdev->tclasslist[pdev->classId].Ifs[0] = interface;
+ 1093              		.loc 1 648 49 is_stmt 0 view .LVU316
+ 1094 003c 5C23     		movs	r3, #92
+ 1095 003e 03FB0646 		mla	r6, r3, r6, r4
+ 1096 0042 0123     		movs	r3, #1
+ 1097 0044 3362     		str	r3, [r6, #32]
+ 649:USBX/App/ux_device_descriptors.c **** 
+ 1098              		.loc 1 649 11 is_stmt 1 view .LVU317
+ 649:USBX/App/ux_device_descriptors.c **** 
+ 1099              		.loc 1 649 50 is_stmt 0 view .LVU318
+ 1100 0046 86F85A00 		strb	r0, [r6, #90]
+ARM GAS  C:\Users\sapph\AppData\Local\Temp\ccnHyWoZ.s 			page 39
+
+
+ 652:USBX/App/ux_device_descriptors.c **** 
+ 1101              		.loc 1 652 11 is_stmt 1 view .LVU319
+ 652:USBX/App/ux_device_descriptors.c **** 
+ 1102              		.loc 1 652 50 is_stmt 0 view .LVU320
+ 1103 004a F361     		str	r3, [r6, #28]
+ 655:USBX/App/ux_device_descriptors.c ****           {
+ 1104              		.loc 1 655 11 is_stmt 1 view .LVU321
+ 655:USBX/App/ux_device_descriptors.c ****           {
+ 1105              		.loc 1 655 19 is_stmt 0 view .LVU322
+ 1106 004c 2378     		ldrb	r3, [r4]	@ zero_extendqisi2
+ 655:USBX/App/ux_device_descriptors.c ****           {
+ 1107              		.loc 1 655 14 view .LVU323
+ 1108 004e 012B     		cmp	r3, #1
+ 1109 0050 0CD0     		beq	.L76
+ 664:USBX/App/ux_device_descriptors.c ****                                     USBD_EP_TYPE_INTR, USBD_HID_KEYBOARD_EPIN_FS_MPS);
+ 1110              		.loc 1 664 13 is_stmt 1 view .LVU324
+ 1111 0052 0423     		movs	r3, #4
+ 1112 0054 0322     		movs	r2, #3
+ 1113 0056 8221     		movs	r1, #130
+ 1114 0058 2046     		mov	r0, r4
+ 1115              	.LVL89:
+ 664:USBX/App/ux_device_descriptors.c ****                                     USBD_EP_TYPE_INTR, USBD_HID_KEYBOARD_EPIN_FS_MPS);
+ 1116              		.loc 1 664 13 is_stmt 0 view .LVU325
+ 1117 005a FFF7FEFF 		bl	USBD_FrameWork_AssignEp
+ 1118              	.LVL90:
+ 1119              	.L72:
+ 669:USBX/App/ux_device_descriptors.c **** 
+ 1120              		.loc 1 669 11 is_stmt 1 view .LVU326
+ 1121 005e 04F59272 		add	r2, r4, #292
+ 1122 0062 2946     		mov	r1, r5
+ 1123 0064 2046     		mov	r0, r4
+ 1124 0066 FFF7FEFF 		bl	USBD_FrameWork_HID_Desc
+ 1125              	.LVL91:
+ 671:USBX/App/ux_device_descriptors.c **** 
+ 1126              		.loc 1 671 11 view .LVU327
+ 1127 006a D6E7     		b	.L70
+ 1128              	.LVL92:
+ 1129              	.L76:
+ 658:USBX/App/ux_device_descriptors.c ****                                     USBD_EP_TYPE_INTR, USBD_HID_KEYBOARD_EPIN_HS_MPS);
+ 1130              		.loc 1 658 13 view .LVU328
+ 1131 006c 0423     		movs	r3, #4
+ 1132 006e 0322     		movs	r2, #3
+ 1133 0070 8221     		movs	r1, #130
+ 1134 0072 2046     		mov	r0, r4
+ 1135              	.LVL93:
+ 658:USBX/App/ux_device_descriptors.c ****                                     USBD_EP_TYPE_INTR, USBD_HID_KEYBOARD_EPIN_HS_MPS);
+ 1136              		.loc 1 658 13 is_stmt 0 view .LVU329
+ 1137 0074 FFF7FEFF 		bl	USBD_FrameWork_AssignEp
+ 1138              	.LVL94:
+ 658:USBX/App/ux_device_descriptors.c ****                                     USBD_EP_TYPE_INTR, USBD_HID_KEYBOARD_EPIN_HS_MPS);
+ 1139              		.loc 1 658 13 view .LVU330
+ 1140 0078 F1E7     		b	.L72
+ 1141              		.cfi_endproc
+ 1142              	.LFE174:
+ 1144              		.section	.text.USBD_FrameWork_AddClass,"ax",%progbits
+ 1145              		.align	1
+ 1146              		.syntax unified
+ARM GAS  C:\Users\sapph\AppData\Local\Temp\ccnHyWoZ.s 			page 40
+
+
+ 1147              		.thumb
+ 1148              		.thumb_func
+ 1150              	USBD_FrameWork_AddClass:
+ 1151              	.LVL95:
+ 1152              	.LFB173:
+ 569:USBX/App/ux_device_descriptors.c **** 
+ 1153              		.loc 1 569 1 is_stmt 1 view -0
+ 1154              		.cfi_startproc
+ 1155              		@ args = 4, pretend = 0, frame = 0
+ 1156              		@ frame_needed = 0, uses_anonymous_args = 0
+ 571:USBX/App/ux_device_descriptors.c **** 
+ 1157              		.loc 1 571 3 view .LVU332
+ 573:USBX/App/ux_device_descriptors.c ****       (pdev->tclasslist[pdev->classId].Active == 0U))
+ 1158              		.loc 1 573 3 view .LVU333
+ 573:USBX/App/ux_device_descriptors.c ****       (pdev->tclasslist[pdev->classId].Active == 0U))
+ 1159              		.loc 1 573 12 is_stmt 0 view .LVU334
+ 1160 0000 4268     		ldr	r2, [r0, #4]
+ 1161              	.LVL96:
+ 573:USBX/App/ux_device_descriptors.c ****       (pdev->tclasslist[pdev->classId].Active == 0U))
+ 1162              		.loc 1 573 6 view .LVU335
+ 1163 0002 022A     		cmp	r2, #2
+ 1164 0004 2ED8     		bhi	.L80
+ 569:USBX/App/ux_device_descriptors.c **** 
+ 1165              		.loc 1 569 1 view .LVU336
+ 1166 0006 38B5     		push	{r3, r4, r5, lr}
+ 1167              		.cfi_def_cfa_offset 16
+ 1168              		.cfi_offset 3, -16
+ 1169              		.cfi_offset 4, -12
+ 1170              		.cfi_offset 5, -8
+ 1171              		.cfi_offset 14, -4
+ 574:USBX/App/ux_device_descriptors.c ****   {
+ 1172              		.loc 1 574 39 view .LVU337
+ 1173 0008 4FF05C0C 		mov	ip, #92
+ 1174 000c 0CFB020C 		mla	ip, ip, r2, r0
+ 1175 0010 DCF81840 		ldr	r4, [ip, #24]
+ 573:USBX/App/ux_device_descriptors.c ****       (pdev->tclasslist[pdev->classId].Active == 0U))
+ 1176              		.loc 1 573 50 discriminator 1 view .LVU338
+ 1177 0014 44BB     		cbnz	r4, .L81
+ 577:USBX/App/ux_device_descriptors.c ****     pdev->tclasslist[pdev->classId].Active = 1U;
+ 1178              		.loc 1 577 5 is_stmt 1 view .LVU339
+ 577:USBX/App/ux_device_descriptors.c ****     pdev->tclasslist[pdev->classId].Active = 1U;
+ 1179              		.loc 1 577 45 is_stmt 0 view .LVU340
+ 1180 0016 4FF05C0C 		mov	ip, #92
+ 1181 001a 0CFB020C 		mla	ip, ip, r2, r0
+ 1182 001e CCF81020 		str	r2, [ip, #16]
+ 578:USBX/App/ux_device_descriptors.c ****     pdev->tclasslist[pdev->classId].ClassType = class;
+ 1183              		.loc 1 578 5 is_stmt 1 view .LVU341
+ 578:USBX/App/ux_device_descriptors.c ****     pdev->tclasslist[pdev->classId].ClassType = class;
+ 1184              		.loc 1 578 44 is_stmt 0 view .LVU342
+ 1185 0022 0124     		movs	r4, #1
+ 1186 0024 CCF81840 		str	r4, [ip, #24]
+ 579:USBX/App/ux_device_descriptors.c **** 
+ 1187              		.loc 1 579 5 is_stmt 1 view .LVU343
+ 579:USBX/App/ux_device_descriptors.c **** 
+ 1188              		.loc 1 579 47 is_stmt 0 view .LVU344
+ 1189 0028 8CF80C10 		strb	r1, [ip, #12]
+ 581:USBX/App/ux_device_descriptors.c ****     {
+ARM GAS  C:\Users\sapph\AppData\Local\Temp\ccnHyWoZ.s 			page 41
+
+
+ 1190              		.loc 1 581 5 is_stmt 1 view .LVU345
+ 581:USBX/App/ux_device_descriptors.c ****     {
+ 1191              		.loc 1 581 8 is_stmt 0 view .LVU346
+ 1192 002c A142     		cmp	r1, r4
+ 1193 002e 06D0     		beq	.L87
+ 1194              	.LVL97:
+ 1195              	.L79:
+ 594:USBX/App/ux_device_descriptors.c ****     {
+ 1196              		.loc 1 594 5 is_stmt 1 view .LVU347
+ 594:USBX/App/ux_device_descriptors.c ****     {
+ 1197              		.loc 1 594 9 is_stmt 0 view .LVU348
+ 1198 0030 049A     		ldr	r2, [sp, #16]
+ 1199 0032 1946     		mov	r1, r3
+ 1200 0034 FFF7FEFF 		bl	USBD_FrameWork_AddToConfDesc
+ 1201              	.LVL98:
+ 594:USBX/App/ux_device_descriptors.c ****     {
+ 1202              		.loc 1 594 8 discriminator 1 view .LVU349
+ 1203 0038 B8B1     		cbz	r0, .L78
+ 596:USBX/App/ux_device_descriptors.c ****     }
+ 1204              		.loc 1 596 14 view .LVU350
+ 1205 003a FF20     		movs	r0, #255
+ 1206 003c 15E0     		b	.L78
+ 1207              	.LVL99:
+ 1208              	.L87:
+ 583:USBX/App/ux_device_descriptors.c **** 
+ 1209              		.loc 1 583 7 is_stmt 1 view .LVU351
+ 583:USBX/App/ux_device_descriptors.c **** 
+ 1210              		.loc 1 583 71 is_stmt 0 view .LVU352
+ 1211 003e 0B4C     		ldr	r4, .L88
+ 1212 0040 2178     		ldrb	r1, [r4]	@ zero_extendqisi2
+ 1213              	.LVL100:
+ 583:USBX/App/ux_device_descriptors.c **** 
+ 1214              		.loc 1 583 71 view .LVU353
+ 1215 0042 0B4D     		ldr	r5, .L88+4
+ 1216 0044 15F801C0 		ldrb	ip, [r5, r1]	@ zero_extendqisi2
+ 1217              	.LVL101:
+ 583:USBX/App/ux_device_descriptors.c **** 
+ 1218              		.loc 1 583 53 view .LVU354
+ 1219 0048 4FF05C0E 		mov	lr, #92
+ 1220              	.LVL102:
+ 583:USBX/App/ux_device_descriptors.c **** 
+ 1221              		.loc 1 583 53 view .LVU355
+ 1222 004c 0EFB0202 		mla	r2, lr, r2, r0
+ 1223              	.LVL103:
+ 583:USBX/App/ux_device_descriptors.c **** 
+ 1224              		.loc 1 583 53 view .LVU356
+ 1225 0050 82F814C0 		strb	ip, [r2, #20]
+ 585:USBX/App/ux_device_descriptors.c **** 
+ 1226              		.loc 1 585 7 is_stmt 1 view .LVU357
+ 585:USBX/App/ux_device_descriptors.c **** 
+ 1227              		.loc 1 585 20 is_stmt 0 view .LVU358
+ 1228 0054 4A1C     		adds	r2, r1, #1
+ 1229 0056 D2B2     		uxtb	r2, r2
+ 1230 0058 2270     		strb	r2, [r4]
+ 587:USBX/App/ux_device_descriptors.c ****       {
+ 1231              		.loc 1 587 7 is_stmt 1 view .LVU359
+ 587:USBX/App/ux_device_descriptors.c ****       {
+ARM GAS  C:\Users\sapph\AppData\Local\Temp\ccnHyWoZ.s 			page 42
+
+
+ 1232              		.loc 1 587 10 is_stmt 0 view .LVU360
+ 1233 005a 012A     		cmp	r2, #1
+ 1234 005c E8D1     		bne	.L79
+ 589:USBX/App/ux_device_descriptors.c ****       }
+ 1235              		.loc 1 589 9 is_stmt 1 view .LVU361
+ 589:USBX/App/ux_device_descriptors.c ****       }
+ 1236              		.loc 1 589 23 is_stmt 0 view .LVU362
+ 1237 005e 0021     		movs	r1, #0
+ 1238 0060 2170     		strb	r1, [r4]
+ 1239 0062 E5E7     		b	.L79
+ 1240              	.LVL104:
+ 1241              	.L80:
+ 1242              		.cfi_def_cfa_offset 0
+ 1243              		.cfi_restore 3
+ 1244              		.cfi_restore 4
+ 1245              		.cfi_restore 5
+ 1246              		.cfi_restore 14
+ 602:USBX/App/ux_device_descriptors.c **** }
+ 1247              		.loc 1 602 10 view .LVU363
+ 1248 0064 0020     		movs	r0, #0
+ 1249              	.LVL105:
+ 603:USBX/App/ux_device_descriptors.c **** 
+ 1250              		.loc 1 603 1 view .LVU364
+ 1251 0066 7047     		bx	lr
+ 1252              	.LVL106:
+ 1253              	.L81:
+ 1254              		.cfi_def_cfa_offset 16
+ 1255              		.cfi_offset 3, -16
+ 1256              		.cfi_offset 4, -12
+ 1257              		.cfi_offset 5, -8
+ 1258              		.cfi_offset 14, -4
+ 602:USBX/App/ux_device_descriptors.c **** }
+ 1259              		.loc 1 602 10 view .LVU365
+ 1260 0068 0020     		movs	r0, #0
+ 1261              	.LVL107:
+ 1262              	.L78:
+ 603:USBX/App/ux_device_descriptors.c **** 
+ 1263              		.loc 1 603 1 view .LVU366
+ 1264 006a 38BD     		pop	{r3, r4, r5, pc}
+ 1265              	.LVL108:
+ 1266              	.L89:
+ 603:USBX/App/ux_device_descriptors.c **** 
+ 1267              		.loc 1 603 1 view .LVU367
+ 1268              		.align	2
+ 1269              	.L88:
+ 1270 006c 00000000 		.word	interface_idx.3
+ 1271 0070 00000000 		.word	UserHIDInterface
+ 1272              		.cfi_endproc
+ 1273              	.LFE173:
+ 1275              		.section	.text.USBD_Device_Framework_Builder,"ax",%progbits
+ 1276              		.align	1
+ 1277              		.syntax unified
+ 1278              		.thumb
+ 1279              		.thumb_func
+ 1281              	USBD_Device_Framework_Builder:
+ 1282              	.LVL109:
+ 1283              	.LFB172:
+ARM GAS  C:\Users\sapph\AppData\Local\Temp\ccnHyWoZ.s 			page 43
+
+
+ 468:USBX/App/ux_device_descriptors.c ****   static USBD_DeviceDescTypedef   *pDevDesc;
+ 1284              		.loc 1 468 1 is_stmt 1 view -0
+ 1285              		.cfi_startproc
+ 1286              		@ args = 0, pretend = 0, frame = 0
+ 1287              		@ frame_needed = 0, uses_anonymous_args = 0
+ 468:USBX/App/ux_device_descriptors.c ****   static USBD_DeviceDescTypedef   *pDevDesc;
+ 1288              		.loc 1 468 1 is_stmt 0 view .LVU369
+ 1289 0000 2DE9F041 		push	{r4, r5, r6, r7, r8, lr}
+ 1290              		.cfi_def_cfa_offset 24
+ 1291              		.cfi_offset 4, -24
+ 1292              		.cfi_offset 5, -20
+ 1293              		.cfi_offset 6, -16
+ 1294              		.cfi_offset 7, -12
+ 1295              		.cfi_offset 8, -8
+ 1296              		.cfi_offset 14, -4
+ 1297 0004 82B0     		sub	sp, sp, #8
+ 1298              		.cfi_def_cfa_offset 32
+ 1299 0006 0646     		mov	r6, r0
+ 1300 0008 0C46     		mov	r4, r1
+ 1301 000a 9046     		mov	r8, r2
+ 1302 000c 1F46     		mov	r7, r3
+ 469:USBX/App/ux_device_descriptors.c ****   static USBD_DevQualiDescTypedef *pDevQualDesc;
+ 1303              		.loc 1 469 3 is_stmt 1 view .LVU370
+ 470:USBX/App/ux_device_descriptors.c ****   uint8_t Idx_Instance = 0U;
+ 1304              		.loc 1 470 3 view .LVU371
+ 471:USBX/App/ux_device_descriptors.c **** 
+ 1305              		.loc 1 471 3 view .LVU372
+ 1306              	.LVL110:
+ 474:USBX/App/ux_device_descriptors.c ****   pdev->CurrDevDescSz = 0U;
+ 1307              		.loc 1 474 3 view .LVU373
+ 474:USBX/App/ux_device_descriptors.c ****   pdev->CurrDevDescSz = 0U;
+ 1308              		.loc 1 474 24 is_stmt 0 view .LVU374
+ 1309 000e 0021     		movs	r1, #0
+ 1310              	.LVL111:
+ 474:USBX/App/ux_device_descriptors.c ****   pdev->CurrDevDescSz = 0U;
+ 1311              		.loc 1 474 24 view .LVU375
+ 1312 0010 C0F82411 		str	r1, [r0, #292]
+ 475:USBX/App/ux_device_descriptors.c **** 
+ 1313              		.loc 1 475 3 is_stmt 1 view .LVU376
+ 475:USBX/App/ux_device_descriptors.c **** 
+ 1314              		.loc 1 475 23 is_stmt 0 view .LVU377
+ 1315 0014 C0F82011 		str	r1, [r0, #288]
+ 478:USBX/App/ux_device_descriptors.c **** 
+ 1316              		.loc 1 478 3 is_stmt 1 view .LVU378
+ 478:USBX/App/ux_device_descriptors.c **** 
+ 1317              		.loc 1 478 12 is_stmt 0 view .LVU379
+ 1318 0018 3C4B     		ldr	r3, .L100
+ 1319              	.LVL112:
+ 478:USBX/App/ux_device_descriptors.c **** 
+ 1320              		.loc 1 478 12 view .LVU380
+ 1321 001a 1C60     		str	r4, [r3]
+ 481:USBX/App/ux_device_descriptors.c ****   pDevDesc->bDescriptorType = UX_DEVICE_DESCRIPTOR_ITEM;
+ 1322              		.loc 1 481 3 is_stmt 1 view .LVU381
+ 481:USBX/App/ux_device_descriptors.c ****   pDevDesc->bDescriptorType = UX_DEVICE_DESCRIPTOR_ITEM;
+ 1323              		.loc 1 481 21 is_stmt 0 view .LVU382
+ 1324 001c 1223     		movs	r3, #18
+ 1325 001e 2370     		strb	r3, [r4]
+ARM GAS  C:\Users\sapph\AppData\Local\Temp\ccnHyWoZ.s 			page 44
+
+
+ 482:USBX/App/ux_device_descriptors.c ****   pDevDesc->bcdUSB = USB_BCDUSB;
+ 1326              		.loc 1 482 3 is_stmt 1 view .LVU383
+ 482:USBX/App/ux_device_descriptors.c ****   pDevDesc->bcdUSB = USB_BCDUSB;
+ 1327              		.loc 1 482 29 is_stmt 0 view .LVU384
+ 1328 0020 0123     		movs	r3, #1
+ 1329 0022 6370     		strb	r3, [r4, #1]
+ 483:USBX/App/ux_device_descriptors.c ****   pDevDesc->bDeviceClass = 0x00;
+ 1330              		.loc 1 483 3 is_stmt 1 view .LVU385
+ 483:USBX/App/ux_device_descriptors.c ****   pDevDesc->bDeviceClass = 0x00;
+ 1331              		.loc 1 483 20 is_stmt 0 view .LVU386
+ 1332 0024 A170     		strb	r1, [r4, #2]
+ 1333 0026 0222     		movs	r2, #2
+ 1334              	.LVL113:
+ 483:USBX/App/ux_device_descriptors.c ****   pDevDesc->bDeviceClass = 0x00;
+ 1335              		.loc 1 483 20 view .LVU387
+ 1336 0028 E270     		strb	r2, [r4, #3]
+ 484:USBX/App/ux_device_descriptors.c ****   pDevDesc->bDeviceSubClass = 0x00;
+ 1337              		.loc 1 484 3 is_stmt 1 view .LVU388
+ 484:USBX/App/ux_device_descriptors.c ****   pDevDesc->bDeviceSubClass = 0x00;
+ 1338              		.loc 1 484 26 is_stmt 0 view .LVU389
+ 1339 002a 2171     		strb	r1, [r4, #4]
+ 485:USBX/App/ux_device_descriptors.c ****   pDevDesc->bDeviceProtocol = 0x00;
+ 1340              		.loc 1 485 3 is_stmt 1 view .LVU390
+ 485:USBX/App/ux_device_descriptors.c ****   pDevDesc->bDeviceProtocol = 0x00;
+ 1341              		.loc 1 485 29 is_stmt 0 view .LVU391
+ 1342 002c 6171     		strb	r1, [r4, #5]
+ 486:USBX/App/ux_device_descriptors.c ****   pDevDesc->bMaxPacketSize = USBD_MAX_EP0_SIZE;
+ 1343              		.loc 1 486 3 is_stmt 1 view .LVU392
+ 486:USBX/App/ux_device_descriptors.c ****   pDevDesc->bMaxPacketSize = USBD_MAX_EP0_SIZE;
+ 1344              		.loc 1 486 29 is_stmt 0 view .LVU393
+ 1345 002e A171     		strb	r1, [r4, #6]
+ 487:USBX/App/ux_device_descriptors.c ****   pDevDesc->idVendor = USBD_VID;
+ 1346              		.loc 1 487 3 is_stmt 1 view .LVU394
+ 487:USBX/App/ux_device_descriptors.c ****   pDevDesc->idVendor = USBD_VID;
+ 1347              		.loc 1 487 28 is_stmt 0 view .LVU395
+ 1348 0030 4020     		movs	r0, #64
+ 1349              	.LVL114:
+ 487:USBX/App/ux_device_descriptors.c ****   pDevDesc->idVendor = USBD_VID;
+ 1350              		.loc 1 487 28 view .LVU396
+ 1351 0032 E071     		strb	r0, [r4, #7]
+ 488:USBX/App/ux_device_descriptors.c ****   pDevDesc->idProduct = USBD_PID;
+ 1352              		.loc 1 488 3 is_stmt 1 view .LVU397
+ 488:USBX/App/ux_device_descriptors.c ****   pDevDesc->idProduct = USBD_PID;
+ 1353              		.loc 1 488 22 is_stmt 0 view .LVU398
+ 1354 0034 6FF07C00 		mvn	r0, #124
+ 1355 0038 2072     		strb	r0, [r4, #8]
+ 1356 003a 0420     		movs	r0, #4
+ 1357 003c 6072     		strb	r0, [r4, #9]
+ 489:USBX/App/ux_device_descriptors.c ****   pDevDesc->bcdDevice = 0x0200;
+ 1358              		.loc 1 489 3 is_stmt 1 view .LVU399
+ 489:USBX/App/ux_device_descriptors.c ****   pDevDesc->bcdDevice = 0x0200;
+ 1359              		.loc 1 489 23 is_stmt 0 view .LVU400
+ 1360 003e 1020     		movs	r0, #16
+ 1361 0040 A072     		strb	r0, [r4, #10]
+ 1362 0042 5720     		movs	r0, #87
+ 1363 0044 E072     		strb	r0, [r4, #11]
+ 490:USBX/App/ux_device_descriptors.c ****   pDevDesc->iManufacturer = USBD_IDX_MFC_STR;
+ARM GAS  C:\Users\sapph\AppData\Local\Temp\ccnHyWoZ.s 			page 45
+
+
+ 1364              		.loc 1 490 3 is_stmt 1 view .LVU401
+ 490:USBX/App/ux_device_descriptors.c ****   pDevDesc->iManufacturer = USBD_IDX_MFC_STR;
+ 1365              		.loc 1 490 23 is_stmt 0 view .LVU402
+ 1366 0046 2173     		strb	r1, [r4, #12]
+ 1367 0048 6273     		strb	r2, [r4, #13]
+ 491:USBX/App/ux_device_descriptors.c ****   pDevDesc->iProduct = USBD_IDX_PRODUCT_STR;
+ 1368              		.loc 1 491 3 is_stmt 1 view .LVU403
+ 491:USBX/App/ux_device_descriptors.c ****   pDevDesc->iProduct = USBD_IDX_PRODUCT_STR;
+ 1369              		.loc 1 491 27 is_stmt 0 view .LVU404
+ 1370 004a A373     		strb	r3, [r4, #14]
+ 492:USBX/App/ux_device_descriptors.c ****   pDevDesc->iSerialNumber = USBD_IDX_SERIAL_STR;
+ 1371              		.loc 1 492 3 is_stmt 1 view .LVU405
+ 492:USBX/App/ux_device_descriptors.c ****   pDevDesc->iSerialNumber = USBD_IDX_SERIAL_STR;
+ 1372              		.loc 1 492 22 is_stmt 0 view .LVU406
+ 1373 004c E273     		strb	r2, [r4, #15]
+ 493:USBX/App/ux_device_descriptors.c ****   pDevDesc->bNumConfigurations = USBD_MAX_NUM_CONFIGURATION;
+ 1374              		.loc 1 493 3 is_stmt 1 view .LVU407
+ 493:USBX/App/ux_device_descriptors.c ****   pDevDesc->bNumConfigurations = USBD_MAX_NUM_CONFIGURATION;
+ 1375              		.loc 1 493 27 is_stmt 0 view .LVU408
+ 1376 004e 0322     		movs	r2, #3
+ 1377 0050 2274     		strb	r2, [r4, #16]
+ 494:USBX/App/ux_device_descriptors.c ****   pdev->CurrDevDescSz += (uint32_t)sizeof(USBD_DeviceDescTypedef);
+ 1378              		.loc 1 494 3 is_stmt 1 view .LVU409
+ 494:USBX/App/ux_device_descriptors.c ****   pdev->CurrDevDescSz += (uint32_t)sizeof(USBD_DeviceDescTypedef);
+ 1379              		.loc 1 494 32 is_stmt 0 view .LVU410
+ 1380 0052 6374     		strb	r3, [r4, #17]
+ 495:USBX/App/ux_device_descriptors.c **** 
+ 1381              		.loc 1 495 3 is_stmt 1 view .LVU411
+ 495:USBX/App/ux_device_descriptors.c **** 
+ 1382              		.loc 1 495 7 is_stmt 0 view .LVU412
+ 1383 0054 D6F82031 		ldr	r3, [r6, #288]
+ 495:USBX/App/ux_device_descriptors.c **** 
+ 1384              		.loc 1 495 23 view .LVU413
+ 1385 0058 1233     		adds	r3, r3, #18
+ 1386 005a C6F82031 		str	r3, [r6, #288]
+ 498:USBX/App/ux_device_descriptors.c ****   {
+ 1387              		.loc 1 498 3 is_stmt 1 view .LVU414
+ 498:USBX/App/ux_device_descriptors.c ****   {
+ 1388              		.loc 1 498 6 is_stmt 0 view .LVU415
+ 1389 005e 012F     		cmp	r7, #1
+ 1390 0060 01D0     		beq	.L98
+ 1391              	.L91:
+ 468:USBX/App/ux_device_descriptors.c ****   static USBD_DeviceDescTypedef   *pDevDesc;
+ 1392              		.loc 1 468 1 view .LVU416
+ 1393 0062 0025     		movs	r5, #0
+ 1394 0064 1AE0     		b	.L92
+ 1395              	.L98:
+ 500:USBX/App/ux_device_descriptors.c ****     pDevQualDesc->bLength = (uint8_t)sizeof(USBD_DevQualiDescTypedef);
+ 1396              		.loc 1 500 5 is_stmt 1 view .LVU417
+ 500:USBX/App/ux_device_descriptors.c ****     pDevQualDesc->bLength = (uint8_t)sizeof(USBD_DevQualiDescTypedef);
+ 1397              		.loc 1 500 67 is_stmt 0 view .LVU418
+ 1398 0066 E218     		adds	r2, r4, r3
+ 500:USBX/App/ux_device_descriptors.c ****     pDevQualDesc->bLength = (uint8_t)sizeof(USBD_DevQualiDescTypedef);
+ 1399              		.loc 1 500 18 view .LVU419
+ 1400 0068 2949     		ldr	r1, .L100+4
+ 1401 006a 0A60     		str	r2, [r1]
+ 501:USBX/App/ux_device_descriptors.c ****     pDevQualDesc->bDescriptorType = UX_DEVICE_QUALIFIER_DESCRIPTOR_ITEM;
+ARM GAS  C:\Users\sapph\AppData\Local\Temp\ccnHyWoZ.s 			page 46
+
+
+ 1402              		.loc 1 501 5 is_stmt 1 view .LVU420
+ 501:USBX/App/ux_device_descriptors.c ****     pDevQualDesc->bDescriptorType = UX_DEVICE_QUALIFIER_DESCRIPTOR_ITEM;
+ 1403              		.loc 1 501 27 is_stmt 0 view .LVU421
+ 1404 006c 0A21     		movs	r1, #10
+ 1405 006e E154     		strb	r1, [r4, r3]
+ 502:USBX/App/ux_device_descriptors.c ****     pDevQualDesc->bcdDevice = 0x0200;
+ 1406              		.loc 1 502 5 is_stmt 1 view .LVU422
+ 502:USBX/App/ux_device_descriptors.c ****     pDevQualDesc->bcdDevice = 0x0200;
+ 1407              		.loc 1 502 35 is_stmt 0 view .LVU423
+ 1408 0070 0623     		movs	r3, #6
+ 1409 0072 5370     		strb	r3, [r2, #1]
+ 503:USBX/App/ux_device_descriptors.c ****     pDevQualDesc->Class = 0x00;
+ 1410              		.loc 1 503 5 is_stmt 1 view .LVU424
+ 503:USBX/App/ux_device_descriptors.c ****     pDevQualDesc->Class = 0x00;
+ 1411              		.loc 1 503 29 is_stmt 0 view .LVU425
+ 1412 0074 0023     		movs	r3, #0
+ 1413 0076 9370     		strb	r3, [r2, #2]
+ 1414 0078 0221     		movs	r1, #2
+ 1415 007a D170     		strb	r1, [r2, #3]
+ 504:USBX/App/ux_device_descriptors.c ****     pDevQualDesc->SubClass = 0x00;
+ 1416              		.loc 1 504 5 is_stmt 1 view .LVU426
+ 504:USBX/App/ux_device_descriptors.c ****     pDevQualDesc->SubClass = 0x00;
+ 1417              		.loc 1 504 25 is_stmt 0 view .LVU427
+ 1418 007c 1371     		strb	r3, [r2, #4]
+ 505:USBX/App/ux_device_descriptors.c ****     pDevQualDesc->Protocol = 0x00;
+ 1419              		.loc 1 505 5 is_stmt 1 view .LVU428
+ 505:USBX/App/ux_device_descriptors.c ****     pDevQualDesc->Protocol = 0x00;
+ 1420              		.loc 1 505 28 is_stmt 0 view .LVU429
+ 1421 007e 5371     		strb	r3, [r2, #5]
+ 506:USBX/App/ux_device_descriptors.c ****     pDevQualDesc->bMaxPacketSize = 0x40;
+ 1422              		.loc 1 506 5 is_stmt 1 view .LVU430
+ 506:USBX/App/ux_device_descriptors.c ****     pDevQualDesc->bMaxPacketSize = 0x40;
+ 1423              		.loc 1 506 28 is_stmt 0 view .LVU431
+ 1424 0080 9371     		strb	r3, [r2, #6]
+ 507:USBX/App/ux_device_descriptors.c ****     pDevQualDesc->bNumConfigurations = 0x01;
+ 1425              		.loc 1 507 5 is_stmt 1 view .LVU432
+ 507:USBX/App/ux_device_descriptors.c ****     pDevQualDesc->bNumConfigurations = 0x01;
+ 1426              		.loc 1 507 34 is_stmt 0 view .LVU433
+ 1427 0082 4021     		movs	r1, #64
+ 1428 0084 D171     		strb	r1, [r2, #7]
+ 508:USBX/App/ux_device_descriptors.c ****     pDevQualDesc->bReserved = 0x00;
+ 1429              		.loc 1 508 5 is_stmt 1 view .LVU434
+ 508:USBX/App/ux_device_descriptors.c ****     pDevQualDesc->bReserved = 0x00;
+ 1430              		.loc 1 508 38 is_stmt 0 view .LVU435
+ 1431 0086 0121     		movs	r1, #1
+ 1432 0088 1172     		strb	r1, [r2, #8]
+ 509:USBX/App/ux_device_descriptors.c ****     pdev->CurrDevDescSz += (uint32_t)sizeof(USBD_DevQualiDescTypedef);
+ 1433              		.loc 1 509 5 is_stmt 1 view .LVU436
+ 509:USBX/App/ux_device_descriptors.c ****     pdev->CurrDevDescSz += (uint32_t)sizeof(USBD_DevQualiDescTypedef);
+ 1434              		.loc 1 509 29 is_stmt 0 view .LVU437
+ 1435 008a 5372     		strb	r3, [r2, #9]
+ 510:USBX/App/ux_device_descriptors.c ****   }
+ 1436              		.loc 1 510 5 is_stmt 1 view .LVU438
+ 510:USBX/App/ux_device_descriptors.c ****   }
+ 1437              		.loc 1 510 9 is_stmt 0 view .LVU439
+ 1438 008c D6F82031 		ldr	r3, [r6, #288]
+ 510:USBX/App/ux_device_descriptors.c ****   }
+ARM GAS  C:\Users\sapph\AppData\Local\Temp\ccnHyWoZ.s 			page 47
+
+
+ 1439              		.loc 1 510 25 view .LVU440
+ 1440 0090 0A33     		adds	r3, r3, #10
+ 1441 0092 C6F82031 		str	r3, [r6, #288]
+ 1442 0096 E4E7     		b	.L91
+ 1443              	.LVL115:
+ 1444              	.L93:
+ 531:USBX/App/ux_device_descriptors.c ****   }
+ 1445              		.loc 1 531 5 is_stmt 1 view .LVU441
+ 531:USBX/App/ux_device_descriptors.c ****   }
+ 1446              		.loc 1 531 17 is_stmt 0 view .LVU442
+ 1447 0098 0135     		adds	r5, r5, #1
+ 1448              	.LVL116:
+ 531:USBX/App/ux_device_descriptors.c ****   }
+ 1449              		.loc 1 531 17 view .LVU443
+ 1450 009a EDB2     		uxtb	r5, r5
+ 1451              	.LVL117:
+ 1452              	.L92:
+ 514:USBX/App/ux_device_descriptors.c ****   {
+ 1453              		.loc 1 514 23 is_stmt 1 view .LVU444
+ 1454 009c 022D     		cmp	r5, #2
+ 1455 009e 19D8     		bhi	.L99
+ 516:USBX/App/ux_device_descriptors.c ****         (pdev->NumClasses < USBD_MAX_SUPPORTED_CLASS) &&
+ 1456              		.loc 1 516 5 view .LVU445
+ 516:USBX/App/ux_device_descriptors.c ****         (pdev->NumClasses < USBD_MAX_SUPPORTED_CLASS) &&
+ 1457              		.loc 1 516 14 is_stmt 0 view .LVU446
+ 1458 00a0 7168     		ldr	r1, [r6, #4]
+ 516:USBX/App/ux_device_descriptors.c ****         (pdev->NumClasses < USBD_MAX_SUPPORTED_CLASS) &&
+ 1459              		.loc 1 516 8 view .LVU447
+ 1460 00a2 0229     		cmp	r1, #2
+ 1461 00a4 F8D8     		bhi	.L93
+ 517:USBX/App/ux_device_descriptors.c ****         (UserClassInstance[Idx_Instance] != CLASS_TYPE_NONE))
+ 1462              		.loc 1 517 14 view .LVU448
+ 1463 00a6 B368     		ldr	r3, [r6, #8]
+ 516:USBX/App/ux_device_descriptors.c ****         (pdev->NumClasses < USBD_MAX_SUPPORTED_CLASS) &&
+ 1464              		.loc 1 516 52 discriminator 1 view .LVU449
+ 1465 00a8 022B     		cmp	r3, #2
+ 1466 00aa F5D8     		bhi	.L93
+ 518:USBX/App/ux_device_descriptors.c ****     {
+ 1467              		.loc 1 518 27 view .LVU450
+ 1468 00ac 18F80510 		ldrb	r1, [r8, r5]	@ zero_extendqisi2
+ 517:USBX/App/ux_device_descriptors.c ****         (UserClassInstance[Idx_Instance] != CLASS_TYPE_NONE))
+ 1469              		.loc 1 517 55 view .LVU451
+ 1470 00b0 0029     		cmp	r1, #0
+ 1471 00b2 F1D0     		beq	.L93
+ 521:USBX/App/ux_device_descriptors.c ****                                     (USBD_CompositeClassTypeDef)UserClassInstance[Idx_Instance],
+ 1472              		.loc 1 521 7 is_stmt 1 view .LVU452
+ 524:USBX/App/ux_device_descriptors.c **** 
+ 1473              		.loc 1 524 62 is_stmt 0 view .LVU453
+ 1474 00b4 D6F82031 		ldr	r3, [r6, #288]
+ 521:USBX/App/ux_device_descriptors.c ****                                     (USBD_CompositeClassTypeDef)UserClassInstance[Idx_Instance],
+ 1475              		.loc 1 521 13 view .LVU454
+ 1476 00b8 2344     		add	r3, r3, r4
+ 1477 00ba 0093     		str	r3, [sp]
+ 1478 00bc 3B46     		mov	r3, r7
+ 1479 00be 0022     		movs	r2, #0
+ 1480 00c0 3046     		mov	r0, r6
+ 1481 00c2 FFF7FEFF 		bl	USBD_FrameWork_AddClass
+ARM GAS  C:\Users\sapph\AppData\Local\Temp\ccnHyWoZ.s 			page 48
+
+
+ 1482              	.LVL118:
+ 527:USBX/App/ux_device_descriptors.c ****       pdev->NumClasses ++;
+ 1483              		.loc 1 527 7 is_stmt 1 view .LVU455
+ 527:USBX/App/ux_device_descriptors.c ****       pdev->NumClasses ++;
+ 1484              		.loc 1 527 11 is_stmt 0 view .LVU456
+ 1485 00c6 7368     		ldr	r3, [r6, #4]
+ 527:USBX/App/ux_device_descriptors.c ****       pdev->NumClasses ++;
+ 1486              		.loc 1 527 21 view .LVU457
+ 1487 00c8 0133     		adds	r3, r3, #1
+ 1488 00ca 7360     		str	r3, [r6, #4]
+ 528:USBX/App/ux_device_descriptors.c ****     }
+ 1489              		.loc 1 528 7 is_stmt 1 view .LVU458
+ 528:USBX/App/ux_device_descriptors.c ****     }
+ 1490              		.loc 1 528 11 is_stmt 0 view .LVU459
+ 1491 00cc B368     		ldr	r3, [r6, #8]
+ 528:USBX/App/ux_device_descriptors.c ****     }
+ 1492              		.loc 1 528 24 view .LVU460
+ 1493 00ce 0133     		adds	r3, r3, #1
+ 1494 00d0 B360     		str	r3, [r6, #8]
+ 1495 00d2 E1E7     		b	.L93
+ 1496              	.L99:
+ 535:USBX/App/ux_device_descriptors.c ****   {
+ 1497              		.loc 1 535 3 is_stmt 1 view .LVU461
+ 535:USBX/App/ux_device_descriptors.c ****   {
+ 1498              		.loc 1 535 11 is_stmt 0 view .LVU462
+ 1499 00d4 B368     		ldr	r3, [r6, #8]
+ 535:USBX/App/ux_device_descriptors.c ****   {
+ 1500              		.loc 1 535 6 view .LVU463
+ 1501 00d6 012B     		cmp	r3, #1
+ 1502 00d8 0BD9     		bls	.L95
+ 537:USBX/App/ux_device_descriptors.c ****     pDevDesc->bDeviceSubClass = 0x02;
+ 1503              		.loc 1 537 5 is_stmt 1 view .LVU464
+ 537:USBX/App/ux_device_descriptors.c ****     pDevDesc->bDeviceSubClass = 0x02;
+ 1504              		.loc 1 537 13 is_stmt 0 view .LVU465
+ 1505 00da 0C4B     		ldr	r3, .L100
+ 1506 00dc 1B68     		ldr	r3, [r3]
+ 537:USBX/App/ux_device_descriptors.c ****     pDevDesc->bDeviceSubClass = 0x02;
+ 1507              		.loc 1 537 28 view .LVU466
+ 1508 00de EF22     		movs	r2, #239
+ 1509 00e0 1A71     		strb	r2, [r3, #4]
+ 538:USBX/App/ux_device_descriptors.c ****     pDevDesc->bDeviceProtocol = 0x01;
+ 1510              		.loc 1 538 5 is_stmt 1 view .LVU467
+ 538:USBX/App/ux_device_descriptors.c ****     pDevDesc->bDeviceProtocol = 0x01;
+ 1511              		.loc 1 538 31 is_stmt 0 view .LVU468
+ 1512 00e2 0222     		movs	r2, #2
+ 1513 00e4 5A71     		strb	r2, [r3, #5]
+ 539:USBX/App/ux_device_descriptors.c ****   }
+ 1514              		.loc 1 539 5 is_stmt 1 view .LVU469
+ 539:USBX/App/ux_device_descriptors.c ****   }
+ 1515              		.loc 1 539 31 is_stmt 0 view .LVU470
+ 1516 00e6 0122     		movs	r2, #1
+ 1517 00e8 9A71     		strb	r2, [r3, #6]
+ 1518              	.L96:
+ 552:USBX/App/ux_device_descriptors.c **** }
+ 1519              		.loc 1 552 3 is_stmt 1 view .LVU471
+ 553:USBX/App/ux_device_descriptors.c **** 
+ 1520              		.loc 1 553 1 is_stmt 0 view .LVU472
+ARM GAS  C:\Users\sapph\AppData\Local\Temp\ccnHyWoZ.s 			page 49
+
+
+ 1521 00ea 2046     		mov	r0, r4
+ 1522 00ec 02B0     		add	sp, sp, #8
+ 1523              		.cfi_remember_state
+ 1524              		.cfi_def_cfa_offset 24
+ 1525              		@ sp needed
+ 1526 00ee BDE8F081 		pop	{r4, r5, r6, r7, r8, pc}
+ 1527              	.LVL119:
+ 1528              	.L95:
+ 1529              		.cfi_restore_state
+ 544:USBX/App/ux_device_descriptors.c ****     {
+ 1530              		.loc 1 544 5 is_stmt 1 view .LVU473
+ 544:USBX/App/ux_device_descriptors.c ****     {
+ 1531              		.loc 1 544 26 is_stmt 0 view .LVU474
+ 1532 00f2 98F80030 		ldrb	r3, [r8]	@ zero_extendqisi2
+ 544:USBX/App/ux_device_descriptors.c ****     {
+ 1533              		.loc 1 544 8 view .LVU475
+ 1534 00f6 022B     		cmp	r3, #2
+ 1535 00f8 F7D1     		bne	.L96
+ 546:USBX/App/ux_device_descriptors.c ****       pDevDesc->bDeviceSubClass = 0x02;
+ 1536              		.loc 1 546 7 is_stmt 1 view .LVU476
+ 546:USBX/App/ux_device_descriptors.c ****       pDevDesc->bDeviceSubClass = 0x02;
+ 1537              		.loc 1 546 15 is_stmt 0 view .LVU477
+ 1538 00fa 044B     		ldr	r3, .L100
+ 1539 00fc 1B68     		ldr	r3, [r3]
+ 546:USBX/App/ux_device_descriptors.c ****       pDevDesc->bDeviceSubClass = 0x02;
+ 1540              		.loc 1 546 30 view .LVU478
+ 1541 00fe 0222     		movs	r2, #2
+ 1542 0100 1A71     		strb	r2, [r3, #4]
+ 547:USBX/App/ux_device_descriptors.c ****       pDevDesc->bDeviceProtocol = 0x00;
+ 1543              		.loc 1 547 7 is_stmt 1 view .LVU479
+ 547:USBX/App/ux_device_descriptors.c ****       pDevDesc->bDeviceProtocol = 0x00;
+ 1544              		.loc 1 547 33 is_stmt 0 view .LVU480
+ 1545 0102 5A71     		strb	r2, [r3, #5]
+ 548:USBX/App/ux_device_descriptors.c ****     }
+ 1546              		.loc 1 548 7 is_stmt 1 view .LVU481
+ 548:USBX/App/ux_device_descriptors.c ****     }
+ 1547              		.loc 1 548 33 is_stmt 0 view .LVU482
+ 1548 0104 0022     		movs	r2, #0
+ 1549 0106 9A71     		strb	r2, [r3, #6]
+ 1550 0108 EFE7     		b	.L96
+ 1551              	.L101:
+ 1552 010a 00BF     		.align	2
+ 1553              	.L100:
+ 1554 010c 00000000 		.word	pDevDesc.5
+ 1555 0110 00000000 		.word	pDevQualDesc.4
+ 1556              		.cfi_endproc
+ 1557              	.LFE172:
+ 1559              		.section	.text.USBD_Get_Device_Framework_Speed,"ax",%progbits
+ 1560              		.align	1
+ 1561              		.global	USBD_Get_Device_Framework_Speed
+ 1562              		.syntax unified
+ 1563              		.thumb
+ 1564              		.thumb_func
+ 1566              	USBD_Get_Device_Framework_Speed:
+ 1567              	.LVL120:
+ 1568              	.LFB163:
+ 186:USBX/App/ux_device_descriptors.c ****   uint8_t *pFrameWork = NULL;
+ARM GAS  C:\Users\sapph\AppData\Local\Temp\ccnHyWoZ.s 			page 50
+
+
+ 1569              		.loc 1 186 1 is_stmt 1 view -0
+ 1570              		.cfi_startproc
+ 1571              		@ args = 0, pretend = 0, frame = 0
+ 1572              		@ frame_needed = 0, uses_anonymous_args = 0
+ 186:USBX/App/ux_device_descriptors.c ****   uint8_t *pFrameWork = NULL;
+ 1573              		.loc 1 186 1 is_stmt 0 view .LVU484
+ 1574 0000 70B5     		push	{r4, r5, r6, lr}
+ 1575              		.cfi_def_cfa_offset 16
+ 1576              		.cfi_offset 4, -16
+ 1577              		.cfi_offset 5, -12
+ 1578              		.cfi_offset 6, -8
+ 1579              		.cfi_offset 14, -4
+ 1580 0002 0D46     		mov	r5, r1
+ 187:USBX/App/ux_device_descriptors.c ****   /* USER CODE BEGIN Device_Framework0 */
+ 1581              		.loc 1 187 3 is_stmt 1 view .LVU485
+ 1582              	.LVL121:
+ 192:USBX/App/ux_device_descriptors.c ****   {
+ 1583              		.loc 1 192 3 view .LVU486
+ 192:USBX/App/ux_device_descriptors.c ****   {
+ 1584              		.loc 1 192 6 is_stmt 0 view .LVU487
+ 1585 0004 0346     		mov	r3, r0
+ 1586 0006 70B9     		cbnz	r0, .L103
+ 194:USBX/App/ux_device_descriptors.c ****                                   UserClassInstance, Speed);
+ 1587              		.loc 1 194 5 is_stmt 1 view .LVU488
+ 1588 0008 0E4C     		ldr	r4, .L106
+ 1589 000a 0F4E     		ldr	r6, .L106+4
+ 1590 000c 0F4A     		ldr	r2, .L106+8
+ 1591 000e 2146     		mov	r1, r4
+ 1592              	.LVL122:
+ 194:USBX/App/ux_device_descriptors.c ****                                   UserClassInstance, Speed);
+ 1593              		.loc 1 194 5 is_stmt 0 view .LVU489
+ 1594 0010 3046     		mov	r0, r6
+ 1595              	.LVL123:
+ 194:USBX/App/ux_device_descriptors.c ****                                   UserClassInstance, Speed);
+ 1596              		.loc 1 194 5 view .LVU490
+ 1597 0012 FFF7FEFF 		bl	USBD_Device_Framework_Builder
+ 1598              	.LVL124:
+ 198:USBX/App/ux_device_descriptors.c **** 
+ 1599              		.loc 1 198 5 is_stmt 1 view .LVU491
+ 198:USBX/App/ux_device_descriptors.c **** 
+ 1600              		.loc 1 198 37 is_stmt 0 view .LVU492
+ 1601 0016 D6F82031 		ldr	r3, [r6, #288]
+ 198:USBX/App/ux_device_descriptors.c **** 
+ 1602              		.loc 1 198 68 view .LVU493
+ 1603 001a D6F82421 		ldr	r2, [r6, #292]
+ 198:USBX/App/ux_device_descriptors.c **** 
+ 1604              		.loc 1 198 52 view .LVU494
+ 1605 001e 1344     		add	r3, r3, r2
+ 198:USBX/App/ux_device_descriptors.c **** 
+ 1606              		.loc 1 198 13 view .LVU495
+ 1607 0020 2B60     		str	r3, [r5]
+ 200:USBX/App/ux_device_descriptors.c ****   }
+ 1608              		.loc 1 200 5 is_stmt 1 view .LVU496
+ 1609              	.LVL125:
+ 200:USBX/App/ux_device_descriptors.c ****   }
+ 1610              		.loc 1 200 16 is_stmt 0 view .LVU497
+ 1611 0022 2046     		mov	r0, r4
+ARM GAS  C:\Users\sapph\AppData\Local\Temp\ccnHyWoZ.s 			page 51
+
+
+ 1612              	.LVL126:
+ 1613              	.L102:
+ 216:USBX/App/ux_device_descriptors.c **** 
+ 1614              		.loc 1 216 1 view .LVU498
+ 1615 0024 70BD     		pop	{r4, r5, r6, pc}
+ 1616              	.LVL127:
+ 1617              	.L103:
+ 204:USBX/App/ux_device_descriptors.c ****                                   UserClassInstance, Speed);
+ 1618              		.loc 1 204 5 is_stmt 1 view .LVU499
+ 1619 0026 0A4C     		ldr	r4, .L106+12
+ 1620 0028 0A4E     		ldr	r6, .L106+16
+ 1621 002a 084A     		ldr	r2, .L106+8
+ 1622 002c 2146     		mov	r1, r4
+ 1623              	.LVL128:
+ 204:USBX/App/ux_device_descriptors.c ****                                   UserClassInstance, Speed);
+ 1624              		.loc 1 204 5 is_stmt 0 view .LVU500
+ 1625 002e 3046     		mov	r0, r6
+ 1626              	.LVL129:
+ 204:USBX/App/ux_device_descriptors.c ****                                   UserClassInstance, Speed);
+ 1627              		.loc 1 204 5 view .LVU501
+ 1628 0030 FFF7FEFF 		bl	USBD_Device_Framework_Builder
+ 1629              	.LVL130:
+ 208:USBX/App/ux_device_descriptors.c **** 
+ 1630              		.loc 1 208 5 is_stmt 1 view .LVU502
+ 208:USBX/App/ux_device_descriptors.c **** 
+ 1631              		.loc 1 208 37 is_stmt 0 view .LVU503
+ 1632 0034 D6F82031 		ldr	r3, [r6, #288]
+ 208:USBX/App/ux_device_descriptors.c **** 
+ 1633              		.loc 1 208 68 view .LVU504
+ 1634 0038 D6F82421 		ldr	r2, [r6, #292]
+ 208:USBX/App/ux_device_descriptors.c **** 
+ 1635              		.loc 1 208 52 view .LVU505
+ 1636 003c 1344     		add	r3, r3, r2
+ 208:USBX/App/ux_device_descriptors.c **** 
+ 1637              		.loc 1 208 13 view .LVU506
+ 1638 003e 2B60     		str	r3, [r5]
+ 210:USBX/App/ux_device_descriptors.c ****   }
+ 1639              		.loc 1 210 5 is_stmt 1 view .LVU507
+ 1640              	.LVL131:
+ 210:USBX/App/ux_device_descriptors.c ****   }
+ 1641              		.loc 1 210 16 is_stmt 0 view .LVU508
+ 1642 0040 2046     		mov	r0, r4
+ 215:USBX/App/ux_device_descriptors.c **** }
+ 1643              		.loc 1 215 3 is_stmt 1 view .LVU509
+ 215:USBX/App/ux_device_descriptors.c **** }
+ 1644              		.loc 1 215 10 is_stmt 0 view .LVU510
+ 1645 0042 EFE7     		b	.L102
+ 1646              	.L107:
+ 1647              		.align	2
+ 1648              	.L106:
+ 1649 0044 00000000 		.word	DevFrameWorkDesc_FS
+ 1650 0048 00000000 		.word	USBD_Device_FS
+ 1651 004c 00000000 		.word	UserClassInstance
+ 1652 0050 00000000 		.word	DevFrameWorkDesc_HS
+ 1653 0054 00000000 		.word	USBD_Device_HS
+ 1654              		.cfi_endproc
+ 1655              	.LFE163:
+ARM GAS  C:\Users\sapph\AppData\Local\Temp\ccnHyWoZ.s 			page 52
+
+
+ 1657              		.section	.bss.pEpDesc.0,"aw",%nobits
+ 1658              		.align	2
+ 1661              	pEpDesc.0:
+ 1662 0000 00000000 		.space	4
+ 1663              		.section	.bss.pHidDesc.1,"aw",%nobits
+ 1664              		.align	2
+ 1667              	pHidDesc.1:
+ 1668 0000 00000000 		.space	4
+ 1669              		.section	.bss.pIfDesc.2,"aw",%nobits
+ 1670              		.align	2
+ 1673              	pIfDesc.2:
+ 1674 0000 00000000 		.space	4
+ 1675              		.section	.bss.interface_idx.3,"aw",%nobits
+ 1678              	interface_idx.3:
+ 1679 0000 00       		.space	1
+ 1680              		.section	.bss.pDevQualDesc.4,"aw",%nobits
+ 1681              		.align	2
+ 1684              	pDevQualDesc.4:
+ 1685 0000 00000000 		.space	4
+ 1686              		.section	.bss.pDevDesc.5,"aw",%nobits
+ 1687              		.align	2
+ 1690              	pDevDesc.5:
+ 1691 0000 00000000 		.space	4
+ 1692              		.global	USBD_HID_KEYBOARD_ReportDesc
+ 1693              		.section	.data.USBD_HID_KEYBOARD_ReportDesc,"aw"
+ 1694              		.align	2
+ 1697              	USBD_HID_KEYBOARD_ReportDesc:
+ 1698 0000 05010906 		.ascii	"\005\001\011\006\241\001\005\007\031\340)\347\025\000"
+ 1698      A1010507 
+ 1698      19E029E7 
+ 1698      1500
+ 1699 000e 25017501 		.ascii	"%\001u\001\225\010\201\002\225\001u\010\201\003\225"
+ 1699      95088102 
+ 1699      95017508 
+ 1699      810395
+ 1700 001d 06750815 		.ascii	"\006u\010\025\000%e\005\007\031\000)e\201\000\300"
+ 1700      00256505 
+ 1700      07190029 
+ 1700      658100C0 
+ 1701              		.global	USBD_language_id_framework
+ 1702              		.section	.bss.USBD_language_id_framework,"aw",%nobits
+ 1703              		.align	2
+ 1706              	USBD_language_id_framework:
+ 1707 0000 0000     		.space	2
+ 1708              		.global	USBD_string_framework
+ 1709              		.section	.bss.USBD_string_framework,"aw",%nobits
+ 1710              		.align	2
+ 1713              	USBD_string_framework:
+ 1714 0000 00000000 		.space	256
+ 1714      00000000 
+ 1714      00000000 
+ 1714      00000000 
+ 1714      00000000 
+ 1715              		.section	.bss.DevFrameWorkDesc_HS,"aw",%nobits
+ 1716              		.align	2
+ 1719              	DevFrameWorkDesc_HS:
+ 1720 0000 00000000 		.space	200
+ARM GAS  C:\Users\sapph\AppData\Local\Temp\ccnHyWoZ.s 			page 53
+
+
+ 1720      00000000 
+ 1720      00000000 
+ 1720      00000000 
+ 1720      00000000 
+ 1721              		.section	.bss.DevFrameWorkDesc_FS,"aw",%nobits
+ 1722              		.align	2
+ 1725              	DevFrameWorkDesc_FS:
+ 1726 0000 00000000 		.space	200
+ 1726      00000000 
+ 1726      00000000 
+ 1726      00000000 
+ 1726      00000000 
+ 1727              		.global	UserHIDInterface
+ 1728              		.section	.data.UserHIDInterface,"aw"
+ 1729              		.align	2
+ 1732              	UserHIDInterface:
+ 1733 0000 01       		.ascii	"\001"
+ 1734              		.global	UserClassInstance
+ 1735              		.section	.data.UserClassInstance,"aw"
+ 1736              		.align	2
+ 1739              	UserClassInstance:
+ 1740 0000 0100     		.ascii	"\001\000"
+ 1741 0002 00000000 		.space	9
+ 1741      00000000 
+ 1741      00
+ 1742              		.global	USBD_Device_HS
+ 1743              		.section	.bss.USBD_Device_HS,"aw",%nobits
+ 1744              		.align	2
+ 1747              	USBD_Device_HS:
+ 1748 0000 00000000 		.space	296
+ 1748      00000000 
+ 1748      00000000 
+ 1748      00000000 
+ 1748      00000000 
+ 1749              		.global	USBD_Device_FS
+ 1750              		.section	.bss.USBD_Device_FS,"aw",%nobits
+ 1751              		.align	2
+ 1754              	USBD_Device_FS:
+ 1755 0000 00000000 		.space	296
+ 1755      00000000 
+ 1755      00000000 
+ 1755      00000000 
+ 1755      00000000 
+ 1756              		.text
+ 1757              	.Letext0:
+ 1758              		.file 2 "C:/Users/sapph/AppData/Roaming/Code/User/globalStorage/bmd.stm32-for-vscode/@xpack-dev-to
+ 1759              		.file 3 "C:/Users/sapph/AppData/Roaming/Code/User/globalStorage/bmd.stm32-for-vscode/@xpack-dev-to
+ 1760              		.file 4 "C:/Users/sapph/AppData/Roaming/Code/User/globalStorage/bmd.stm32-for-vscode/@xpack-dev-to
+ 1761              		.file 5 "Middlewares/ST/usbx/ports/generic/inc/ux_port.h"
+ 1762              		.file 6 "USBX/App/ux_device_descriptors.h"
+ 1763              		.file 7 "C:/Users/sapph/AppData/Roaming/Code/User/globalStorage/bmd.stm32-for-vscode/@xpack-dev-to
+ARM GAS  C:\Users\sapph\AppData\Local\Temp\ccnHyWoZ.s 			page 54
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 ux_device_descriptors.c
+C:\Users\sapph\AppData\Local\Temp\ccnHyWoZ.s:22     .text.USBD_Desc_GetLen:00000000 $t
+C:\Users\sapph\AppData\Local\Temp\ccnHyWoZ.s:27     .text.USBD_Desc_GetLen:00000000 USBD_Desc_GetLen
+C:\Users\sapph\AppData\Local\Temp\ccnHyWoZ.s:73     .text.USBD_Desc_GetString:00000000 $t
+C:\Users\sapph\AppData\Local\Temp\ccnHyWoZ.s:78     .text.USBD_Desc_GetString:00000000 USBD_Desc_GetString
+C:\Users\sapph\AppData\Local\Temp\ccnHyWoZ.s:154    .text.USBD_FrameWork_FindFreeIFNbr:00000000 $t
+C:\Users\sapph\AppData\Local\Temp\ccnHyWoZ.s:159    .text.USBD_FrameWork_FindFreeIFNbr:00000000 USBD_FrameWork_FindFreeIFNbr
+C:\Users\sapph\AppData\Local\Temp\ccnHyWoZ.s:227    .text.USBD_FrameWork_AddConfDesc:00000000 $t
+C:\Users\sapph\AppData\Local\Temp\ccnHyWoZ.s:232    .text.USBD_FrameWork_AddConfDesc:00000000 USBD_FrameWork_AddConfDesc
+C:\Users\sapph\AppData\Local\Temp\ccnHyWoZ.s:283    .text.USBD_FrameWork_AssignEp:00000000 $t
+C:\Users\sapph\AppData\Local\Temp\ccnHyWoZ.s:288    .text.USBD_FrameWork_AssignEp:00000000 USBD_FrameWork_AssignEp
+C:\Users\sapph\AppData\Local\Temp\ccnHyWoZ.s:365    .rodata.USBD_Get_String_Framework.str1.4:00000000 $d
+C:\Users\sapph\AppData\Local\Temp\ccnHyWoZ.s:375    .text.USBD_Get_String_Framework:00000000 $t
+C:\Users\sapph\AppData\Local\Temp\ccnHyWoZ.s:381    .text.USBD_Get_String_Framework:00000000 USBD_Get_String_Framework
+C:\Users\sapph\AppData\Local\Temp\ccnHyWoZ.s:519    .text.USBD_Get_String_Framework:00000094 $d
+C:\Users\sapph\AppData\Local\Temp\ccnHyWoZ.s:1713   .bss.USBD_string_framework:00000000 USBD_string_framework
+C:\Users\sapph\AppData\Local\Temp\ccnHyWoZ.s:527    .text.USBD_Get_Language_Id_Framework:00000000 $t
+C:\Users\sapph\AppData\Local\Temp\ccnHyWoZ.s:533    .text.USBD_Get_Language_Id_Framework:00000000 USBD_Get_Language_Id_Framework
+C:\Users\sapph\AppData\Local\Temp\ccnHyWoZ.s:578    .text.USBD_Get_Language_Id_Framework:0000001c $d
+C:\Users\sapph\AppData\Local\Temp\ccnHyWoZ.s:1706   .bss.USBD_language_id_framework:00000000 USBD_language_id_framework
+C:\Users\sapph\AppData\Local\Temp\ccnHyWoZ.s:583    .text.USBD_Get_Interface_Number:00000000 $t
+C:\Users\sapph\AppData\Local\Temp\ccnHyWoZ.s:589    .text.USBD_Get_Interface_Number:00000000 USBD_Get_Interface_Number
+C:\Users\sapph\AppData\Local\Temp\ccnHyWoZ.s:667    .text.USBD_Get_Interface_Number:00000044 $d
+C:\Users\sapph\AppData\Local\Temp\ccnHyWoZ.s:1754   .bss.USBD_Device_FS:00000000 USBD_Device_FS
+C:\Users\sapph\AppData\Local\Temp\ccnHyWoZ.s:672    .text.USBD_Get_Configuration_Number:00000000 $t
+C:\Users\sapph\AppData\Local\Temp\ccnHyWoZ.s:678    .text.USBD_Get_Configuration_Number:00000000 USBD_Get_Configuration_Number
+C:\Users\sapph\AppData\Local\Temp\ccnHyWoZ.s:697    .text.USBD_HID_ReportDesc:00000000 $t
+C:\Users\sapph\AppData\Local\Temp\ccnHyWoZ.s:703    .text.USBD_HID_ReportDesc:00000000 USBD_HID_ReportDesc
+C:\Users\sapph\AppData\Local\Temp\ccnHyWoZ.s:731    .text.USBD_HID_ReportDesc:0000000c $d
+C:\Users\sapph\AppData\Local\Temp\ccnHyWoZ.s:1697   .data.USBD_HID_KEYBOARD_ReportDesc:00000000 USBD_HID_KEYBOARD_ReportDesc
+C:\Users\sapph\AppData\Local\Temp\ccnHyWoZ.s:736    .text.USBD_HID_ReportDesc_length:00000000 $t
+C:\Users\sapph\AppData\Local\Temp\ccnHyWoZ.s:742    .text.USBD_HID_ReportDesc_length:00000000 USBD_HID_ReportDesc_length
+C:\Users\sapph\AppData\Local\Temp\ccnHyWoZ.s:771    .text.USBD_FrameWork_HID_Desc:00000000 $t
+C:\Users\sapph\AppData\Local\Temp\ccnHyWoZ.s:776    .text.USBD_FrameWork_HID_Desc:00000000 USBD_FrameWork_HID_Desc
+C:\Users\sapph\AppData\Local\Temp\ccnHyWoZ.s:1009   .text.USBD_FrameWork_HID_Desc:00000118 $d
+C:\Users\sapph\AppData\Local\Temp\ccnHyWoZ.s:1673   .bss.pIfDesc.2:00000000 pIfDesc.2
+C:\Users\sapph\AppData\Local\Temp\ccnHyWoZ.s:1667   .bss.pHidDesc.1:00000000 pHidDesc.1
+C:\Users\sapph\AppData\Local\Temp\ccnHyWoZ.s:1661   .bss.pEpDesc.0:00000000 pEpDesc.0
+C:\Users\sapph\AppData\Local\Temp\ccnHyWoZ.s:1016   .text.USBD_FrameWork_AddToConfDesc:00000000 $t
+C:\Users\sapph\AppData\Local\Temp\ccnHyWoZ.s:1021   .text.USBD_FrameWork_AddToConfDesc:00000000 USBD_FrameWork_AddToConfDesc
+C:\Users\sapph\AppData\Local\Temp\ccnHyWoZ.s:1145   .text.USBD_FrameWork_AddClass:00000000 $t
+C:\Users\sapph\AppData\Local\Temp\ccnHyWoZ.s:1150   .text.USBD_FrameWork_AddClass:00000000 USBD_FrameWork_AddClass
+C:\Users\sapph\AppData\Local\Temp\ccnHyWoZ.s:1270   .text.USBD_FrameWork_AddClass:0000006c $d
+C:\Users\sapph\AppData\Local\Temp\ccnHyWoZ.s:1678   .bss.interface_idx.3:00000000 interface_idx.3
+C:\Users\sapph\AppData\Local\Temp\ccnHyWoZ.s:1732   .data.UserHIDInterface:00000000 UserHIDInterface
+C:\Users\sapph\AppData\Local\Temp\ccnHyWoZ.s:1276   .text.USBD_Device_Framework_Builder:00000000 $t
+C:\Users\sapph\AppData\Local\Temp\ccnHyWoZ.s:1281   .text.USBD_Device_Framework_Builder:00000000 USBD_Device_Framework_Builder
+C:\Users\sapph\AppData\Local\Temp\ccnHyWoZ.s:1554   .text.USBD_Device_Framework_Builder:0000010c $d
+C:\Users\sapph\AppData\Local\Temp\ccnHyWoZ.s:1690   .bss.pDevDesc.5:00000000 pDevDesc.5
+C:\Users\sapph\AppData\Local\Temp\ccnHyWoZ.s:1684   .bss.pDevQualDesc.4:00000000 pDevQualDesc.4
+C:\Users\sapph\AppData\Local\Temp\ccnHyWoZ.s:1560   .text.USBD_Get_Device_Framework_Speed:00000000 $t
+C:\Users\sapph\AppData\Local\Temp\ccnHyWoZ.s:1566   .text.USBD_Get_Device_Framework_Speed:00000000 USBD_Get_Device_Framework_Speed
+C:\Users\sapph\AppData\Local\Temp\ccnHyWoZ.s:1649   .text.USBD_Get_Device_Framework_Speed:00000044 $d
+C:\Users\sapph\AppData\Local\Temp\ccnHyWoZ.s:1725   .bss.DevFrameWorkDesc_FS:00000000 DevFrameWorkDesc_FS
+C:\Users\sapph\AppData\Local\Temp\ccnHyWoZ.s:1739   .data.UserClassInstance:00000000 UserClassInstance
+C:\Users\sapph\AppData\Local\Temp\ccnHyWoZ.s:1719   .bss.DevFrameWorkDesc_HS:00000000 DevFrameWorkDesc_HS
+ARM GAS  C:\Users\sapph\AppData\Local\Temp\ccnHyWoZ.s 			page 55
+
+
+C:\Users\sapph\AppData\Local\Temp\ccnHyWoZ.s:1747   .bss.USBD_Device_HS:00000000 USBD_Device_HS
+C:\Users\sapph\AppData\Local\Temp\ccnHyWoZ.s:1658   .bss.pEpDesc.0:00000000 $d
+C:\Users\sapph\AppData\Local\Temp\ccnHyWoZ.s:1664   .bss.pHidDesc.1:00000000 $d
+C:\Users\sapph\AppData\Local\Temp\ccnHyWoZ.s:1670   .bss.pIfDesc.2:00000000 $d
+C:\Users\sapph\AppData\Local\Temp\ccnHyWoZ.s:1679   .bss.interface_idx.3:00000000 $d
+C:\Users\sapph\AppData\Local\Temp\ccnHyWoZ.s:1681   .bss.pDevQualDesc.4:00000000 $d
+C:\Users\sapph\AppData\Local\Temp\ccnHyWoZ.s:1687   .bss.pDevDesc.5:00000000 $d
+C:\Users\sapph\AppData\Local\Temp\ccnHyWoZ.s:1694   .data.USBD_HID_KEYBOARD_ReportDesc:00000000 $d
+C:\Users\sapph\AppData\Local\Temp\ccnHyWoZ.s:1703   .bss.USBD_language_id_framework:00000000 $d
+C:\Users\sapph\AppData\Local\Temp\ccnHyWoZ.s:1710   .bss.USBD_string_framework:00000000 $d
+C:\Users\sapph\AppData\Local\Temp\ccnHyWoZ.s:1716   .bss.DevFrameWorkDesc_HS:00000000 $d
+C:\Users\sapph\AppData\Local\Temp\ccnHyWoZ.s:1722   .bss.DevFrameWorkDesc_FS:00000000 $d
+C:\Users\sapph\AppData\Local\Temp\ccnHyWoZ.s:1729   .data.UserHIDInterface:00000000 $d
+C:\Users\sapph\AppData\Local\Temp\ccnHyWoZ.s:1736   .data.UserClassInstance:00000000 $d
+C:\Users\sapph\AppData\Local\Temp\ccnHyWoZ.s:1744   .bss.USBD_Device_HS:00000000 $d
+C:\Users\sapph\AppData\Local\Temp\ccnHyWoZ.s:1751   .bss.USBD_Device_FS:00000000 $d
+
+UNDEFINED SYMBOLS
+strlen

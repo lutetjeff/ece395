@@ -1,0 +1,452 @@
+ARM GAS  C:\Users\sapph\AppData\Local\Temp\cc5ugbNe.s 			page 1
+
+
+   1              		.cpu cortex-m33
+   2              		.arch armv8-m.main
+   3              		.fpu fpv4-sp-d16
+   4              		.arch_extension dsp
+   5              		.eabi_attribute 27, 1
+   6              		.eabi_attribute 28, 1
+   7              		.eabi_attribute 20, 1
+   8              		.eabi_attribute 21, 1
+   9              		.eabi_attribute 23, 3
+  10              		.eabi_attribute 24, 1
+  11              		.eabi_attribute 25, 1
+  12              		.eabi_attribute 26, 1
+  13              		.eabi_attribute 30, 1
+  14              		.eabi_attribute 34, 1
+  15              		.eabi_attribute 18, 4
+  16              		.file	"ux_device_stack_set_feature.c"
+  17              		.text
+  18              	.Ltext0:
+  19              		.cfi_sections	.debug_frame
+  20              		.file 1 "Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c"
+  21              		.section	.text._ux_device_stack_set_feature,"ax",%progbits
+  22              		.align	1
+  23              		.global	_ux_device_stack_set_feature
+  24              		.syntax unified
+  25              		.thumb
+  26              		.thumb_func
+  28              	_ux_device_stack_set_feature:
+  29              	.LVL0:
+  30              	.LFB3:
+   1:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c **** /**************************************************************************/
+   2:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c **** /*                                                                        */
+   3:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c **** /*       Copyright (c) Microsoft Corporation. All rights reserved.        */
+   4:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c **** /*                                                                        */
+   5:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c **** /*       This software is licensed under the Microsoft Software License   */
+   6:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c **** /*       Terms for Microsoft Azure RTOS. Full text of the license can be  */
+   7:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c **** /*       found in the LICENSE file at https://aka.ms/AzureRTOS_EULA       */
+   8:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c **** /*       and in the root directory of this software.                      */
+   9:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c **** /*                                                                        */
+  10:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c **** /**************************************************************************/
+  11:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c **** 
+  12:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c **** 
+  13:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c **** /**************************************************************************/
+  14:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c **** /**************************************************************************/
+  15:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c **** /**                                                                       */ 
+  16:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c **** /** USBX Component                                                        */ 
+  17:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c **** /**                                                                       */
+  18:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c **** /**   Device Stack                                                        */
+  19:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c **** /**                                                                       */
+  20:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c **** /**************************************************************************/
+  21:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c **** /**************************************************************************/
+  22:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c **** 
+  23:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c **** #define UX_SOURCE_CODE
+  24:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c **** 
+  25:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c **** 
+  26:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c **** /* Include necessary system files.  */
+  27:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c **** 
+  28:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c **** #include "ux_api.h"
+ARM GAS  C:\Users\sapph\AppData\Local\Temp\cc5ugbNe.s 			page 2
+
+
+  29:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c **** #include "ux_device_stack.h"
+  30:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c **** 
+  31:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c **** 
+  32:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c **** /**************************************************************************/
+  33:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c **** /*                                                                        */
+  34:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c **** /*  FUNCTION                                               RELEASE        */
+  35:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c **** /*                                                                        */
+  36:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c **** /*    _ux_device_stack_set_feature                        PORTABLE C      */
+  37:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c **** /*                                                           6.1.12       */
+  38:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c **** /*  AUTHOR                                                                */
+  39:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c **** /*                                                                        */
+  40:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c **** /*    Chaoqiong Xiao, Microsoft Corporation                               */
+  41:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c **** /*                                                                        */
+  42:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c **** /*  DESCRIPTION                                                           */
+  43:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c **** /*                                                                        */
+  44:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c **** /*    This function sets a specific feature (Device, Interface,           */
+  45:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c **** /*    Endpoint ....).                                                     */
+  46:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c **** /*                                                                        */
+  47:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c **** /*  INPUT                                                                 */
+  48:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c **** /*                                                                        */
+  49:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c **** /*    request_type                          Request type                  */
+  50:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c **** /*    request_value                         Request value                 */
+  51:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c **** /*    request_index                         Request index                 */
+  52:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c **** /*                                                                        */
+  53:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c **** /*  OUTPUT                                                                */
+  54:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c **** /*                                                                        */
+  55:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c **** /*    Completion Status                                                   */ 
+  56:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c **** /*                                                                        */
+  57:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c **** /*  CALLS                                                                 */ 
+  58:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c **** /*                                                                        */ 
+  59:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c **** /*    (ux_slave_dcd_function)               DCD controller function       */ 
+  60:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c **** /*                                                                        */ 
+  61:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c **** /*  CALLED BY                                                             */ 
+  62:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c **** /*                                                                        */ 
+  63:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c **** /*    Device Stack                                                        */
+  64:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c **** /*                                                                        */ 
+  65:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c **** /*  RELEASE HISTORY                                                       */ 
+  66:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c **** /*                                                                        */ 
+  67:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c **** /*    DATE              NAME                      DESCRIPTION             */ 
+  68:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c **** /*                                                                        */ 
+  69:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c **** /*  05-19-2020     Chaoqiong Xiao           Initial Version 6.0           */
+  70:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c **** /*  09-30-2020     Chaoqiong Xiao           Modified comment(s),          */
+  71:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c **** /*                                            optimized based on compile  */
+  72:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c **** /*                                            definitions, stalled on not */
+  73:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c **** /*                                            supported device requests,  */
+  74:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c **** /*                                            resulting in version 6.1    */
+  75:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c **** /*  07-29-2022     Chaoqiong Xiao           Modified comment(s),          */
+  76:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c **** /*                                            fixed parameter/variable    */
+  77:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c **** /*                                            names conflict C++ keyword, */
+  78:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c **** /*                                            resulting in version 6.1.12 */
+  79:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c **** /*                                                                        */
+  80:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c **** /**************************************************************************/
+  81:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c **** UINT  _ux_device_stack_set_feature(ULONG request_type, ULONG request_value, ULONG request_index)
+  82:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c **** {
+  31              		.loc 1 82 1 view -0
+  32              		.cfi_startproc
+  33              		@ args = 0, pretend = 0, frame = 0
+ARM GAS  C:\Users\sapph\AppData\Local\Temp\cc5ugbNe.s 			page 3
+
+
+  34              		@ frame_needed = 0, uses_anonymous_args = 0
+  35              		.loc 1 82 1 is_stmt 0 view .LVU1
+  36 0000 38B5     		push	{r3, r4, r5, lr}
+  37              		.cfi_def_cfa_offset 16
+  38              		.cfi_offset 3, -16
+  39              		.cfi_offset 4, -12
+  40              		.cfi_offset 5, -8
+  41              		.cfi_offset 14, -4
+  83:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c **** 
+  84:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c **** UX_SLAVE_DCD            *dcd;
+  42              		.loc 1 84 1 is_stmt 1 view .LVU2
+  85:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c **** UX_SLAVE_DEVICE         *device;
+  43              		.loc 1 85 1 view .LVU3
+  86:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c **** UX_SLAVE_INTERFACE      *interface_ptr;
+  44              		.loc 1 86 1 view .LVU4
+  87:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c **** UX_SLAVE_ENDPOINT       *endpoint;
+  45              		.loc 1 87 1 view .LVU5
+  88:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c **** UX_SLAVE_ENDPOINT       *endpoint_target;
+  46              		.loc 1 88 1 view .LVU6
+  89:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c **** 
+  90:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c ****     UX_PARAMETER_NOT_USED(request_value);
+  47              		.loc 1 90 5 view .LVU7
+  91:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c **** 
+  92:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c ****     /* If trace is enabled, insert this event into the trace buffer.  */
+  93:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c ****     UX_TRACE_IN_LINE_INSERT(UX_TRACE_DEVICE_STACK_SET_FEATURE, request_value, request_index, 0, 0, 
+  94:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c **** 
+  95:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c ****     /* Get the pointer to the DCD.  */
+  96:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c ****     dcd =  &_ux_system_slave -> ux_system_slave_dcd;
+  48              		.loc 1 96 5 view .LVU8
+  49              		.loc 1 96 30 is_stmt 0 view .LVU9
+  50 0002 184B     		ldr	r3, .L17
+  51 0004 1C68     		ldr	r4, [r3]
+  52              	.LVL1:
+  97:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c **** 
+  98:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c ****     /* Get the pointer to the device.  */
+  99:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c ****     device =  &_ux_system_slave -> ux_system_slave_device;
+  53              		.loc 1 99 5 is_stmt 1 view .LVU10
+ 100:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c **** 
+ 101:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c ****     /* Get the control endpoint for the device.  */
+ 102:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c ****     endpoint =  &device -> ux_slave_device_control_endpoint;
+  54              		.loc 1 102 5 view .LVU11
+ 103:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c **** 
+ 104:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c ****     /* The feature can be for either the device or the endpoint.  */
+ 105:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c ****     switch (request_type & UX_REQUEST_TARGET)
+  55              		.loc 1 105 5 view .LVU12
+  56 0006 10F00300 		ands	r0, r0, #3
+  57              	.LVL2:
+  58              		.loc 1 105 5 is_stmt 0 view .LVU13
+  59 000a 0AD0     		beq	.L2
+  60 000c 9446     		mov	ip, r2
+  61 000e 04F16002 		add	r2, r4, #96
+  62              	.LVL3:
+  63              		.loc 1 105 5 view .LVU14
+  64 0012 0228     		cmp	r0, #2
+  65 0014 10D0     		beq	.L3
+  66              	.LVL4:
+  67              	.L4:
+ARM GAS  C:\Users\sapph\AppData\Local\Temp\cc5ugbNe.s 			page 4
+
+
+ 106:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c ****     {
+ 107:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c ****     
+ 108:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c ****     case UX_REQUEST_TARGET_DEVICE:
+ 109:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c **** 
+ 110:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c ****         /* Check if we have a DEVICE_REMOTE_WAKEUP Feature.  */
+ 111:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c ****         if (request_value == UX_REQUEST_FEATURE_DEVICE_REMOTE_WAKEUP)
+ 112:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c ****         {
+ 113:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c **** 
+ 114:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c ****             /* Check if we have the capability. */
+ 115:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c ****             if (_ux_system_slave -> ux_system_slave_remote_wakeup_capability)
+ 116:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c ****             {
+ 117:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c **** 
+ 118:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c ****                 /* Enable the feature. */
+ 119:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c ****                 _ux_system_slave -> ux_system_slave_remote_wakeup_enabled = UX_TRUE;
+ 120:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c **** 
+ 121:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c ****                 /* OK. */
+ 122:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c ****                 return (UX_SUCCESS);
+ 123:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c ****             }
+ 124:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c ****             else
+ 125:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c **** 
+ 126:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c ****                 /* Protocol error. */
+ 127:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c ****                 return (UX_FUNCTION_NOT_SUPPORTED);
+ 128:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c ****         }
+ 129:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c **** 
+ 130:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c **** #ifdef UX_OTG_SUPPORT
+ 131:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c ****         /* Check if we have a A_HNP_SUPPORT Feature. This is set when the Host is HNP capable. */
+ 132:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c ****         if (request_value == UX_OTG_FEATURE_A_HNP_SUPPORT)
+ 133:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c ****         {
+ 134:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c **** 
+ 135:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c ****             /* Store the A_HNP_SUPPORT flag.  */
+ 136:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c ****             _ux_system_otg -> ux_system_otg_slave_set_feature_flag |= UX_OTG_FEATURE_A_HNP_SUPPORT;
+ 137:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c **** 
+ 138:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c ****             /* OK.  */
+ 139:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c ****             return(UX_SUCCESS);
+ 140:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c ****         }
+ 141:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c **** 
+ 142:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c ****         /* Check if the host asks us to perform HNP.  If also we become the host.  */
+ 143:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c ****         if (request_value == UX_OTG_FEATURE_B_HNP_ENABLE)
+ 144:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c ****         {
+ 145:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c **** 
+ 146:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c ****             /* The ISR will pick up the suspend event and check if we need to become IDLE or HOST. 
+ 147:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c ****             _ux_system_otg -> ux_system_otg_slave_set_feature_flag |= UX_OTG_FEATURE_B_HNP_ENABLE;
+ 148:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c **** 
+ 149:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c ****             /* OK.  */
+ 150:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c ****             return(UX_SUCCESS);
+ 151:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c ****         }
+ 152:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c **** #endif
+ 153:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c **** 
+ 154:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c ****         /* Request value not supported.  */
+ 155:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c ****         return(UX_FUNCTION_NOT_SUPPORTED);
+ 156:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c **** 
+ 157:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c ****     case UX_REQUEST_TARGET_ENDPOINT:
+ 158:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c **** 
+ 159:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c ****         /* The only set feature for endpoint is ENDPOINT_STALL. This forces
+ 160:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c ****            the endpoint to the stall situation.
+ 161:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c ****            We need to find the endpoint through the interface(s). */
+ 162:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c ****         interface_ptr =  device -> ux_slave_device_first_interface;
+ARM GAS  C:\Users\sapph\AppData\Local\Temp\cc5ugbNe.s 			page 5
+
+
+ 163:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c **** 
+ 164:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c **** #if !defined(UX_DEVICE_INITIALIZE_FRAMEWORK_SCAN_DISABLE) || UX_MAX_DEVICE_INTERFACES > 1
+ 165:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c ****         while (interface_ptr != UX_NULL)
+ 166:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c ****         {
+ 167:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c **** #endif
+ 168:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c ****             /* Get the first endpoint for this interface.  */
+ 169:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c ****             endpoint_target =  interface_ptr -> ux_slave_interface_first_endpoint;
+ 170:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c ****                 
+ 171:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c ****             /* Parse all the endpoints.  */
+ 172:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c ****             while (endpoint_target != UX_NULL)
+ 173:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c ****             {
+ 174:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c **** 
+ 175:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c ****                 /* Check the endpoint index.  */
+ 176:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c ****                 if (endpoint_target -> ux_slave_endpoint_descriptor.bEndpointAddress == request_ind
+ 177:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c ****                 {
+ 178:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c **** 
+ 179:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c ****                     /* Stall the endpoint.  */
+ 180:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c ****                     dcd -> ux_slave_dcd_function(dcd, UX_DCD_STALL_ENDPOINT, endpoint_target);
+ 181:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c **** 
+ 182:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c ****                     /* Return the function status.  */
+ 183:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c ****                     return(UX_SUCCESS);
+ 184:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c ****                 }
+ 185:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c **** 
+ 186:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c ****                 /* Next endpoint.  */
+ 187:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c ****                 endpoint_target =  endpoint_target -> ux_slave_endpoint_next_endpoint;
+ 188:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c ****             }
+ 189:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c **** 
+ 190:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c **** #if !defined(UX_DEVICE_INITIALIZE_FRAMEWORK_SCAN_DISABLE) || UX_MAX_DEVICE_INTERFACES > 1
+ 191:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c ****             /* Next interface.  */
+ 192:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c ****             interface_ptr =  interface_ptr -> ux_slave_interface_next_interface;
+ 193:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c ****         }
+ 194:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c **** #endif
+ 195:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c **** 
+ 196:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c ****         /* We get here when the endpoint is wrong. Should not happen though.  */
+ 197:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c ****         /* Intentionally fall through into the default case. */
+ 198:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c ****         /* fall through */
+ 199:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c ****     default:
+ 200:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c ****         
+ 201:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c ****         /* We stall the command.  */
+ 202:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c ****         dcd -> ux_slave_dcd_function(dcd, UX_DCD_STALL_ENDPOINT, endpoint);
+  68              		.loc 1 202 9 is_stmt 1 view .LVU15
+  69              		.loc 1 202 13 is_stmt 0 view .LVU16
+  70 0016 A369     		ldr	r3, [r4, #24]
+  71              		.loc 1 202 9 view .LVU17
+  72 0018 1421     		movs	r1, #20
+  73 001a 2046     		mov	r0, r4
+  74 001c 9847     		blx	r3
+  75              	.LVL5:
+ 203:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c ****     
+ 204:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c ****         /* No more work to do here.  The command failed but the upper layer does not depend on it. 
+ 205:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c ****         return(UX_SUCCESS);            
+  76              		.loc 1 205 9 is_stmt 1 view .LVU18
+  77              		.loc 1 205 15 is_stmt 0 view .LVU19
+  78 001e 0020     		movs	r0, #0
+  79              	.L1:
+ 206:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c ****     }
+ 207:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c **** }
+ARM GAS  C:\Users\sapph\AppData\Local\Temp\cc5ugbNe.s 			page 6
+
+
+  80              		.loc 1 207 1 view .LVU20
+  81 0020 38BD     		pop	{r3, r4, r5, pc}
+  82              	.LVL6:
+  83              	.L2:
+ 111:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c ****         {
+  84              		.loc 1 111 9 is_stmt 1 view .LVU21
+ 111:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c ****         {
+  85              		.loc 1 111 12 is_stmt 0 view .LVU22
+  86 0022 0129     		cmp	r1, #1
+  87 0024 01D0     		beq	.L14
+ 155:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c **** 
+  88              		.loc 1 155 15 view .LVU23
+  89 0026 5420     		movs	r0, #84
+  90 0028 FAE7     		b	.L1
+  91              	.L14:
+ 115:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c ****             {
+  92              		.loc 1 115 13 is_stmt 1 view .LVU24
+ 115:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c ****             {
+  93              		.loc 1 115 34 is_stmt 0 view .LVU25
+  94 002a D4F89031 		ldr	r3, [r4, #400]
+ 115:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c ****             {
+  95              		.loc 1 115 16 view .LVU26
+  96 002e BBB1     		cbz	r3, .L12
+ 119:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c **** 
+  97              		.loc 1 119 17 is_stmt 1 view .LVU27
+ 119:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c **** 
+  98              		.loc 1 119 75 is_stmt 0 view .LVU28
+  99 0030 0123     		movs	r3, #1
+ 100 0032 C4F89431 		str	r3, [r4, #404]
+ 122:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c ****             }
+ 101              		.loc 1 122 17 is_stmt 1 view .LVU29
+ 122:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c ****             }
+ 102              		.loc 1 122 24 is_stmt 0 view .LVU30
+ 103 0036 F3E7     		b	.L1
+ 104              	.LVL7:
+ 105              	.L3:
+ 162:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c **** 
+ 106              		.loc 1 162 9 is_stmt 1 view .LVU31
+ 162:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c **** 
+ 107              		.loc 1 162 23 is_stmt 0 view .LVU32
+ 108 0038 D4F8FC00 		ldr	r0, [r4, #252]
+ 109              	.LVL8:
+ 165:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c ****         {
+ 110              		.loc 1 165 9 is_stmt 1 view .LVU33
+ 111              	.L6:
+ 165:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c ****         {
+ 112              		.loc 1 165 30 view .LVU34
+ 113 003c 0028     		cmp	r0, #0
+ 114 003e EAD0     		beq	.L4
+ 169:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c ****                 
+ 115              		.loc 1 169 13 view .LVU35
+ 169:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c ****                 
+ 116              		.loc 1 169 29 is_stmt 0 view .LVU36
+ 117 0040 436B     		ldr	r3, [r0, #52]
+ 118              	.LVL9:
+ 172:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c ****             {
+ 119              		.loc 1 172 13 is_stmt 1 view .LVU37
+ARM GAS  C:\Users\sapph\AppData\Local\Temp\cc5ugbNe.s 			page 7
+
+
+ 120              	.L7:
+ 172:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c ****             {
+ 121              		.loc 1 172 36 view .LVU38
+ 122 0042 5BB1     		cbz	r3, .L15
+ 176:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c ****                 {
+ 123              		.loc 1 176 17 view .LVU39
+ 176:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c ****                 {
+ 124              		.loc 1 176 68 is_stmt 0 view .LVU40
+ 125 0044 5969     		ldr	r1, [r3, #20]
+ 176:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c ****                 {
+ 126              		.loc 1 176 20 view .LVU41
+ 127 0046 6145     		cmp	r1, ip
+ 128 0048 01D0     		beq	.L16
+ 187:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c ****             }
+ 129              		.loc 1 187 17 is_stmt 1 view .LVU42
+ 187:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c ****             }
+ 130              		.loc 1 187 33 is_stmt 0 view .LVU43
+ 131 004a 5B6A     		ldr	r3, [r3, #36]
+ 132              	.LVL10:
+ 187:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c ****             }
+ 133              		.loc 1 187 33 view .LVU44
+ 134 004c F9E7     		b	.L7
+ 135              	.L16:
+ 180:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c **** 
+ 136              		.loc 1 180 21 is_stmt 1 view .LVU45
+ 180:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c **** 
+ 137              		.loc 1 180 25 is_stmt 0 view .LVU46
+ 138 004e A569     		ldr	r5, [r4, #24]
+ 180:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c **** 
+ 139              		.loc 1 180 21 view .LVU47
+ 140 0050 1A46     		mov	r2, r3
+ 141              	.LVL11:
+ 180:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c **** 
+ 142              		.loc 1 180 21 view .LVU48
+ 143 0052 1421     		movs	r1, #20
+ 144 0054 2046     		mov	r0, r4
+ 145              	.LVL12:
+ 180:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c **** 
+ 146              		.loc 1 180 21 view .LVU49
+ 147 0056 A847     		blx	r5
+ 148              	.LVL13:
+ 183:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c ****                 }
+ 149              		.loc 1 183 21 is_stmt 1 view .LVU50
+ 183:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c ****                 }
+ 150              		.loc 1 183 27 is_stmt 0 view .LVU51
+ 151 0058 0020     		movs	r0, #0
+ 152 005a E1E7     		b	.L1
+ 153              	.LVL14:
+ 154              	.L15:
+ 192:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c ****         }
+ 155              		.loc 1 192 13 is_stmt 1 view .LVU52
+ 192:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c ****         }
+ 156              		.loc 1 192 27 is_stmt 0 view .LVU53
+ 157 005c 006B     		ldr	r0, [r0, #48]
+ 158              	.LVL15:
+ 192:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c ****         }
+ 159              		.loc 1 192 27 view .LVU54
+ARM GAS  C:\Users\sapph\AppData\Local\Temp\cc5ugbNe.s 			page 8
+
+
+ 160 005e EDE7     		b	.L6
+ 161              	.LVL16:
+ 162              	.L12:
+ 127:Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c ****         }
+ 163              		.loc 1 127 24 view .LVU55
+ 164 0060 5420     		movs	r0, #84
+ 165 0062 DDE7     		b	.L1
+ 166              	.L18:
+ 167              		.align	2
+ 168              	.L17:
+ 169 0064 00000000 		.word	_ux_system_slave
+ 170              		.cfi_endproc
+ 171              	.LFE3:
+ 173              		.text
+ 174              	.Letext0:
+ 175              		.file 2 "Middlewares/ST/usbx/ports/generic/inc/ux_port.h"
+ 176              		.file 3 "Middlewares/ST/usbx/common/core/inc/ux_api.h"
+ 177              		.file 4 "Middlewares/ST/usbx/common/core/inc/ux_system.h"
+ARM GAS  C:\Users\sapph\AppData\Local\Temp\cc5ugbNe.s 			page 9
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 ux_device_stack_set_feature.c
+C:\Users\sapph\AppData\Local\Temp\cc5ugbNe.s:22     .text._ux_device_stack_set_feature:00000000 $t
+C:\Users\sapph\AppData\Local\Temp\cc5ugbNe.s:28     .text._ux_device_stack_set_feature:00000000 _ux_device_stack_set_feature
+C:\Users\sapph\AppData\Local\Temp\cc5ugbNe.s:169    .text._ux_device_stack_set_feature:00000064 $d
+
+UNDEFINED SYMBOLS
+_ux_system_slave

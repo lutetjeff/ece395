@@ -1,0 +1,340 @@
+ARM GAS  C:\Users\sapph\AppData\Local\Temp\ccCghBuv.s 			page 1
+
+
+   1              		.cpu cortex-m33
+   2              		.arch armv8-m.main
+   3              		.fpu fpv4-sp-d16
+   4              		.arch_extension dsp
+   5              		.eabi_attribute 27, 1
+   6              		.eabi_attribute 28, 1
+   7              		.eabi_attribute 20, 1
+   8              		.eabi_attribute 21, 1
+   9              		.eabi_attribute 23, 3
+  10              		.eabi_attribute 24, 1
+  11              		.eabi_attribute 25, 1
+  12              		.eabi_attribute 26, 1
+  13              		.eabi_attribute 30, 1
+  14              		.eabi_attribute 34, 1
+  15              		.eabi_attribute 18, 4
+  16              		.file	"ux_device_stack_class_unregister.c"
+  17              		.text
+  18              	.Ltext0:
+  19              		.cfi_sections	.debug_frame
+  20              		.file 1 "Middlewares/ST/usbx/common/core/src/ux_device_stack_class_unregister.c"
+  21              		.section	.text._ux_device_stack_class_unregister,"ax",%progbits
+  22              		.align	1
+  23              		.global	_ux_device_stack_class_unregister
+  24              		.syntax unified
+  25              		.thumb
+  26              		.thumb_func
+  28              	_ux_device_stack_class_unregister:
+  29              	.LVL0:
+  30              	.LFB3:
+   1:Middlewares/ST/usbx/common/core/src/ux_device_stack_class_unregister.c **** /**************************************************************************/
+   2:Middlewares/ST/usbx/common/core/src/ux_device_stack_class_unregister.c **** /*                                                                        */
+   3:Middlewares/ST/usbx/common/core/src/ux_device_stack_class_unregister.c **** /*       Copyright (c) Microsoft Corporation. All rights reserved.        */
+   4:Middlewares/ST/usbx/common/core/src/ux_device_stack_class_unregister.c **** /*                                                                        */
+   5:Middlewares/ST/usbx/common/core/src/ux_device_stack_class_unregister.c **** /*       This software is licensed under the Microsoft Software License   */
+   6:Middlewares/ST/usbx/common/core/src/ux_device_stack_class_unregister.c **** /*       Terms for Microsoft Azure RTOS. Full text of the license can be  */
+   7:Middlewares/ST/usbx/common/core/src/ux_device_stack_class_unregister.c **** /*       found in the LICENSE file at https://aka.ms/AzureRTOS_EULA       */
+   8:Middlewares/ST/usbx/common/core/src/ux_device_stack_class_unregister.c **** /*       and in the root directory of this software.                      */
+   9:Middlewares/ST/usbx/common/core/src/ux_device_stack_class_unregister.c **** /*                                                                        */
+  10:Middlewares/ST/usbx/common/core/src/ux_device_stack_class_unregister.c **** /**************************************************************************/
+  11:Middlewares/ST/usbx/common/core/src/ux_device_stack_class_unregister.c **** 
+  12:Middlewares/ST/usbx/common/core/src/ux_device_stack_class_unregister.c **** 
+  13:Middlewares/ST/usbx/common/core/src/ux_device_stack_class_unregister.c **** /**************************************************************************/
+  14:Middlewares/ST/usbx/common/core/src/ux_device_stack_class_unregister.c **** /**************************************************************************/
+  15:Middlewares/ST/usbx/common/core/src/ux_device_stack_class_unregister.c **** /**                                                                       */ 
+  16:Middlewares/ST/usbx/common/core/src/ux_device_stack_class_unregister.c **** /** USBX Component                                                        */ 
+  17:Middlewares/ST/usbx/common/core/src/ux_device_stack_class_unregister.c **** /**                                                                       */
+  18:Middlewares/ST/usbx/common/core/src/ux_device_stack_class_unregister.c **** /**   Device Stack                                                        */
+  19:Middlewares/ST/usbx/common/core/src/ux_device_stack_class_unregister.c **** /**                                                                       */
+  20:Middlewares/ST/usbx/common/core/src/ux_device_stack_class_unregister.c **** /**************************************************************************/
+  21:Middlewares/ST/usbx/common/core/src/ux_device_stack_class_unregister.c **** /**************************************************************************/
+  22:Middlewares/ST/usbx/common/core/src/ux_device_stack_class_unregister.c **** 
+  23:Middlewares/ST/usbx/common/core/src/ux_device_stack_class_unregister.c **** #define UX_SOURCE_CODE
+  24:Middlewares/ST/usbx/common/core/src/ux_device_stack_class_unregister.c **** 
+  25:Middlewares/ST/usbx/common/core/src/ux_device_stack_class_unregister.c **** 
+  26:Middlewares/ST/usbx/common/core/src/ux_device_stack_class_unregister.c **** /* Include necessary system files.  */
+  27:Middlewares/ST/usbx/common/core/src/ux_device_stack_class_unregister.c **** 
+  28:Middlewares/ST/usbx/common/core/src/ux_device_stack_class_unregister.c **** #include "ux_api.h"
+ARM GAS  C:\Users\sapph\AppData\Local\Temp\ccCghBuv.s 			page 2
+
+
+  29:Middlewares/ST/usbx/common/core/src/ux_device_stack_class_unregister.c **** #include "ux_device_stack.h"
+  30:Middlewares/ST/usbx/common/core/src/ux_device_stack_class_unregister.c **** 
+  31:Middlewares/ST/usbx/common/core/src/ux_device_stack_class_unregister.c **** 
+  32:Middlewares/ST/usbx/common/core/src/ux_device_stack_class_unregister.c **** /**************************************************************************/
+  33:Middlewares/ST/usbx/common/core/src/ux_device_stack_class_unregister.c **** /*                                                                        */
+  34:Middlewares/ST/usbx/common/core/src/ux_device_stack_class_unregister.c **** /*  FUNCTION                                               RELEASE        */
+  35:Middlewares/ST/usbx/common/core/src/ux_device_stack_class_unregister.c **** /*                                                                        */
+  36:Middlewares/ST/usbx/common/core/src/ux_device_stack_class_unregister.c **** /*    _ux_device_stack_class_unregister                   PORTABLE C      */
+  37:Middlewares/ST/usbx/common/core/src/ux_device_stack_class_unregister.c **** /*                                                           6.1          */
+  38:Middlewares/ST/usbx/common/core/src/ux_device_stack_class_unregister.c **** /*  AUTHOR                                                                */
+  39:Middlewares/ST/usbx/common/core/src/ux_device_stack_class_unregister.c **** /*                                                                        */
+  40:Middlewares/ST/usbx/common/core/src/ux_device_stack_class_unregister.c **** /*    Chaoqiong Xiao, Microsoft Corporation                               */
+  41:Middlewares/ST/usbx/common/core/src/ux_device_stack_class_unregister.c **** /*                                                                        */
+  42:Middlewares/ST/usbx/common/core/src/ux_device_stack_class_unregister.c **** /*  DESCRIPTION                                                           */
+  43:Middlewares/ST/usbx/common/core/src/ux_device_stack_class_unregister.c **** /*                                                                        */
+  44:Middlewares/ST/usbx/common/core/src/ux_device_stack_class_unregister.c **** /*    This function unregisters a slave class to the slave stack.         */
+  45:Middlewares/ST/usbx/common/core/src/ux_device_stack_class_unregister.c **** /*                                                                        */
+  46:Middlewares/ST/usbx/common/core/src/ux_device_stack_class_unregister.c **** /*    Note: The C string of class_name must be NULL-terminated and the    */
+  47:Middlewares/ST/usbx/common/core/src/ux_device_stack_class_unregister.c **** /*    length of it (without the NULL-terminator itself) must be no larger */
+  48:Middlewares/ST/usbx/common/core/src/ux_device_stack_class_unregister.c **** /*    than UX_MAX_CLASS_NAME_LENGTH.                                      */
+  49:Middlewares/ST/usbx/common/core/src/ux_device_stack_class_unregister.c **** /*                                                                        */
+  50:Middlewares/ST/usbx/common/core/src/ux_device_stack_class_unregister.c **** /*  INPUT                                                                 */
+  51:Middlewares/ST/usbx/common/core/src/ux_device_stack_class_unregister.c **** /*                                                                        */
+  52:Middlewares/ST/usbx/common/core/src/ux_device_stack_class_unregister.c **** /*    class_name                            Name of class                 */
+  53:Middlewares/ST/usbx/common/core/src/ux_device_stack_class_unregister.c **** /*    class_function_entry                  Class entry function          */
+  54:Middlewares/ST/usbx/common/core/src/ux_device_stack_class_unregister.c **** /*                                                                        */
+  55:Middlewares/ST/usbx/common/core/src/ux_device_stack_class_unregister.c **** /*  OUTPUT                                                                */
+  56:Middlewares/ST/usbx/common/core/src/ux_device_stack_class_unregister.c **** /*                                                                        */
+  57:Middlewares/ST/usbx/common/core/src/ux_device_stack_class_unregister.c **** /*    Completion Status                                                   */ 
+  58:Middlewares/ST/usbx/common/core/src/ux_device_stack_class_unregister.c **** /*                                                                        */
+  59:Middlewares/ST/usbx/common/core/src/ux_device_stack_class_unregister.c **** /*  CALLS                                                                 */ 
+  60:Middlewares/ST/usbx/common/core/src/ux_device_stack_class_unregister.c **** /*                                                                        */ 
+  61:Middlewares/ST/usbx/common/core/src/ux_device_stack_class_unregister.c **** /*    _ux_utility_string_length_check       Check C string and return     */
+  62:Middlewares/ST/usbx/common/core/src/ux_device_stack_class_unregister.c **** /*                                          its length if null-terminated */
+  63:Middlewares/ST/usbx/common/core/src/ux_device_stack_class_unregister.c **** /*    _ux_utility_memory_compare            Memory compare                */ 
+  64:Middlewares/ST/usbx/common/core/src/ux_device_stack_class_unregister.c **** /*                                                                        */ 
+  65:Middlewares/ST/usbx/common/core/src/ux_device_stack_class_unregister.c **** /*  CALLED BY                                                             */ 
+  66:Middlewares/ST/usbx/common/core/src/ux_device_stack_class_unregister.c **** /*                                                                        */ 
+  67:Middlewares/ST/usbx/common/core/src/ux_device_stack_class_unregister.c **** /*    Application                                                         */ 
+  68:Middlewares/ST/usbx/common/core/src/ux_device_stack_class_unregister.c **** /*                                                                        */ 
+  69:Middlewares/ST/usbx/common/core/src/ux_device_stack_class_unregister.c **** /*  RELEASE HISTORY                                                       */ 
+  70:Middlewares/ST/usbx/common/core/src/ux_device_stack_class_unregister.c **** /*                                                                        */ 
+  71:Middlewares/ST/usbx/common/core/src/ux_device_stack_class_unregister.c **** /*    DATE              NAME                      DESCRIPTION             */ 
+  72:Middlewares/ST/usbx/common/core/src/ux_device_stack_class_unregister.c **** /*                                                                        */ 
+  73:Middlewares/ST/usbx/common/core/src/ux_device_stack_class_unregister.c **** /*  05-19-2020     Chaoqiong Xiao           Initial Version 6.0           */
+  74:Middlewares/ST/usbx/common/core/src/ux_device_stack_class_unregister.c **** /*  09-30-2020     Chaoqiong Xiao           Modified comment(s),          */
+  75:Middlewares/ST/usbx/common/core/src/ux_device_stack_class_unregister.c **** /*                                            optimized based on compile  */
+  76:Middlewares/ST/usbx/common/core/src/ux_device_stack_class_unregister.c **** /*                                            definitions,                */
+  77:Middlewares/ST/usbx/common/core/src/ux_device_stack_class_unregister.c **** /*                                            resulting in version 6.1    */
+  78:Middlewares/ST/usbx/common/core/src/ux_device_stack_class_unregister.c **** /*                                                                        */
+  79:Middlewares/ST/usbx/common/core/src/ux_device_stack_class_unregister.c **** /**************************************************************************/
+  80:Middlewares/ST/usbx/common/core/src/ux_device_stack_class_unregister.c **** UINT  _ux_device_stack_class_unregister(UCHAR *class_name,
+  81:Middlewares/ST/usbx/common/core/src/ux_device_stack_class_unregister.c ****                         UINT (*class_entry_function)(struct UX_SLAVE_CLASS_COMMAND_STRUCT *))
+  82:Middlewares/ST/usbx/common/core/src/ux_device_stack_class_unregister.c **** {
+  31              		.loc 1 82 1 view -0
+  32              		.cfi_startproc
+  33              		@ args = 0, pretend = 0, frame = 48
+ARM GAS  C:\Users\sapph\AppData\Local\Temp\ccCghBuv.s 			page 3
+
+
+  34              		@ frame_needed = 0, uses_anonymous_args = 0
+  35              		.loc 1 82 1 is_stmt 0 view .LVU1
+  36 0000 70B5     		push	{r4, r5, r6, lr}
+  37              		.cfi_def_cfa_offset 16
+  38              		.cfi_offset 4, -16
+  39              		.cfi_offset 5, -12
+  40              		.cfi_offset 6, -8
+  41              		.cfi_offset 14, -4
+  42 0002 8CB0     		sub	sp, sp, #48
+  43              		.cfi_def_cfa_offset 64
+  44 0004 0546     		mov	r5, r0
+  45 0006 0C46     		mov	r4, r1
+  83:Middlewares/ST/usbx/common/core/src/ux_device_stack_class_unregister.c **** 
+  84:Middlewares/ST/usbx/common/core/src/ux_device_stack_class_unregister.c **** UX_SLAVE_CLASS              *class_inst;
+  46              		.loc 1 84 1 is_stmt 1 view .LVU2
+  85:Middlewares/ST/usbx/common/core/src/ux_device_stack_class_unregister.c **** UINT                        status;
+  47              		.loc 1 85 1 view .LVU3
+  86:Middlewares/ST/usbx/common/core/src/ux_device_stack_class_unregister.c **** UX_SLAVE_CLASS_COMMAND      command;
+  48              		.loc 1 86 1 view .LVU4
+  87:Middlewares/ST/usbx/common/core/src/ux_device_stack_class_unregister.c **** #if !defined(UX_NAME_REFERENCED_BY_POINTER)
+  88:Middlewares/ST/usbx/common/core/src/ux_device_stack_class_unregister.c **** UINT                        class_name_length =  0;
+  49              		.loc 1 88 1 view .LVU5
+  50              		.loc 1 88 29 is_stmt 0 view .LVU6
+  51 0008 0023     		movs	r3, #0
+  52 000a 0093     		str	r3, [sp]
+  89:Middlewares/ST/usbx/common/core/src/ux_device_stack_class_unregister.c **** #endif
+  90:Middlewares/ST/usbx/common/core/src/ux_device_stack_class_unregister.c **** #if UX_MAX_SLAVE_CLASS_DRIVER > 1
+  91:Middlewares/ST/usbx/common/core/src/ux_device_stack_class_unregister.c **** ULONG                       class_index;
+  92:Middlewares/ST/usbx/common/core/src/ux_device_stack_class_unregister.c **** #endif
+  93:Middlewares/ST/usbx/common/core/src/ux_device_stack_class_unregister.c **** 
+  94:Middlewares/ST/usbx/common/core/src/ux_device_stack_class_unregister.c **** 
+  95:Middlewares/ST/usbx/common/core/src/ux_device_stack_class_unregister.c ****     /* If trace is enabled, insert this event into the trace buffer.  */
+  96:Middlewares/ST/usbx/common/core/src/ux_device_stack_class_unregister.c ****     UX_TRACE_IN_LINE_INSERT(UX_TRACE_DEVICE_STACK_CLASS_UNREGISTER, class_name, 0, 0, 0, UX_TRACE_D
+  97:Middlewares/ST/usbx/common/core/src/ux_device_stack_class_unregister.c **** 
+  98:Middlewares/ST/usbx/common/core/src/ux_device_stack_class_unregister.c **** #if !defined(UX_NAME_REFERENCED_BY_POINTER)
+  99:Middlewares/ST/usbx/common/core/src/ux_device_stack_class_unregister.c ****     /* Get the length of the class name (exclude null-terminator).  */
+ 100:Middlewares/ST/usbx/common/core/src/ux_device_stack_class_unregister.c ****     status =  _ux_utility_string_length_check(class_name, &class_name_length, UX_MAX_CLASS_NAME_LEN
+  53              		.loc 1 100 5 is_stmt 1 view .LVU7
+  54              		.loc 1 100 15 is_stmt 0 view .LVU8
+  55 000c 3F22     		movs	r2, #63
+  56 000e 6946     		mov	r1, sp
+  57              	.LVL1:
+  58              		.loc 1 100 15 view .LVU9
+  59 0010 FFF7FEFF 		bl	_ux_utility_string_length_check
+  60              	.LVL2:
+ 101:Middlewares/ST/usbx/common/core/src/ux_device_stack_class_unregister.c ****     if (status)
+  61              		.loc 1 101 5 is_stmt 1 view .LVU10
+  62              		.loc 1 101 8 is_stmt 0 view .LVU11
+  63 0014 38B9     		cbnz	r0, .L1
+ 102:Middlewares/ST/usbx/common/core/src/ux_device_stack_class_unregister.c ****         return(status);
+ 103:Middlewares/ST/usbx/common/core/src/ux_device_stack_class_unregister.c **** #endif
+ 104:Middlewares/ST/usbx/common/core/src/ux_device_stack_class_unregister.c **** 
+ 105:Middlewares/ST/usbx/common/core/src/ux_device_stack_class_unregister.c ****     class_inst =  _ux_system_slave -> ux_system_slave_class_array;
+  64              		.loc 1 105 5 is_stmt 1 view .LVU12
+  65              		.loc 1 105 36 is_stmt 0 view .LVU13
+  66 0016 0E4B     		ldr	r3, .L7
+  67 0018 1B68     		ldr	r3, [r3]
+ARM GAS  C:\Users\sapph\AppData\Local\Temp\ccCghBuv.s 			page 4
+
+
+  68              		.loc 1 105 16 view .LVU14
+  69 001a D3F84461 		ldr	r6, [r3, #324]
+  70              	.LVL3:
+ 106:Middlewares/ST/usbx/common/core/src/ux_device_stack_class_unregister.c **** 
+ 107:Middlewares/ST/usbx/common/core/src/ux_device_stack_class_unregister.c **** #if UX_MAX_SLAVE_CLASS_DRIVER > 1
+ 108:Middlewares/ST/usbx/common/core/src/ux_device_stack_class_unregister.c ****     /* We need to parse the class table to find the right class.  */
+ 109:Middlewares/ST/usbx/common/core/src/ux_device_stack_class_unregister.c ****     for (class_index = 0; class_index < _ux_system_slave -> ux_system_slave_max_class; class_index+
+ 110:Middlewares/ST/usbx/common/core/src/ux_device_stack_class_unregister.c ****     {
+ 111:Middlewares/ST/usbx/common/core/src/ux_device_stack_class_unregister.c **** #endif
+ 112:Middlewares/ST/usbx/common/core/src/ux_device_stack_class_unregister.c **** 
+ 113:Middlewares/ST/usbx/common/core/src/ux_device_stack_class_unregister.c ****         /* Check if this class is the right one.  */
+ 114:Middlewares/ST/usbx/common/core/src/ux_device_stack_class_unregister.c ****         if (class_inst -> ux_slave_class_status == UX_USED)
+  71              		.loc 1 114 9 is_stmt 1 view .LVU15
+  72              		.loc 1 114 24 is_stmt 0 view .LVU16
+  73 001e 336C     		ldr	r3, [r6, #64]
+  74              		.loc 1 114 12 view .LVU17
+  75 0020 012B     		cmp	r3, #1
+  76 0022 02D0     		beq	.L6
+ 115:Middlewares/ST/usbx/common/core/src/ux_device_stack_class_unregister.c ****         {
+ 116:Middlewares/ST/usbx/common/core/src/ux_device_stack_class_unregister.c **** 
+ 117:Middlewares/ST/usbx/common/core/src/ux_device_stack_class_unregister.c ****             /* We have found a used container with a  class. Compare the name (include null-termina
+ 118:Middlewares/ST/usbx/common/core/src/ux_device_stack_class_unregister.c ****             if (ux_utility_name_match(class_inst -> ux_slave_class_name, class_name, class_name_len
+ 119:Middlewares/ST/usbx/common/core/src/ux_device_stack_class_unregister.c ****             {
+ 120:Middlewares/ST/usbx/common/core/src/ux_device_stack_class_unregister.c ****                         
+ 121:Middlewares/ST/usbx/common/core/src/ux_device_stack_class_unregister.c ****                 /* Build all the fields of the Class Command to uninitialize the class.  */
+ 122:Middlewares/ST/usbx/common/core/src/ux_device_stack_class_unregister.c ****                 command.ux_slave_class_command_request    =  UX_SLAVE_CLASS_COMMAND_UNINITIALIZE;
+ 123:Middlewares/ST/usbx/common/core/src/ux_device_stack_class_unregister.c ****                 command.ux_slave_class_command_class_ptr  =  class_inst;
+ 124:Middlewares/ST/usbx/common/core/src/ux_device_stack_class_unregister.c **** 
+ 125:Middlewares/ST/usbx/common/core/src/ux_device_stack_class_unregister.c ****                 /* Call the class uninitialization routine.  */
+ 126:Middlewares/ST/usbx/common/core/src/ux_device_stack_class_unregister.c ****                 status = class_entry_function(&command);
+ 127:Middlewares/ST/usbx/common/core/src/ux_device_stack_class_unregister.c ****             
+ 128:Middlewares/ST/usbx/common/core/src/ux_device_stack_class_unregister.c ****                 /* Check the status.  */
+ 129:Middlewares/ST/usbx/common/core/src/ux_device_stack_class_unregister.c ****                 if (status != UX_SUCCESS)
+ 130:Middlewares/ST/usbx/common/core/src/ux_device_stack_class_unregister.c ****                     return(status);
+ 131:Middlewares/ST/usbx/common/core/src/ux_device_stack_class_unregister.c ****             
+ 132:Middlewares/ST/usbx/common/core/src/ux_device_stack_class_unregister.c ****                 /* Make this class unused now.  */
+ 133:Middlewares/ST/usbx/common/core/src/ux_device_stack_class_unregister.c ****                 class_inst -> ux_slave_class_status = UX_UNUSED;
+ 134:Middlewares/ST/usbx/common/core/src/ux_device_stack_class_unregister.c ****             
+ 135:Middlewares/ST/usbx/common/core/src/ux_device_stack_class_unregister.c ****                 /* Erase the instance of the class.  */
+ 136:Middlewares/ST/usbx/common/core/src/ux_device_stack_class_unregister.c ****                 class_inst -> ux_slave_class_instance = UX_NULL;
+ 137:Middlewares/ST/usbx/common/core/src/ux_device_stack_class_unregister.c **** 
+ 138:Middlewares/ST/usbx/common/core/src/ux_device_stack_class_unregister.c ****                 /* Return successful completion.  */
+ 139:Middlewares/ST/usbx/common/core/src/ux_device_stack_class_unregister.c ****                 return(UX_SUCCESS);
+ 140:Middlewares/ST/usbx/common/core/src/ux_device_stack_class_unregister.c ****             }
+ 141:Middlewares/ST/usbx/common/core/src/ux_device_stack_class_unregister.c ****         }
+ 142:Middlewares/ST/usbx/common/core/src/ux_device_stack_class_unregister.c **** 
+ 143:Middlewares/ST/usbx/common/core/src/ux_device_stack_class_unregister.c **** #if UX_MAX_SLAVE_CLASS_DRIVER > 1
+ 144:Middlewares/ST/usbx/common/core/src/ux_device_stack_class_unregister.c ****         /* Move to the next class.  */
+ 145:Middlewares/ST/usbx/common/core/src/ux_device_stack_class_unregister.c ****         class_inst ++;
+ 146:Middlewares/ST/usbx/common/core/src/ux_device_stack_class_unregister.c ****     }    
+ 147:Middlewares/ST/usbx/common/core/src/ux_device_stack_class_unregister.c **** #endif
+ 148:Middlewares/ST/usbx/common/core/src/ux_device_stack_class_unregister.c **** 
+ 149:Middlewares/ST/usbx/common/core/src/ux_device_stack_class_unregister.c ****     /* No class match.  */
+ 150:Middlewares/ST/usbx/common/core/src/ux_device_stack_class_unregister.c ****     return(UX_NO_CLASS_MATCH);
+  77              		.loc 1 150 11 view .LVU18
+  78 0024 5720     		movs	r0, #87
+  79              	.LVL4:
+ARM GAS  C:\Users\sapph\AppData\Local\Temp\ccCghBuv.s 			page 5
+
+
+  80              	.L1:
+ 151:Middlewares/ST/usbx/common/core/src/ux_device_stack_class_unregister.c **** }
+  81              		.loc 1 151 1 view .LVU19
+  82 0026 0CB0     		add	sp, sp, #48
+  83              		.cfi_remember_state
+  84              		.cfi_def_cfa_offset 16
+  85              		@ sp needed
+  86 0028 70BD     		pop	{r4, r5, r6, pc}
+  87              	.LVL5:
+  88              	.L6:
+  89              		.cfi_restore_state
+ 118:Middlewares/ST/usbx/common/core/src/ux_device_stack_class_unregister.c ****             {
+  90              		.loc 1 118 13 is_stmt 1 view .LVU20
+ 118:Middlewares/ST/usbx/common/core/src/ux_device_stack_class_unregister.c ****             {
+  91              		.loc 1 118 17 is_stmt 0 view .LVU21
+  92 002a 009A     		ldr	r2, [sp]
+  93 002c 0132     		adds	r2, r2, #1
+  94 002e 2946     		mov	r1, r5
+  95 0030 3046     		mov	r0, r6
+  96 0032 FFF7FEFF 		bl	_ux_utility_memory_compare
+  97              	.LVL6:
+ 118:Middlewares/ST/usbx/common/core/src/ux_device_stack_class_unregister.c ****             {
+  98              		.loc 1 118 16 discriminator 1 view .LVU22
+  99 0036 48B9     		cbnz	r0, .L4
+ 122:Middlewares/ST/usbx/common/core/src/ux_device_stack_class_unregister.c ****                 command.ux_slave_class_command_class_ptr  =  class_inst;
+ 100              		.loc 1 122 17 is_stmt 1 view .LVU23
+ 122:Middlewares/ST/usbx/common/core/src/ux_device_stack_class_unregister.c ****                 command.ux_slave_class_command_class_ptr  =  class_inst;
+ 101              		.loc 1 122 59 is_stmt 0 view .LVU24
+ 102 0038 0723     		movs	r3, #7
+ 103 003a 0193     		str	r3, [sp, #4]
+ 123:Middlewares/ST/usbx/common/core/src/ux_device_stack_class_unregister.c **** 
+ 104              		.loc 1 123 17 is_stmt 1 view .LVU25
+ 123:Middlewares/ST/usbx/common/core/src/ux_device_stack_class_unregister.c **** 
+ 105              		.loc 1 123 59 is_stmt 0 view .LVU26
+ 106 003c 0996     		str	r6, [sp, #36]
+ 126:Middlewares/ST/usbx/common/core/src/ux_device_stack_class_unregister.c ****             
+ 107              		.loc 1 126 17 is_stmt 1 view .LVU27
+ 126:Middlewares/ST/usbx/common/core/src/ux_device_stack_class_unregister.c ****             
+ 108              		.loc 1 126 26 is_stmt 0 view .LVU28
+ 109 003e 01A8     		add	r0, sp, #4
+ 110 0040 A047     		blx	r4
+ 111              	.LVL7:
+ 129:Middlewares/ST/usbx/common/core/src/ux_device_stack_class_unregister.c ****                     return(status);
+ 112              		.loc 1 129 17 is_stmt 1 view .LVU29
+ 129:Middlewares/ST/usbx/common/core/src/ux_device_stack_class_unregister.c ****                     return(status);
+ 113              		.loc 1 129 20 is_stmt 0 view .LVU30
+ 114 0042 0028     		cmp	r0, #0
+ 115 0044 EFD1     		bne	.L1
+ 133:Middlewares/ST/usbx/common/core/src/ux_device_stack_class_unregister.c ****             
+ 116              		.loc 1 133 17 is_stmt 1 view .LVU31
+ 133:Middlewares/ST/usbx/common/core/src/ux_device_stack_class_unregister.c ****             
+ 117              		.loc 1 133 53 is_stmt 0 view .LVU32
+ 118 0046 3064     		str	r0, [r6, #64]
+ 136:Middlewares/ST/usbx/common/core/src/ux_device_stack_class_unregister.c **** 
+ 119              		.loc 1 136 17 is_stmt 1 view .LVU33
+ 136:Middlewares/ST/usbx/common/core/src/ux_device_stack_class_unregister.c **** 
+ 120              		.loc 1 136 55 is_stmt 0 view .LVU34
+ARM GAS  C:\Users\sapph\AppData\Local\Temp\ccCghBuv.s 			page 6
+
+
+ 121 0048 B064     		str	r0, [r6, #72]
+ 139:Middlewares/ST/usbx/common/core/src/ux_device_stack_class_unregister.c ****             }
+ 122              		.loc 1 139 17 is_stmt 1 view .LVU35
+ 139:Middlewares/ST/usbx/common/core/src/ux_device_stack_class_unregister.c ****             }
+ 123              		.loc 1 139 23 is_stmt 0 view .LVU36
+ 124 004a ECE7     		b	.L1
+ 125              	.LVL8:
+ 126              	.L4:
+ 150:Middlewares/ST/usbx/common/core/src/ux_device_stack_class_unregister.c **** }
+ 127              		.loc 1 150 11 view .LVU37
+ 128 004c 5720     		movs	r0, #87
+ 129 004e EAE7     		b	.L1
+ 130              	.L8:
+ 131              		.align	2
+ 132              	.L7:
+ 133 0050 00000000 		.word	_ux_system_slave
+ 134              		.cfi_endproc
+ 135              	.LFE3:
+ 137              		.text
+ 138              	.Letext0:
+ 139              		.file 2 "Middlewares/ST/usbx/ports/generic/inc/ux_port.h"
+ 140              		.file 3 "Middlewares/ST/usbx/common/core/inc/ux_api.h"
+ 141              		.file 4 "Middlewares/ST/usbx/common/core/inc/ux_utility.h"
+ 142              		.file 5 "Middlewares/ST/usbx/common/core/inc/ux_system.h"
+ARM GAS  C:\Users\sapph\AppData\Local\Temp\ccCghBuv.s 			page 7
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 ux_device_stack_class_unregister.c
+C:\Users\sapph\AppData\Local\Temp\ccCghBuv.s:22     .text._ux_device_stack_class_unregister:00000000 $t
+C:\Users\sapph\AppData\Local\Temp\ccCghBuv.s:28     .text._ux_device_stack_class_unregister:00000000 _ux_device_stack_class_unregister
+C:\Users\sapph\AppData\Local\Temp\ccCghBuv.s:133    .text._ux_device_stack_class_unregister:00000050 $d
+
+UNDEFINED SYMBOLS
+_ux_utility_string_length_check
+_ux_utility_memory_compare
+_ux_system_slave

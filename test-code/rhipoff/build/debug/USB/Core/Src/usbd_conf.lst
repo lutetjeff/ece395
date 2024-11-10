@@ -1,0 +1,804 @@
+ARM GAS  C:\Users\sapph\AppData\Local\Temp\cc1nekz3.s 			page 1
+
+
+   1              		.cpu cortex-m33
+   2              		.arch armv8-m.main
+   3              		.fpu fpv4-sp-d16
+   4              		.arch_extension dsp
+   5              		.eabi_attribute 27, 1
+   6              		.eabi_attribute 28, 1
+   7              		.eabi_attribute 20, 1
+   8              		.eabi_attribute 21, 1
+   9              		.eabi_attribute 23, 3
+  10              		.eabi_attribute 24, 1
+  11              		.eabi_attribute 25, 1
+  12              		.eabi_attribute 26, 1
+  13              		.eabi_attribute 30, 1
+  14              		.eabi_attribute 34, 1
+  15              		.eabi_attribute 18, 4
+  16              		.file	"usbd_conf.c"
+  17              		.text
+  18              	.Ltext0:
+  19              		.cfi_sections	.debug_frame
+  20              		.file 1 "USB/Core/Src/usbd_conf.c"
+  21              		.section	.text.USBD_LL_Init,"ax",%progbits
+  22              		.align	1
+  23              		.global	USBD_LL_Init
+  24              		.syntax unified
+  25              		.thumb
+  26              		.thumb_func
+  28              	USBD_LL_Init:
+  29              	.LVL0:
+  30              	.LFB164:
+   1:USB/Core/Src/usbd_conf.c **** /**
+   2:USB/Core/Src/usbd_conf.c ****   ******************************************************************************
+   3:USB/Core/Src/usbd_conf.c ****   * @file    usbd_conf_template.c
+   4:USB/Core/Src/usbd_conf.c ****   * @author  MCD Application Team
+   5:USB/Core/Src/usbd_conf.c ****   * @brief   USB Device configuration and interface file
+   6:USB/Core/Src/usbd_conf.c ****   *          This template should be copied to the user folder,
+   7:USB/Core/Src/usbd_conf.c ****   *          renamed and customized following user needs.
+   8:USB/Core/Src/usbd_conf.c ****   ******************************************************************************
+   9:USB/Core/Src/usbd_conf.c ****   * @attention
+  10:USB/Core/Src/usbd_conf.c ****   *
+  11:USB/Core/Src/usbd_conf.c ****   * Copyright (c) 2015 STMicroelectronics.
+  12:USB/Core/Src/usbd_conf.c ****   * All rights reserved.
+  13:USB/Core/Src/usbd_conf.c ****   *
+  14:USB/Core/Src/usbd_conf.c ****   * This software is licensed under terms that can be found in the LICENSE file
+  15:USB/Core/Src/usbd_conf.c ****   * in the root directory of this software component.
+  16:USB/Core/Src/usbd_conf.c ****   * If no LICENSE file comes with this software, it is provided AS-IS.
+  17:USB/Core/Src/usbd_conf.c ****   *
+  18:USB/Core/Src/usbd_conf.c ****   ******************************************************************************
+  19:USB/Core/Src/usbd_conf.c ****   */
+  20:USB/Core/Src/usbd_conf.c **** 
+  21:USB/Core/Src/usbd_conf.c **** /* Includes ------------------------------------------------------------------*/
+  22:USB/Core/Src/usbd_conf.c **** #include "main.h"
+  23:USB/Core/Src/usbd_conf.c **** #include "usbd_core.h"
+  24:USB/Core/Src/usbd_conf.c **** #include "usbd_hid.h" /* Include class header file */
+  25:USB/Core/Src/usbd_conf.c **** #include "usbd_cdc.h"
+  26:USB/Core/Src/usbd_conf.c **** /* Private typedef -----------------------------------------------------------*/
+  27:USB/Core/Src/usbd_conf.c **** /* Private define ------------------------------------------------------------*/
+  28:USB/Core/Src/usbd_conf.c **** /* Private macro -------------------------------------------------------------*/
+ARM GAS  C:\Users\sapph\AppData\Local\Temp\cc1nekz3.s 			page 2
+
+
+  29:USB/Core/Src/usbd_conf.c **** /* Private variables ---------------------------------------------------------*/
+  30:USB/Core/Src/usbd_conf.c **** /* Private function prototypes -----------------------------------------------*/
+  31:USB/Core/Src/usbd_conf.c **** /* Private functions ---------------------------------------------------------*/
+  32:USB/Core/Src/usbd_conf.c **** /**
+  33:USB/Core/Src/usbd_conf.c ****   * @brief  Initializes the Low Level portion of the Device driver.
+  34:USB/Core/Src/usbd_conf.c ****   * @param  pdev: Device handle
+  35:USB/Core/Src/usbd_conf.c ****   * @retval USBD Status
+  36:USB/Core/Src/usbd_conf.c ****   */
+  37:USB/Core/Src/usbd_conf.c **** USBD_StatusTypeDef USBD_LL_Init(USBD_HandleTypeDef *pdev)
+  38:USB/Core/Src/usbd_conf.c **** {
+  31              		.loc 1 38 1 view -0
+  32              		.cfi_startproc
+  33              		@ args = 0, pretend = 0, frame = 0
+  34              		@ frame_needed = 0, uses_anonymous_args = 0
+  35              		@ link register save eliminated.
+  39:USB/Core/Src/usbd_conf.c ****   UNUSED(pdev);
+  36              		.loc 1 39 3 view .LVU1
+  40:USB/Core/Src/usbd_conf.c **** 
+  41:USB/Core/Src/usbd_conf.c ****   return USBD_OK;
+  37              		.loc 1 41 3 view .LVU2
+  42:USB/Core/Src/usbd_conf.c **** }
+  38              		.loc 1 42 1 is_stmt 0 view .LVU3
+  39 0000 0020     		movs	r0, #0
+  40              	.LVL1:
+  41              		.loc 1 42 1 view .LVU4
+  42 0002 7047     		bx	lr
+  43              		.cfi_endproc
+  44              	.LFE164:
+  46              		.section	.text.USBD_LL_DeInit,"ax",%progbits
+  47              		.align	1
+  48              		.global	USBD_LL_DeInit
+  49              		.syntax unified
+  50              		.thumb
+  51              		.thumb_func
+  53              	USBD_LL_DeInit:
+  54              	.LVL2:
+  55              	.LFB165:
+  43:USB/Core/Src/usbd_conf.c **** 
+  44:USB/Core/Src/usbd_conf.c **** /**
+  45:USB/Core/Src/usbd_conf.c ****   * @brief  De-Initializes the Low Level portion of the Device driver.
+  46:USB/Core/Src/usbd_conf.c ****   * @param  pdev: Device handle
+  47:USB/Core/Src/usbd_conf.c ****   * @retval USBD Status
+  48:USB/Core/Src/usbd_conf.c ****   */
+  49:USB/Core/Src/usbd_conf.c **** USBD_StatusTypeDef USBD_LL_DeInit(USBD_HandleTypeDef *pdev)
+  50:USB/Core/Src/usbd_conf.c **** {
+  56              		.loc 1 50 1 is_stmt 1 view -0
+  57              		.cfi_startproc
+  58              		@ args = 0, pretend = 0, frame = 0
+  59              		@ frame_needed = 0, uses_anonymous_args = 0
+  60              		@ link register save eliminated.
+  51:USB/Core/Src/usbd_conf.c ****   UNUSED(pdev);
+  61              		.loc 1 51 3 view .LVU6
+  52:USB/Core/Src/usbd_conf.c **** 
+  53:USB/Core/Src/usbd_conf.c ****   return USBD_OK;
+  62              		.loc 1 53 3 view .LVU7
+  54:USB/Core/Src/usbd_conf.c **** }
+  63              		.loc 1 54 1 is_stmt 0 view .LVU8
+ARM GAS  C:\Users\sapph\AppData\Local\Temp\cc1nekz3.s 			page 3
+
+
+  64 0000 0020     		movs	r0, #0
+  65              	.LVL3:
+  66              		.loc 1 54 1 view .LVU9
+  67 0002 7047     		bx	lr
+  68              		.cfi_endproc
+  69              	.LFE165:
+  71              		.section	.text.USBD_LL_Start,"ax",%progbits
+  72              		.align	1
+  73              		.global	USBD_LL_Start
+  74              		.syntax unified
+  75              		.thumb
+  76              		.thumb_func
+  78              	USBD_LL_Start:
+  79              	.LVL4:
+  80              	.LFB166:
+  55:USB/Core/Src/usbd_conf.c **** 
+  56:USB/Core/Src/usbd_conf.c **** /**
+  57:USB/Core/Src/usbd_conf.c ****   * @brief  Starts the Low Level portion of the Device driver.
+  58:USB/Core/Src/usbd_conf.c ****   * @param  pdev: Device handle
+  59:USB/Core/Src/usbd_conf.c ****   * @retval USBD Status
+  60:USB/Core/Src/usbd_conf.c ****   */
+  61:USB/Core/Src/usbd_conf.c **** USBD_StatusTypeDef USBD_LL_Start(USBD_HandleTypeDef *pdev)
+  62:USB/Core/Src/usbd_conf.c **** {
+  81              		.loc 1 62 1 is_stmt 1 view -0
+  82              		.cfi_startproc
+  83              		@ args = 0, pretend = 0, frame = 0
+  84              		@ frame_needed = 0, uses_anonymous_args = 0
+  85              		@ link register save eliminated.
+  63:USB/Core/Src/usbd_conf.c ****   UNUSED(pdev);
+  86              		.loc 1 63 3 view .LVU11
+  64:USB/Core/Src/usbd_conf.c **** 
+  65:USB/Core/Src/usbd_conf.c ****   return USBD_OK;
+  87              		.loc 1 65 3 view .LVU12
+  66:USB/Core/Src/usbd_conf.c **** }
+  88              		.loc 1 66 1 is_stmt 0 view .LVU13
+  89 0000 0020     		movs	r0, #0
+  90              	.LVL5:
+  91              		.loc 1 66 1 view .LVU14
+  92 0002 7047     		bx	lr
+  93              		.cfi_endproc
+  94              	.LFE166:
+  96              		.section	.text.USBD_LL_Stop,"ax",%progbits
+  97              		.align	1
+  98              		.global	USBD_LL_Stop
+  99              		.syntax unified
+ 100              		.thumb
+ 101              		.thumb_func
+ 103              	USBD_LL_Stop:
+ 104              	.LVL6:
+ 105              	.LFB167:
+  67:USB/Core/Src/usbd_conf.c **** 
+  68:USB/Core/Src/usbd_conf.c **** /**
+  69:USB/Core/Src/usbd_conf.c ****   * @brief  Stops the Low Level portion of the Device driver.
+  70:USB/Core/Src/usbd_conf.c ****   * @param  pdev: Device handle
+  71:USB/Core/Src/usbd_conf.c ****   * @retval USBD Status
+  72:USB/Core/Src/usbd_conf.c ****   */
+  73:USB/Core/Src/usbd_conf.c **** USBD_StatusTypeDef USBD_LL_Stop(USBD_HandleTypeDef *pdev)
+ARM GAS  C:\Users\sapph\AppData\Local\Temp\cc1nekz3.s 			page 4
+
+
+  74:USB/Core/Src/usbd_conf.c **** {
+ 106              		.loc 1 74 1 is_stmt 1 view -0
+ 107              		.cfi_startproc
+ 108              		@ args = 0, pretend = 0, frame = 0
+ 109              		@ frame_needed = 0, uses_anonymous_args = 0
+ 110              		@ link register save eliminated.
+  75:USB/Core/Src/usbd_conf.c ****   UNUSED(pdev);
+ 111              		.loc 1 75 3 view .LVU16
+  76:USB/Core/Src/usbd_conf.c **** 
+  77:USB/Core/Src/usbd_conf.c ****   return USBD_OK;
+ 112              		.loc 1 77 3 view .LVU17
+  78:USB/Core/Src/usbd_conf.c **** }
+ 113              		.loc 1 78 1 is_stmt 0 view .LVU18
+ 114 0000 0020     		movs	r0, #0
+ 115              	.LVL7:
+ 116              		.loc 1 78 1 view .LVU19
+ 117 0002 7047     		bx	lr
+ 118              		.cfi_endproc
+ 119              	.LFE167:
+ 121              		.section	.text.USBD_LL_OpenEP,"ax",%progbits
+ 122              		.align	1
+ 123              		.global	USBD_LL_OpenEP
+ 124              		.syntax unified
+ 125              		.thumb
+ 126              		.thumb_func
+ 128              	USBD_LL_OpenEP:
+ 129              	.LVL8:
+ 130              	.LFB168:
+  79:USB/Core/Src/usbd_conf.c **** 
+  80:USB/Core/Src/usbd_conf.c **** /**
+  81:USB/Core/Src/usbd_conf.c ****   * @brief  Opens an endpoint of the Low Level Driver.
+  82:USB/Core/Src/usbd_conf.c ****   * @param  pdev: Device handle
+  83:USB/Core/Src/usbd_conf.c ****   * @param  ep_addr: Endpoint Number
+  84:USB/Core/Src/usbd_conf.c ****   * @param  ep_type: Endpoint Type
+  85:USB/Core/Src/usbd_conf.c ****   * @param  ep_mps: Endpoint Max Packet Size
+  86:USB/Core/Src/usbd_conf.c ****   * @retval USBD Status
+  87:USB/Core/Src/usbd_conf.c ****   */
+  88:USB/Core/Src/usbd_conf.c **** USBD_StatusTypeDef USBD_LL_OpenEP(USBD_HandleTypeDef *pdev, uint8_t ep_addr,
+  89:USB/Core/Src/usbd_conf.c ****                                   uint8_t ep_type, uint16_t ep_mps)
+  90:USB/Core/Src/usbd_conf.c **** {
+ 131              		.loc 1 90 1 is_stmt 1 view -0
+ 132              		.cfi_startproc
+ 133              		@ args = 0, pretend = 0, frame = 0
+ 134              		@ frame_needed = 0, uses_anonymous_args = 0
+ 135              		@ link register save eliminated.
+  91:USB/Core/Src/usbd_conf.c ****   UNUSED(pdev);
+ 136              		.loc 1 91 3 view .LVU21
+  92:USB/Core/Src/usbd_conf.c ****   UNUSED(ep_addr);
+ 137              		.loc 1 92 3 view .LVU22
+  93:USB/Core/Src/usbd_conf.c ****   UNUSED(ep_type);
+ 138              		.loc 1 93 3 view .LVU23
+  94:USB/Core/Src/usbd_conf.c ****   UNUSED(ep_mps);
+ 139              		.loc 1 94 3 view .LVU24
+  95:USB/Core/Src/usbd_conf.c **** 
+  96:USB/Core/Src/usbd_conf.c ****   return USBD_OK;
+ 140              		.loc 1 96 3 view .LVU25
+  97:USB/Core/Src/usbd_conf.c **** }
+ARM GAS  C:\Users\sapph\AppData\Local\Temp\cc1nekz3.s 			page 5
+
+
+ 141              		.loc 1 97 1 is_stmt 0 view .LVU26
+ 142 0000 0020     		movs	r0, #0
+ 143              	.LVL9:
+ 144              		.loc 1 97 1 view .LVU27
+ 145 0002 7047     		bx	lr
+ 146              		.cfi_endproc
+ 147              	.LFE168:
+ 149              		.section	.text.USBD_LL_CloseEP,"ax",%progbits
+ 150              		.align	1
+ 151              		.global	USBD_LL_CloseEP
+ 152              		.syntax unified
+ 153              		.thumb
+ 154              		.thumb_func
+ 156              	USBD_LL_CloseEP:
+ 157              	.LVL10:
+ 158              	.LFB169:
+  98:USB/Core/Src/usbd_conf.c **** 
+  99:USB/Core/Src/usbd_conf.c **** /**
+ 100:USB/Core/Src/usbd_conf.c ****   * @brief  Closes an endpoint of the Low Level Driver.
+ 101:USB/Core/Src/usbd_conf.c ****   * @param  pdev: Device handle
+ 102:USB/Core/Src/usbd_conf.c ****   * @param  ep_addr: Endpoint Number
+ 103:USB/Core/Src/usbd_conf.c ****   * @retval USBD Status
+ 104:USB/Core/Src/usbd_conf.c ****   */
+ 105:USB/Core/Src/usbd_conf.c **** USBD_StatusTypeDef USBD_LL_CloseEP(USBD_HandleTypeDef *pdev, uint8_t ep_addr)
+ 106:USB/Core/Src/usbd_conf.c **** {
+ 159              		.loc 1 106 1 is_stmt 1 view -0
+ 160              		.cfi_startproc
+ 161              		@ args = 0, pretend = 0, frame = 0
+ 162              		@ frame_needed = 0, uses_anonymous_args = 0
+ 163              		@ link register save eliminated.
+ 107:USB/Core/Src/usbd_conf.c ****   UNUSED(pdev);
+ 164              		.loc 1 107 3 view .LVU29
+ 108:USB/Core/Src/usbd_conf.c ****   UNUSED(ep_addr);
+ 165              		.loc 1 108 3 view .LVU30
+ 109:USB/Core/Src/usbd_conf.c **** 
+ 110:USB/Core/Src/usbd_conf.c ****   return USBD_OK;
+ 166              		.loc 1 110 3 view .LVU31
+ 111:USB/Core/Src/usbd_conf.c **** }
+ 167              		.loc 1 111 1 is_stmt 0 view .LVU32
+ 168 0000 0020     		movs	r0, #0
+ 169              	.LVL11:
+ 170              		.loc 1 111 1 view .LVU33
+ 171 0002 7047     		bx	lr
+ 172              		.cfi_endproc
+ 173              	.LFE169:
+ 175              		.section	.text.USBD_LL_FlushEP,"ax",%progbits
+ 176              		.align	1
+ 177              		.global	USBD_LL_FlushEP
+ 178              		.syntax unified
+ 179              		.thumb
+ 180              		.thumb_func
+ 182              	USBD_LL_FlushEP:
+ 183              	.LVL12:
+ 184              	.LFB170:
+ 112:USB/Core/Src/usbd_conf.c **** 
+ 113:USB/Core/Src/usbd_conf.c **** /**
+ 114:USB/Core/Src/usbd_conf.c ****   * @brief  Flushes an endpoint of the Low Level Driver.
+ARM GAS  C:\Users\sapph\AppData\Local\Temp\cc1nekz3.s 			page 6
+
+
+ 115:USB/Core/Src/usbd_conf.c ****   * @param  pdev: Device handle
+ 116:USB/Core/Src/usbd_conf.c ****   * @param  ep_addr: Endpoint Number
+ 117:USB/Core/Src/usbd_conf.c ****   * @retval USBD Status
+ 118:USB/Core/Src/usbd_conf.c ****   */
+ 119:USB/Core/Src/usbd_conf.c **** USBD_StatusTypeDef USBD_LL_FlushEP(USBD_HandleTypeDef *pdev, uint8_t ep_addr)
+ 120:USB/Core/Src/usbd_conf.c **** {
+ 185              		.loc 1 120 1 is_stmt 1 view -0
+ 186              		.cfi_startproc
+ 187              		@ args = 0, pretend = 0, frame = 0
+ 188              		@ frame_needed = 0, uses_anonymous_args = 0
+ 189              		@ link register save eliminated.
+ 121:USB/Core/Src/usbd_conf.c ****   UNUSED(pdev);
+ 190              		.loc 1 121 3 view .LVU35
+ 122:USB/Core/Src/usbd_conf.c ****   UNUSED(ep_addr);
+ 191              		.loc 1 122 3 view .LVU36
+ 123:USB/Core/Src/usbd_conf.c **** 
+ 124:USB/Core/Src/usbd_conf.c ****   return USBD_OK;
+ 192              		.loc 1 124 3 view .LVU37
+ 125:USB/Core/Src/usbd_conf.c **** }
+ 193              		.loc 1 125 1 is_stmt 0 view .LVU38
+ 194 0000 0020     		movs	r0, #0
+ 195              	.LVL13:
+ 196              		.loc 1 125 1 view .LVU39
+ 197 0002 7047     		bx	lr
+ 198              		.cfi_endproc
+ 199              	.LFE170:
+ 201              		.section	.text.USBD_LL_StallEP,"ax",%progbits
+ 202              		.align	1
+ 203              		.global	USBD_LL_StallEP
+ 204              		.syntax unified
+ 205              		.thumb
+ 206              		.thumb_func
+ 208              	USBD_LL_StallEP:
+ 209              	.LVL14:
+ 210              	.LFB171:
+ 126:USB/Core/Src/usbd_conf.c **** 
+ 127:USB/Core/Src/usbd_conf.c **** /**
+ 128:USB/Core/Src/usbd_conf.c ****   * @brief  Sets a Stall condition on an endpoint of the Low Level Driver.
+ 129:USB/Core/Src/usbd_conf.c ****   * @param  pdev: Device handle
+ 130:USB/Core/Src/usbd_conf.c ****   * @param  ep_addr: Endpoint Number
+ 131:USB/Core/Src/usbd_conf.c ****   * @retval USBD Status
+ 132:USB/Core/Src/usbd_conf.c ****   */
+ 133:USB/Core/Src/usbd_conf.c **** USBD_StatusTypeDef USBD_LL_StallEP(USBD_HandleTypeDef *pdev, uint8_t ep_addr)
+ 134:USB/Core/Src/usbd_conf.c **** {
+ 211              		.loc 1 134 1 is_stmt 1 view -0
+ 212              		.cfi_startproc
+ 213              		@ args = 0, pretend = 0, frame = 0
+ 214              		@ frame_needed = 0, uses_anonymous_args = 0
+ 215              		@ link register save eliminated.
+ 135:USB/Core/Src/usbd_conf.c ****   UNUSED(pdev);
+ 216              		.loc 1 135 3 view .LVU41
+ 136:USB/Core/Src/usbd_conf.c ****   UNUSED(ep_addr);
+ 217              		.loc 1 136 3 view .LVU42
+ 137:USB/Core/Src/usbd_conf.c **** 
+ 138:USB/Core/Src/usbd_conf.c ****   return USBD_OK;
+ 218              		.loc 1 138 3 view .LVU43
+ 139:USB/Core/Src/usbd_conf.c **** }
+ARM GAS  C:\Users\sapph\AppData\Local\Temp\cc1nekz3.s 			page 7
+
+
+ 219              		.loc 1 139 1 is_stmt 0 view .LVU44
+ 220 0000 0020     		movs	r0, #0
+ 221              	.LVL15:
+ 222              		.loc 1 139 1 view .LVU45
+ 223 0002 7047     		bx	lr
+ 224              		.cfi_endproc
+ 225              	.LFE171:
+ 227              		.section	.text.USBD_LL_ClearStallEP,"ax",%progbits
+ 228              		.align	1
+ 229              		.global	USBD_LL_ClearStallEP
+ 230              		.syntax unified
+ 231              		.thumb
+ 232              		.thumb_func
+ 234              	USBD_LL_ClearStallEP:
+ 235              	.LVL16:
+ 236              	.LFB172:
+ 140:USB/Core/Src/usbd_conf.c **** 
+ 141:USB/Core/Src/usbd_conf.c **** /**
+ 142:USB/Core/Src/usbd_conf.c ****   * @brief  Clears a Stall condition on an endpoint of the Low Level Driver.
+ 143:USB/Core/Src/usbd_conf.c ****   * @param  pdev: Device handle
+ 144:USB/Core/Src/usbd_conf.c ****   * @param  ep_addr: Endpoint Number
+ 145:USB/Core/Src/usbd_conf.c ****   * @retval USBD Status
+ 146:USB/Core/Src/usbd_conf.c ****   */
+ 147:USB/Core/Src/usbd_conf.c **** USBD_StatusTypeDef USBD_LL_ClearStallEP(USBD_HandleTypeDef *pdev,
+ 148:USB/Core/Src/usbd_conf.c ****                                         uint8_t ep_addr)
+ 149:USB/Core/Src/usbd_conf.c **** {
+ 237              		.loc 1 149 1 is_stmt 1 view -0
+ 238              		.cfi_startproc
+ 239              		@ args = 0, pretend = 0, frame = 0
+ 240              		@ frame_needed = 0, uses_anonymous_args = 0
+ 241              		@ link register save eliminated.
+ 150:USB/Core/Src/usbd_conf.c ****   UNUSED(pdev);
+ 242              		.loc 1 150 3 view .LVU47
+ 151:USB/Core/Src/usbd_conf.c ****   UNUSED(ep_addr);
+ 243              		.loc 1 151 3 view .LVU48
+ 152:USB/Core/Src/usbd_conf.c **** 
+ 153:USB/Core/Src/usbd_conf.c ****   return USBD_OK;
+ 244              		.loc 1 153 3 view .LVU49
+ 154:USB/Core/Src/usbd_conf.c **** }
+ 245              		.loc 1 154 1 is_stmt 0 view .LVU50
+ 246 0000 0020     		movs	r0, #0
+ 247              	.LVL17:
+ 248              		.loc 1 154 1 view .LVU51
+ 249 0002 7047     		bx	lr
+ 250              		.cfi_endproc
+ 251              	.LFE172:
+ 253              		.section	.text.USBD_LL_IsStallEP,"ax",%progbits
+ 254              		.align	1
+ 255              		.global	USBD_LL_IsStallEP
+ 256              		.syntax unified
+ 257              		.thumb
+ 258              		.thumb_func
+ 260              	USBD_LL_IsStallEP:
+ 261              	.LVL18:
+ 262              	.LFB173:
+ 155:USB/Core/Src/usbd_conf.c **** 
+ 156:USB/Core/Src/usbd_conf.c **** /**
+ARM GAS  C:\Users\sapph\AppData\Local\Temp\cc1nekz3.s 			page 8
+
+
+ 157:USB/Core/Src/usbd_conf.c ****   * @brief  Returns Stall condition.
+ 158:USB/Core/Src/usbd_conf.c ****   * @param  pdev: Device handle
+ 159:USB/Core/Src/usbd_conf.c ****   * @param  ep_addr: Endpoint Number
+ 160:USB/Core/Src/usbd_conf.c ****   * @retval Stall (1: Yes, 0: No)
+ 161:USB/Core/Src/usbd_conf.c ****   */
+ 162:USB/Core/Src/usbd_conf.c **** uint8_t USBD_LL_IsStallEP(USBD_HandleTypeDef *pdev, uint8_t ep_addr)
+ 163:USB/Core/Src/usbd_conf.c **** {
+ 263              		.loc 1 163 1 is_stmt 1 view -0
+ 264              		.cfi_startproc
+ 265              		@ args = 0, pretend = 0, frame = 0
+ 266              		@ frame_needed = 0, uses_anonymous_args = 0
+ 267              		@ link register save eliminated.
+ 164:USB/Core/Src/usbd_conf.c ****   UNUSED(pdev);
+ 268              		.loc 1 164 3 view .LVU53
+ 165:USB/Core/Src/usbd_conf.c ****   UNUSED(ep_addr);
+ 269              		.loc 1 165 3 view .LVU54
+ 166:USB/Core/Src/usbd_conf.c **** 
+ 167:USB/Core/Src/usbd_conf.c ****   return 0U;
+ 270              		.loc 1 167 3 view .LVU55
+ 168:USB/Core/Src/usbd_conf.c **** }
+ 271              		.loc 1 168 1 is_stmt 0 view .LVU56
+ 272 0000 0020     		movs	r0, #0
+ 273              	.LVL19:
+ 274              		.loc 1 168 1 view .LVU57
+ 275 0002 7047     		bx	lr
+ 276              		.cfi_endproc
+ 277              	.LFE173:
+ 279              		.section	.text.USBD_LL_SetUSBAddress,"ax",%progbits
+ 280              		.align	1
+ 281              		.global	USBD_LL_SetUSBAddress
+ 282              		.syntax unified
+ 283              		.thumb
+ 284              		.thumb_func
+ 286              	USBD_LL_SetUSBAddress:
+ 287              	.LVL20:
+ 288              	.LFB174:
+ 169:USB/Core/Src/usbd_conf.c **** 
+ 170:USB/Core/Src/usbd_conf.c **** /**
+ 171:USB/Core/Src/usbd_conf.c ****   * @brief  Assigns a USB address to the device.
+ 172:USB/Core/Src/usbd_conf.c ****   * @param  pdev: Device handle
+ 173:USB/Core/Src/usbd_conf.c ****   * @param  dev_addr: Endpoint Number
+ 174:USB/Core/Src/usbd_conf.c ****   * @retval USBD Status
+ 175:USB/Core/Src/usbd_conf.c ****   */
+ 176:USB/Core/Src/usbd_conf.c **** USBD_StatusTypeDef USBD_LL_SetUSBAddress(USBD_HandleTypeDef *pdev,
+ 177:USB/Core/Src/usbd_conf.c ****                                          uint8_t dev_addr)
+ 178:USB/Core/Src/usbd_conf.c **** {
+ 289              		.loc 1 178 1 is_stmt 1 view -0
+ 290              		.cfi_startproc
+ 291              		@ args = 0, pretend = 0, frame = 0
+ 292              		@ frame_needed = 0, uses_anonymous_args = 0
+ 293              		@ link register save eliminated.
+ 179:USB/Core/Src/usbd_conf.c ****   UNUSED(pdev);
+ 294              		.loc 1 179 3 view .LVU59
+ 180:USB/Core/Src/usbd_conf.c ****   UNUSED(dev_addr);
+ 295              		.loc 1 180 3 view .LVU60
+ 181:USB/Core/Src/usbd_conf.c **** 
+ 182:USB/Core/Src/usbd_conf.c ****   return USBD_OK;
+ARM GAS  C:\Users\sapph\AppData\Local\Temp\cc1nekz3.s 			page 9
+
+
+ 296              		.loc 1 182 3 view .LVU61
+ 183:USB/Core/Src/usbd_conf.c **** }
+ 297              		.loc 1 183 1 is_stmt 0 view .LVU62
+ 298 0000 0020     		movs	r0, #0
+ 299              	.LVL21:
+ 300              		.loc 1 183 1 view .LVU63
+ 301 0002 7047     		bx	lr
+ 302              		.cfi_endproc
+ 303              	.LFE174:
+ 305              		.section	.text.USBD_LL_Transmit,"ax",%progbits
+ 306              		.align	1
+ 307              		.global	USBD_LL_Transmit
+ 308              		.syntax unified
+ 309              		.thumb
+ 310              		.thumb_func
+ 312              	USBD_LL_Transmit:
+ 313              	.LVL22:
+ 314              	.LFB175:
+ 184:USB/Core/Src/usbd_conf.c **** 
+ 185:USB/Core/Src/usbd_conf.c **** /**
+ 186:USB/Core/Src/usbd_conf.c ****   * @brief  Transmits data over an endpoint.
+ 187:USB/Core/Src/usbd_conf.c ****   * @param  pdev: Device handle
+ 188:USB/Core/Src/usbd_conf.c ****   * @param  ep_addr: Endpoint Number
+ 189:USB/Core/Src/usbd_conf.c ****   * @param  pbuf: Pointer to data to be sent
+ 190:USB/Core/Src/usbd_conf.c ****   * @param  size: Data size
+ 191:USB/Core/Src/usbd_conf.c ****   * @retval USBD Status
+ 192:USB/Core/Src/usbd_conf.c ****   */
+ 193:USB/Core/Src/usbd_conf.c **** USBD_StatusTypeDef USBD_LL_Transmit(USBD_HandleTypeDef *pdev, uint8_t ep_addr,
+ 194:USB/Core/Src/usbd_conf.c ****                                     uint8_t *pbuf, uint32_t size)
+ 195:USB/Core/Src/usbd_conf.c **** {
+ 315              		.loc 1 195 1 is_stmt 1 view -0
+ 316              		.cfi_startproc
+ 317              		@ args = 0, pretend = 0, frame = 0
+ 318              		@ frame_needed = 0, uses_anonymous_args = 0
+ 319              		@ link register save eliminated.
+ 196:USB/Core/Src/usbd_conf.c ****   UNUSED(pdev);
+ 320              		.loc 1 196 3 view .LVU65
+ 197:USB/Core/Src/usbd_conf.c ****   UNUSED(ep_addr);
+ 321              		.loc 1 197 3 view .LVU66
+ 198:USB/Core/Src/usbd_conf.c ****   UNUSED(pbuf);
+ 322              		.loc 1 198 3 view .LVU67
+ 199:USB/Core/Src/usbd_conf.c ****   UNUSED(size);
+ 323              		.loc 1 199 3 view .LVU68
+ 200:USB/Core/Src/usbd_conf.c **** 
+ 201:USB/Core/Src/usbd_conf.c ****   return USBD_OK;
+ 324              		.loc 1 201 3 view .LVU69
+ 202:USB/Core/Src/usbd_conf.c **** }
+ 325              		.loc 1 202 1 is_stmt 0 view .LVU70
+ 326 0000 0020     		movs	r0, #0
+ 327              	.LVL23:
+ 328              		.loc 1 202 1 view .LVU71
+ 329 0002 7047     		bx	lr
+ 330              		.cfi_endproc
+ 331              	.LFE175:
+ 333              		.section	.text.USBD_LL_PrepareReceive,"ax",%progbits
+ 334              		.align	1
+ 335              		.global	USBD_LL_PrepareReceive
+ARM GAS  C:\Users\sapph\AppData\Local\Temp\cc1nekz3.s 			page 10
+
+
+ 336              		.syntax unified
+ 337              		.thumb
+ 338              		.thumb_func
+ 340              	USBD_LL_PrepareReceive:
+ 341              	.LVL24:
+ 342              	.LFB176:
+ 203:USB/Core/Src/usbd_conf.c **** 
+ 204:USB/Core/Src/usbd_conf.c **** /**
+ 205:USB/Core/Src/usbd_conf.c ****   * @brief  Prepares an endpoint for reception.
+ 206:USB/Core/Src/usbd_conf.c ****   * @param  pdev: Device handle
+ 207:USB/Core/Src/usbd_conf.c ****   * @param  ep_addr: Endpoint Number
+ 208:USB/Core/Src/usbd_conf.c ****   * @param  pbuf: Pointer to data to be received
+ 209:USB/Core/Src/usbd_conf.c ****   * @param  size: Data size
+ 210:USB/Core/Src/usbd_conf.c ****   * @retval USBD Status
+ 211:USB/Core/Src/usbd_conf.c ****   */
+ 212:USB/Core/Src/usbd_conf.c **** USBD_StatusTypeDef USBD_LL_PrepareReceive(USBD_HandleTypeDef *pdev,
+ 213:USB/Core/Src/usbd_conf.c ****                                           uint8_t ep_addr, uint8_t *pbuf,
+ 214:USB/Core/Src/usbd_conf.c ****                                           uint32_t size)
+ 215:USB/Core/Src/usbd_conf.c **** {
+ 343              		.loc 1 215 1 is_stmt 1 view -0
+ 344              		.cfi_startproc
+ 345              		@ args = 0, pretend = 0, frame = 0
+ 346              		@ frame_needed = 0, uses_anonymous_args = 0
+ 347              		@ link register save eliminated.
+ 216:USB/Core/Src/usbd_conf.c ****   UNUSED(pdev);
+ 348              		.loc 1 216 3 view .LVU73
+ 217:USB/Core/Src/usbd_conf.c ****   UNUSED(ep_addr);
+ 349              		.loc 1 217 3 view .LVU74
+ 218:USB/Core/Src/usbd_conf.c ****   UNUSED(pbuf);
+ 350              		.loc 1 218 3 view .LVU75
+ 219:USB/Core/Src/usbd_conf.c ****   UNUSED(size);
+ 351              		.loc 1 219 3 view .LVU76
+ 220:USB/Core/Src/usbd_conf.c **** 
+ 221:USB/Core/Src/usbd_conf.c ****   return USBD_OK;
+ 352              		.loc 1 221 3 view .LVU77
+ 222:USB/Core/Src/usbd_conf.c **** }
+ 353              		.loc 1 222 1 is_stmt 0 view .LVU78
+ 354 0000 0020     		movs	r0, #0
+ 355              	.LVL25:
+ 356              		.loc 1 222 1 view .LVU79
+ 357 0002 7047     		bx	lr
+ 358              		.cfi_endproc
+ 359              	.LFE176:
+ 361              		.section	.text.USBD_LL_GetRxDataSize,"ax",%progbits
+ 362              		.align	1
+ 363              		.global	USBD_LL_GetRxDataSize
+ 364              		.syntax unified
+ 365              		.thumb
+ 366              		.thumb_func
+ 368              	USBD_LL_GetRxDataSize:
+ 369              	.LVL26:
+ 370              	.LFB177:
+ 223:USB/Core/Src/usbd_conf.c **** 
+ 224:USB/Core/Src/usbd_conf.c **** /**
+ 225:USB/Core/Src/usbd_conf.c ****   * @brief  Returns the last transferred packet size.
+ 226:USB/Core/Src/usbd_conf.c ****   * @param  pdev: Device handle
+ 227:USB/Core/Src/usbd_conf.c ****   * @param  ep_addr: Endpoint Number
+ARM GAS  C:\Users\sapph\AppData\Local\Temp\cc1nekz3.s 			page 11
+
+
+ 228:USB/Core/Src/usbd_conf.c ****   * @retval Received Data Size
+ 229:USB/Core/Src/usbd_conf.c ****   */
+ 230:USB/Core/Src/usbd_conf.c **** uint32_t USBD_LL_GetRxDataSize(USBD_HandleTypeDef *pdev, uint8_t ep_addr)
+ 231:USB/Core/Src/usbd_conf.c **** {
+ 371              		.loc 1 231 1 is_stmt 1 view -0
+ 372              		.cfi_startproc
+ 373              		@ args = 0, pretend = 0, frame = 0
+ 374              		@ frame_needed = 0, uses_anonymous_args = 0
+ 375              		@ link register save eliminated.
+ 232:USB/Core/Src/usbd_conf.c ****   UNUSED(pdev);
+ 376              		.loc 1 232 3 view .LVU81
+ 233:USB/Core/Src/usbd_conf.c ****   UNUSED(ep_addr);
+ 377              		.loc 1 233 3 view .LVU82
+ 234:USB/Core/Src/usbd_conf.c **** 
+ 235:USB/Core/Src/usbd_conf.c ****   return 0U;
+ 378              		.loc 1 235 3 view .LVU83
+ 236:USB/Core/Src/usbd_conf.c **** }
+ 379              		.loc 1 236 1 is_stmt 0 view .LVU84
+ 380 0000 0020     		movs	r0, #0
+ 381              	.LVL27:
+ 382              		.loc 1 236 1 view .LVU85
+ 383 0002 7047     		bx	lr
+ 384              		.cfi_endproc
+ 385              	.LFE177:
+ 387              		.section	.text.USBD_static_malloc,"ax",%progbits
+ 388              		.align	1
+ 389              		.global	USBD_static_malloc
+ 390              		.syntax unified
+ 391              		.thumb
+ 392              		.thumb_func
+ 394              	USBD_static_malloc:
+ 395              	.LVL28:
+ 396              	.LFB178:
+ 237:USB/Core/Src/usbd_conf.c **** 
+ 238:USB/Core/Src/usbd_conf.c **** #ifdef USBD_HS_TESTMODE_ENABLE
+ 239:USB/Core/Src/usbd_conf.c **** /**
+ 240:USB/Core/Src/usbd_conf.c ****   * @brief  Set High speed Test mode.
+ 241:USB/Core/Src/usbd_conf.c ****   * @param  pdev: Device handle
+ 242:USB/Core/Src/usbd_conf.c ****   * @param  testmode: test mode
+ 243:USB/Core/Src/usbd_conf.c ****   * @retval USBD Status
+ 244:USB/Core/Src/usbd_conf.c ****   */
+ 245:USB/Core/Src/usbd_conf.c **** USBD_StatusTypeDef USBD_LL_SetTestMode(USBD_HandleTypeDef *pdev, uint8_t testmode)
+ 246:USB/Core/Src/usbd_conf.c **** {
+ 247:USB/Core/Src/usbd_conf.c ****   UNUSED(pdev);
+ 248:USB/Core/Src/usbd_conf.c ****   UNUSED(testmode);
+ 249:USB/Core/Src/usbd_conf.c **** 
+ 250:USB/Core/Src/usbd_conf.c ****   return USBD_OK;
+ 251:USB/Core/Src/usbd_conf.c **** }
+ 252:USB/Core/Src/usbd_conf.c **** #endif /* USBD_HS_TESTMODE_ENABLE */
+ 253:USB/Core/Src/usbd_conf.c **** 
+ 254:USB/Core/Src/usbd_conf.c **** /**
+ 255:USB/Core/Src/usbd_conf.c ****   * @brief  Static single allocation.
+ 256:USB/Core/Src/usbd_conf.c ****   * @param  size: Size of allocated memory
+ 257:USB/Core/Src/usbd_conf.c ****   * @retval None
+ 258:USB/Core/Src/usbd_conf.c ****   */
+ 259:USB/Core/Src/usbd_conf.c **** void *USBD_static_malloc(uint32_t size)
+ 260:USB/Core/Src/usbd_conf.c **** {
+ARM GAS  C:\Users\sapph\AppData\Local\Temp\cc1nekz3.s 			page 12
+
+
+ 397              		.loc 1 260 1 is_stmt 1 view -0
+ 398              		.cfi_startproc
+ 399              		@ args = 0, pretend = 0, frame = 0
+ 400              		@ frame_needed = 0, uses_anonymous_args = 0
+ 401              		@ link register save eliminated.
+ 261:USB/Core/Src/usbd_conf.c ****   UNUSED(size);
+ 402              		.loc 1 261 3 view .LVU87
+ 262:USB/Core/Src/usbd_conf.c ****   static uint32_t mem[(sizeof(USBD_HID_HandleTypeDef) / 4) + 1]; /* On 32-bit boundary */
+ 403              		.loc 1 262 3 view .LVU88
+ 263:USB/Core/Src/usbd_conf.c ****   return mem;
+ 404              		.loc 1 263 3 view .LVU89
+ 264:USB/Core/Src/usbd_conf.c **** }
+ 405              		.loc 1 264 1 is_stmt 0 view .LVU90
+ 406 0000 0048     		ldr	r0, .L16
+ 407              	.LVL29:
+ 408              		.loc 1 264 1 view .LVU91
+ 409 0002 7047     		bx	lr
+ 410              	.L17:
+ 411              		.align	2
+ 412              	.L16:
+ 413 0004 00000000 		.word	mem.0
+ 414              		.cfi_endproc
+ 415              	.LFE178:
+ 417              		.section	.text.USBD_static_free,"ax",%progbits
+ 418              		.align	1
+ 419              		.global	USBD_static_free
+ 420              		.syntax unified
+ 421              		.thumb
+ 422              		.thumb_func
+ 424              	USBD_static_free:
+ 425              	.LVL30:
+ 426              	.LFB179:
+ 265:USB/Core/Src/usbd_conf.c **** 
+ 266:USB/Core/Src/usbd_conf.c **** /**
+ 267:USB/Core/Src/usbd_conf.c ****   * @brief  Dummy memory free
+ 268:USB/Core/Src/usbd_conf.c ****   * @param  p: Pointer to allocated  memory address
+ 269:USB/Core/Src/usbd_conf.c ****   * @retval None
+ 270:USB/Core/Src/usbd_conf.c ****   */
+ 271:USB/Core/Src/usbd_conf.c **** void USBD_static_free(void *p)
+ 272:USB/Core/Src/usbd_conf.c **** {
+ 427              		.loc 1 272 1 is_stmt 1 view -0
+ 428              		.cfi_startproc
+ 429              		@ args = 0, pretend = 0, frame = 0
+ 430              		@ frame_needed = 0, uses_anonymous_args = 0
+ 431              		@ link register save eliminated.
+ 273:USB/Core/Src/usbd_conf.c ****   UNUSED(p);
+ 432              		.loc 1 273 3 view .LVU93
+ 274:USB/Core/Src/usbd_conf.c **** }
+ 433              		.loc 1 274 1 is_stmt 0 view .LVU94
+ 434 0000 7047     		bx	lr
+ 435              		.cfi_endproc
+ 436              	.LFE179:
+ 438              		.section	.text.USBD_LL_Delay,"ax",%progbits
+ 439              		.align	1
+ 440              		.global	USBD_LL_Delay
+ 441              		.syntax unified
+ 442              		.thumb
+ARM GAS  C:\Users\sapph\AppData\Local\Temp\cc1nekz3.s 			page 13
+
+
+ 443              		.thumb_func
+ 445              	USBD_LL_Delay:
+ 446              	.LVL31:
+ 447              	.LFB180:
+ 275:USB/Core/Src/usbd_conf.c **** 
+ 276:USB/Core/Src/usbd_conf.c **** /**
+ 277:USB/Core/Src/usbd_conf.c ****   * @brief  Delays routine for the USB Device Library.
+ 278:USB/Core/Src/usbd_conf.c ****   * @param  Delay: Delay in ms
+ 279:USB/Core/Src/usbd_conf.c ****   * @retval None
+ 280:USB/Core/Src/usbd_conf.c ****   */
+ 281:USB/Core/Src/usbd_conf.c **** void USBD_LL_Delay(uint32_t Delay)
+ 282:USB/Core/Src/usbd_conf.c **** {
+ 448              		.loc 1 282 1 is_stmt 1 view -0
+ 449              		.cfi_startproc
+ 450              		@ args = 0, pretend = 0, frame = 0
+ 451              		@ frame_needed = 0, uses_anonymous_args = 0
+ 452              		@ link register save eliminated.
+ 283:USB/Core/Src/usbd_conf.c ****   UNUSED(Delay);
+ 453              		.loc 1 283 3 view .LVU96
+ 284:USB/Core/Src/usbd_conf.c **** }
+ 454              		.loc 1 284 1 is_stmt 0 view .LVU97
+ 455 0000 7047     		bx	lr
+ 456              		.cfi_endproc
+ 457              	.LFE180:
+ 459              		.section	.bss.mem.0,"aw",%nobits
+ 460              		.align	2
+ 463              	mem.0:
+ 464 0000 00000000 		.space	20
+ 464      00000000 
+ 464      00000000 
+ 464      00000000 
+ 464      00000000 
+ 465              		.text
+ 466              	.Letext0:
+ 467              		.file 2 "C:/Users/sapph/AppData/Roaming/Code/User/globalStorage/bmd.stm32-for-vscode/@xpack-dev-to
+ 468              		.file 3 "C:/Users/sapph/AppData/Roaming/Code/User/globalStorage/bmd.stm32-for-vscode/@xpack-dev-to
+ 469              		.file 4 "USB/Core/Inc/usbd_def.h"
+ARM GAS  C:\Users\sapph\AppData\Local\Temp\cc1nekz3.s 			page 14
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 usbd_conf.c
+C:\Users\sapph\AppData\Local\Temp\cc1nekz3.s:22     .text.USBD_LL_Init:00000000 $t
+C:\Users\sapph\AppData\Local\Temp\cc1nekz3.s:28     .text.USBD_LL_Init:00000000 USBD_LL_Init
+C:\Users\sapph\AppData\Local\Temp\cc1nekz3.s:47     .text.USBD_LL_DeInit:00000000 $t
+C:\Users\sapph\AppData\Local\Temp\cc1nekz3.s:53     .text.USBD_LL_DeInit:00000000 USBD_LL_DeInit
+C:\Users\sapph\AppData\Local\Temp\cc1nekz3.s:72     .text.USBD_LL_Start:00000000 $t
+C:\Users\sapph\AppData\Local\Temp\cc1nekz3.s:78     .text.USBD_LL_Start:00000000 USBD_LL_Start
+C:\Users\sapph\AppData\Local\Temp\cc1nekz3.s:97     .text.USBD_LL_Stop:00000000 $t
+C:\Users\sapph\AppData\Local\Temp\cc1nekz3.s:103    .text.USBD_LL_Stop:00000000 USBD_LL_Stop
+C:\Users\sapph\AppData\Local\Temp\cc1nekz3.s:122    .text.USBD_LL_OpenEP:00000000 $t
+C:\Users\sapph\AppData\Local\Temp\cc1nekz3.s:128    .text.USBD_LL_OpenEP:00000000 USBD_LL_OpenEP
+C:\Users\sapph\AppData\Local\Temp\cc1nekz3.s:150    .text.USBD_LL_CloseEP:00000000 $t
+C:\Users\sapph\AppData\Local\Temp\cc1nekz3.s:156    .text.USBD_LL_CloseEP:00000000 USBD_LL_CloseEP
+C:\Users\sapph\AppData\Local\Temp\cc1nekz3.s:176    .text.USBD_LL_FlushEP:00000000 $t
+C:\Users\sapph\AppData\Local\Temp\cc1nekz3.s:182    .text.USBD_LL_FlushEP:00000000 USBD_LL_FlushEP
+C:\Users\sapph\AppData\Local\Temp\cc1nekz3.s:202    .text.USBD_LL_StallEP:00000000 $t
+C:\Users\sapph\AppData\Local\Temp\cc1nekz3.s:208    .text.USBD_LL_StallEP:00000000 USBD_LL_StallEP
+C:\Users\sapph\AppData\Local\Temp\cc1nekz3.s:228    .text.USBD_LL_ClearStallEP:00000000 $t
+C:\Users\sapph\AppData\Local\Temp\cc1nekz3.s:234    .text.USBD_LL_ClearStallEP:00000000 USBD_LL_ClearStallEP
+C:\Users\sapph\AppData\Local\Temp\cc1nekz3.s:254    .text.USBD_LL_IsStallEP:00000000 $t
+C:\Users\sapph\AppData\Local\Temp\cc1nekz3.s:260    .text.USBD_LL_IsStallEP:00000000 USBD_LL_IsStallEP
+C:\Users\sapph\AppData\Local\Temp\cc1nekz3.s:280    .text.USBD_LL_SetUSBAddress:00000000 $t
+C:\Users\sapph\AppData\Local\Temp\cc1nekz3.s:286    .text.USBD_LL_SetUSBAddress:00000000 USBD_LL_SetUSBAddress
+C:\Users\sapph\AppData\Local\Temp\cc1nekz3.s:306    .text.USBD_LL_Transmit:00000000 $t
+C:\Users\sapph\AppData\Local\Temp\cc1nekz3.s:312    .text.USBD_LL_Transmit:00000000 USBD_LL_Transmit
+C:\Users\sapph\AppData\Local\Temp\cc1nekz3.s:334    .text.USBD_LL_PrepareReceive:00000000 $t
+C:\Users\sapph\AppData\Local\Temp\cc1nekz3.s:340    .text.USBD_LL_PrepareReceive:00000000 USBD_LL_PrepareReceive
+C:\Users\sapph\AppData\Local\Temp\cc1nekz3.s:362    .text.USBD_LL_GetRxDataSize:00000000 $t
+C:\Users\sapph\AppData\Local\Temp\cc1nekz3.s:368    .text.USBD_LL_GetRxDataSize:00000000 USBD_LL_GetRxDataSize
+C:\Users\sapph\AppData\Local\Temp\cc1nekz3.s:388    .text.USBD_static_malloc:00000000 $t
+C:\Users\sapph\AppData\Local\Temp\cc1nekz3.s:394    .text.USBD_static_malloc:00000000 USBD_static_malloc
+C:\Users\sapph\AppData\Local\Temp\cc1nekz3.s:413    .text.USBD_static_malloc:00000004 $d
+C:\Users\sapph\AppData\Local\Temp\cc1nekz3.s:463    .bss.mem.0:00000000 mem.0
+C:\Users\sapph\AppData\Local\Temp\cc1nekz3.s:418    .text.USBD_static_free:00000000 $t
+C:\Users\sapph\AppData\Local\Temp\cc1nekz3.s:424    .text.USBD_static_free:00000000 USBD_static_free
+C:\Users\sapph\AppData\Local\Temp\cc1nekz3.s:439    .text.USBD_LL_Delay:00000000 $t
+C:\Users\sapph\AppData\Local\Temp\cc1nekz3.s:445    .text.USBD_LL_Delay:00000000 USBD_LL_Delay
+C:\Users\sapph\AppData\Local\Temp\cc1nekz3.s:460    .bss.mem.0:00000000 $d
+
+NO UNDEFINED SYMBOLS

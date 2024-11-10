@@ -1,0 +1,425 @@
+ARM GAS  C:\Users\sapph\AppData\Local\Temp\ccOUXM5B.s 			page 1
+
+
+   1              		.cpu cortex-m33
+   2              		.arch armv8-m.main
+   3              		.fpu fpv4-sp-d16
+   4              		.arch_extension dsp
+   5              		.eabi_attribute 27, 1
+   6              		.eabi_attribute 28, 1
+   7              		.eabi_attribute 20, 1
+   8              		.eabi_attribute 21, 1
+   9              		.eabi_attribute 23, 3
+  10              		.eabi_attribute 24, 1
+  11              		.eabi_attribute 25, 1
+  12              		.eabi_attribute 26, 1
+  13              		.eabi_attribute 30, 1
+  14              		.eabi_attribute 34, 1
+  15              		.eabi_attribute 18, 4
+  16              		.file	"ux_device_stack_clear_feature.c"
+  17              		.text
+  18              	.Ltext0:
+  19              		.cfi_sections	.debug_frame
+  20              		.file 1 "Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c"
+  21              		.section	.text._ux_device_stack_clear_feature,"ax",%progbits
+  22              		.align	1
+  23              		.global	_ux_device_stack_clear_feature
+  24              		.syntax unified
+  25              		.thumb
+  26              		.thumb_func
+  28              	_ux_device_stack_clear_feature:
+  29              	.LVL0:
+  30              	.LFB3:
+   1:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c **** /**************************************************************************/
+   2:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c **** /*                                                                        */
+   3:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c **** /*       Copyright (c) Microsoft Corporation. All rights reserved.        */
+   4:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c **** /*                                                                        */
+   5:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c **** /*       This software is licensed under the Microsoft Software License   */
+   6:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c **** /*       Terms for Microsoft Azure RTOS. Full text of the license can be  */
+   7:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c **** /*       found in the LICENSE file at https://aka.ms/AzureRTOS_EULA       */
+   8:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c **** /*       and in the root directory of this software.                      */
+   9:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c **** /*                                                                        */
+  10:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c **** /**************************************************************************/
+  11:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c **** 
+  12:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c **** 
+  13:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c **** /**************************************************************************/
+  14:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c **** /**************************************************************************/
+  15:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c **** /**                                                                       */ 
+  16:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c **** /** USBX Component                                                        */ 
+  17:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c **** /**                                                                       */
+  18:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c **** /**   Device Stack                                                        */
+  19:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c **** /**                                                                       */
+  20:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c **** /**************************************************************************/
+  21:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c **** /**************************************************************************/
+  22:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c **** 
+  23:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c **** #define UX_SOURCE_CODE
+  24:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c **** 
+  25:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c **** 
+  26:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c **** /* Include necessary system files.  */
+  27:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c **** 
+  28:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c **** #include "ux_api.h"
+ARM GAS  C:\Users\sapph\AppData\Local\Temp\ccOUXM5B.s 			page 2
+
+
+  29:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c **** #include "ux_device_stack.h"
+  30:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c **** 
+  31:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c **** 
+  32:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c **** /**************************************************************************/
+  33:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c **** /*                                                                        */
+  34:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c **** /*  FUNCTION                                               RELEASE        */
+  35:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c **** /*                                                                        */
+  36:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c **** /*    _ux_device_stack_clear_feature                      PORTABLE C      */
+  37:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c **** /*                                                           6.1.12       */
+  38:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c **** /*  AUTHOR                                                                */
+  39:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c **** /*                                                                        */
+  40:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c **** /*    Chaoqiong Xiao, Microsoft Corporation                               */
+  41:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c **** /*                                                                        */
+  42:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c **** /*  DESCRIPTION                                                           */
+  43:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c **** /*                                                                        */
+  44:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c **** /*    This function clears a specific feature (Device, Interface,         */
+  45:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c **** /*    Endpoint ....).                                                     */
+  46:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c **** /*                                                                        */
+  47:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c **** /*  INPUT                                                                 */
+  48:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c **** /*                                                                        */
+  49:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c **** /*    request_type                          Request type                  */ 
+  50:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c **** /*    request_value                         Request value                 */
+  51:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c **** /*    request_index                         Request index                 */
+  52:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c **** /*                                                                        */
+  53:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c **** /*  OUTPUT                                                                */
+  54:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c **** /*                                                                        */
+  55:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c **** /*    Completion Status                                                   */ 
+  56:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c **** /*                                                                        */
+  57:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c **** /*  CALLS                                                                 */ 
+  58:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c **** /*                                                                        */ 
+  59:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c **** /*    (ux_slave_dcd_function)               DCD dispatch function         */ 
+  60:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c **** /*                                                                        */ 
+  61:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c **** /*  CALLED BY                                                             */ 
+  62:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c **** /*                                                                        */ 
+  63:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c **** /*    Device Stack                                                        */
+  64:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c **** /*                                                                        */ 
+  65:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c **** /*  RELEASE HISTORY                                                       */ 
+  66:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c **** /*                                                                        */ 
+  67:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c **** /*    DATE              NAME                      DESCRIPTION             */ 
+  68:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c **** /*                                                                        */ 
+  69:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c **** /*  05-19-2020     Chaoqiong Xiao           Initial Version 6.0           */
+  70:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c **** /*  09-30-2020     Chaoqiong Xiao           Modified comment(s),          */
+  71:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c **** /*                                            optimized based on compile  */
+  72:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c **** /*                                            definitions,                */
+  73:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c **** /*                                            resulting in version 6.1    */
+  74:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c **** /*  07-29-2022     Chaoqiong Xiao           Modified comment(s),          */
+  75:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c **** /*                                            fixed parameter/variable    */
+  76:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c **** /*                                            names conflict C++ keyword, */
+  77:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c **** /*                                            resulting in version 6.1.12 */
+  78:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c **** /*                                                                        */
+  79:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c **** /**************************************************************************/
+  80:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c **** UINT  _ux_device_stack_clear_feature(ULONG request_type, ULONG request_value, ULONG request_index)
+  81:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c **** {
+  31              		.loc 1 81 1 view -0
+  32              		.cfi_startproc
+  33              		@ args = 0, pretend = 0, frame = 0
+  34              		@ frame_needed = 0, uses_anonymous_args = 0
+ARM GAS  C:\Users\sapph\AppData\Local\Temp\ccOUXM5B.s 			page 3
+
+
+  35              		.loc 1 81 1 is_stmt 0 view .LVU1
+  36 0000 38B5     		push	{r3, r4, r5, lr}
+  37              		.cfi_def_cfa_offset 16
+  38              		.cfi_offset 3, -16
+  39              		.cfi_offset 4, -12
+  40              		.cfi_offset 5, -8
+  41              		.cfi_offset 14, -4
+  82:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c **** 
+  83:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c **** UX_SLAVE_DCD            *dcd;
+  42              		.loc 1 83 1 is_stmt 1 view .LVU2
+  84:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c **** UX_SLAVE_DEVICE         *device;
+  43              		.loc 1 84 1 view .LVU3
+  85:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c **** UX_SLAVE_INTERFACE      *interface_ptr;
+  44              		.loc 1 85 1 view .LVU4
+  86:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c **** UX_SLAVE_ENDPOINT       *endpoint;
+  45              		.loc 1 86 1 view .LVU5
+  87:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c **** UX_SLAVE_ENDPOINT       *endpoint_target;
+  46              		.loc 1 87 1 view .LVU6
+  88:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c ****                                 
+  89:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c ****     UX_PARAMETER_NOT_USED(request_value);
+  47              		.loc 1 89 5 view .LVU7
+  90:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c **** 
+  91:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c ****     /* If trace is enabled, insert this event into the trace buffer.  */
+  92:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c ****     UX_TRACE_IN_LINE_INSERT(UX_TRACE_DEVICE_STACK_CLEAR_FEATURE, request_type, request_value, reque
+  93:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c **** 
+  94:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c ****     /* Get the pointer to the DCD.  */
+  95:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c ****     dcd =  &_ux_system_slave -> ux_system_slave_dcd;
+  48              		.loc 1 95 5 view .LVU8
+  49              		.loc 1 95 30 is_stmt 0 view .LVU9
+  50 0002 184B     		ldr	r3, .L15
+  51 0004 1D68     		ldr	r5, [r3]
+  52              	.LVL1:
+  96:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c **** 
+  97:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c ****     /* Get the pointer to the device.  */
+  98:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c ****     device =  &_ux_system_slave -> ux_system_slave_device;
+  53              		.loc 1 98 5 is_stmt 1 view .LVU10
+  99:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c **** 
+ 100:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c ****     /* Get the control endpoint for the device.  */
+ 101:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c ****     endpoint =  &device -> ux_slave_device_control_endpoint;
+  54              		.loc 1 101 5 view .LVU11
+ 102:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c **** 
+ 103:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c ****     /* The request can be for either the device or the endpoint.  */
+ 104:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c ****     switch (request_type & UX_REQUEST_TARGET)
+  55              		.loc 1 104 5 view .LVU12
+  56 0006 10F00300 		ands	r0, r0, #3
+  57              	.LVL2:
+  58              		.loc 1 104 5 is_stmt 0 view .LVU13
+  59 000a 0AD0     		beq	.L2
+  60 000c 9446     		mov	ip, r2
+  61 000e 05F16002 		add	r2, r5, #96
+  62              	.LVL3:
+  63              		.loc 1 104 5 view .LVU14
+  64 0012 0228     		cmp	r0, #2
+  65 0014 0ED0     		beq	.L3
+  66              	.LVL4:
+  67              	.L4:
+ 105:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c ****     {
+ARM GAS  C:\Users\sapph\AppData\Local\Temp\ccOUXM5B.s 			page 4
+
+
+ 106:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c ****     
+ 107:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c ****     case UX_REQUEST_TARGET_DEVICE:
+ 108:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c **** 
+ 109:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c ****         /* Check if we have a DEVICE_REMOTE_WAKEUP Feature.  */
+ 110:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c ****         if (request_value == UX_REQUEST_FEATURE_DEVICE_REMOTE_WAKEUP)
+ 111:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c ****         {
+ 112:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c **** 
+ 113:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c ****             /* Check if we have the capability. */
+ 114:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c ****             if (_ux_system_slave -> ux_system_slave_remote_wakeup_capability)
+ 115:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c ****             {
+ 116:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c **** 
+ 117:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c ****                 /* Disable the feature. */
+ 118:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c ****                 _ux_system_slave -> ux_system_slave_remote_wakeup_enabled = UX_FALSE;
+ 119:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c ****             }
+ 120:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c **** 
+ 121:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c ****             else
+ 122:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c **** 
+ 123:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c ****                 /* Protocol error. */
+ 124:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c ****                 return (UX_FUNCTION_NOT_SUPPORTED);
+ 125:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c ****         }
+ 126:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c **** 
+ 127:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c ****         break;
+ 128:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c ****             
+ 129:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c ****     case UX_REQUEST_TARGET_ENDPOINT:
+ 130:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c **** 
+ 131:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c ****         /* The only clear feature for endpoint is ENDPOINT_STALL. This clears
+ 132:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c ****            the endpoint of the stall situation and resets its data toggle. 
+ 133:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c ****            We need to find the endpoint through the interface(s). */
+ 134:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c ****         interface_ptr =  device -> ux_slave_device_first_interface;
+ 135:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c **** 
+ 136:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c **** #if !defined(UX_DEVICE_INITIALIZE_FRAMEWORK_SCAN_DISABLE) || UX_MAX_DEVICE_INTERFACES > 1
+ 137:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c ****         while (interface_ptr != UX_NULL)
+ 138:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c ****         {
+ 139:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c **** #endif
+ 140:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c **** 
+ 141:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c ****             /* Get the first endpoint for this interface.  */
+ 142:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c ****             endpoint_target =  interface_ptr -> ux_slave_interface_first_endpoint;
+ 143:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c ****                 
+ 144:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c ****             /* Parse all the endpoints.  */
+ 145:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c ****             while (endpoint_target != UX_NULL)
+ 146:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c ****             {
+ 147:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c **** 
+ 148:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c ****                 /* Check the endpoint index.  */
+ 149:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c ****                 if (endpoint_target -> ux_slave_endpoint_descriptor.bEndpointAddress == request_ind
+ 150:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c ****                 {
+ 151:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c **** 
+ 152:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c ****                     /* Reset the endpoint.  */
+ 153:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c ****                     dcd -> ux_slave_dcd_function(dcd, UX_DCD_RESET_ENDPOINT, endpoint_target);
+ 154:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c ****                     
+ 155:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c ****                     /* Mark its state now.  */
+ 156:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c ****                     endpoint_target -> ux_slave_endpoint_state = UX_ENDPOINT_RESET;
+ 157:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c **** 
+ 158:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c ****                     /* Return the function status.  */
+ 159:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c ****                     return(UX_SUCCESS);
+ 160:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c ****                 }
+ 161:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c **** 
+ 162:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c ****                 /* Next endpoint.  */
+ARM GAS  C:\Users\sapph\AppData\Local\Temp\ccOUXM5B.s 			page 5
+
+
+ 163:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c ****                 endpoint_target =  endpoint_target -> ux_slave_endpoint_next_endpoint;
+ 164:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c ****             }
+ 165:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c **** 
+ 166:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c **** #if !defined(UX_DEVICE_INITIALIZE_FRAMEWORK_SCAN_DISABLE) || UX_MAX_DEVICE_INTERFACES > 1
+ 167:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c ****             /* Next interface.  */
+ 168:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c ****             interface_ptr =  interface_ptr -> ux_slave_interface_next_interface;
+ 169:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c ****         }
+ 170:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c **** #endif
+ 171:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c **** 
+ 172:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c ****         /* Intentional fallthrough and go into the default case. */
+ 173:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c ****         /* fall through */
+ 174:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c **** 
+ 175:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c ****     /* We get here when the endpoint is wrong. Should not happen though.  */
+ 176:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c ****     default:
+ 177:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c ****         
+ 178:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c ****         /* We stall the command.  */
+ 179:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c ****         dcd -> ux_slave_dcd_function(dcd, UX_DCD_STALL_ENDPOINT, endpoint);
+  68              		.loc 1 179 9 is_stmt 1 view .LVU15
+  69              		.loc 1 179 13 is_stmt 0 view .LVU16
+  70 0016 AB69     		ldr	r3, [r5, #24]
+  71              		.loc 1 179 9 view .LVU17
+  72 0018 1421     		movs	r1, #20
+  73 001a 2846     		mov	r0, r5
+  74 001c 9847     		blx	r3
+  75              	.LVL5:
+ 180:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c ****     
+ 181:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c ****         /* No more work to do here.  The command failed but the upper layer does not depend on it. 
+ 182:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c ****         return(UX_SUCCESS);            
+  76              		.loc 1 182 9 is_stmt 1 view .LVU18
+  77              		.loc 1 182 15 is_stmt 0 view .LVU19
+  78 001e 0020     		movs	r0, #0
+  79              	.L1:
+ 183:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c ****     }
+ 184:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c **** 
+ 185:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c ****     /* Return the function status.  */
+ 186:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c ****     return(UX_SUCCESS);
+ 187:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c **** }
+  80              		.loc 1 187 1 view .LVU20
+  81 0020 38BD     		pop	{r3, r4, r5, pc}
+  82              	.LVL6:
+  83              	.L2:
+ 110:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c ****         {
+  84              		.loc 1 110 9 is_stmt 1 view .LVU21
+ 110:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c ****         {
+  85              		.loc 1 110 12 is_stmt 0 view .LVU22
+  86 0022 0129     		cmp	r1, #1
+  87 0024 FCD1     		bne	.L1
+ 114:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c ****             {
+  88              		.loc 1 114 13 is_stmt 1 view .LVU23
+ 114:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c ****             {
+  89              		.loc 1 114 34 is_stmt 0 view .LVU24
+  90 0026 D5F89031 		ldr	r3, [r5, #400]
+ 114:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c ****             {
+  91              		.loc 1 114 16 view .LVU25
+  92 002a C3B1     		cbz	r3, .L11
+ 118:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c ****             }
+  93              		.loc 1 118 17 is_stmt 1 view .LVU26
+ARM GAS  C:\Users\sapph\AppData\Local\Temp\ccOUXM5B.s 			page 6
+
+
+ 118:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c ****             }
+  94              		.loc 1 118 75 is_stmt 0 view .LVU27
+  95 002c 0023     		movs	r3, #0
+  96 002e C5F89431 		str	r3, [r5, #404]
+  97 0032 F5E7     		b	.L1
+  98              	.LVL7:
+  99              	.L3:
+ 134:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c **** 
+ 100              		.loc 1 134 9 is_stmt 1 view .LVU28
+ 134:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c **** 
+ 101              		.loc 1 134 23 is_stmt 0 view .LVU29
+ 102 0034 D5F8FC10 		ldr	r1, [r5, #252]
+ 103              	.LVL8:
+ 137:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c ****         {
+ 104              		.loc 1 137 9 is_stmt 1 view .LVU30
+ 105              	.L6:
+ 137:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c ****         {
+ 106              		.loc 1 137 30 view .LVU31
+ 107 0038 0029     		cmp	r1, #0
+ 108 003a ECD0     		beq	.L4
+ 142:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c ****                 
+ 109              		.loc 1 142 13 view .LVU32
+ 142:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c ****                 
+ 110              		.loc 1 142 29 is_stmt 0 view .LVU33
+ 111 003c 4C6B     		ldr	r4, [r1, #52]
+ 112              	.LVL9:
+ 145:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c ****             {
+ 113              		.loc 1 145 13 is_stmt 1 view .LVU34
+ 114              	.L7:
+ 145:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c ****             {
+ 115              		.loc 1 145 36 view .LVU35
+ 116 003e 64B1     		cbz	r4, .L13
+ 149:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c ****                 {
+ 117              		.loc 1 149 17 view .LVU36
+ 149:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c ****                 {
+ 118              		.loc 1 149 68 is_stmt 0 view .LVU37
+ 119 0040 6369     		ldr	r3, [r4, #20]
+ 149:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c ****                 {
+ 120              		.loc 1 149 20 view .LVU38
+ 121 0042 6345     		cmp	r3, ip
+ 122 0044 01D0     		beq	.L14
+ 163:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c ****             }
+ 123              		.loc 1 163 17 is_stmt 1 view .LVU39
+ 163:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c ****             }
+ 124              		.loc 1 163 33 is_stmt 0 view .LVU40
+ 125 0046 646A     		ldr	r4, [r4, #36]
+ 126              	.LVL10:
+ 163:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c ****             }
+ 127              		.loc 1 163 33 view .LVU41
+ 128 0048 F9E7     		b	.L7
+ 129              	.L14:
+ 153:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c ****                     
+ 130              		.loc 1 153 21 is_stmt 1 view .LVU42
+ 153:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c ****                     
+ 131              		.loc 1 153 25 is_stmt 0 view .LVU43
+ 132 004a AB69     		ldr	r3, [r5, #24]
+ 153:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c ****                     
+ARM GAS  C:\Users\sapph\AppData\Local\Temp\ccOUXM5B.s 			page 7
+
+
+ 133              		.loc 1 153 21 view .LVU44
+ 134 004c 2246     		mov	r2, r4
+ 135              	.LVL11:
+ 153:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c ****                     
+ 136              		.loc 1 153 21 view .LVU45
+ 137 004e 1021     		movs	r1, #16
+ 138              	.LVL12:
+ 153:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c ****                     
+ 139              		.loc 1 153 21 view .LVU46
+ 140 0050 2846     		mov	r0, r5
+ 141 0052 9847     		blx	r3
+ 142              	.LVL13:
+ 156:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c **** 
+ 143              		.loc 1 156 21 is_stmt 1 view .LVU47
+ 156:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c **** 
+ 144              		.loc 1 156 64 is_stmt 0 view .LVU48
+ 145 0054 0020     		movs	r0, #0
+ 146 0056 6060     		str	r0, [r4, #4]
+ 159:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c ****                 }
+ 147              		.loc 1 159 21 is_stmt 1 view .LVU49
+ 159:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c ****                 }
+ 148              		.loc 1 159 27 is_stmt 0 view .LVU50
+ 149 0058 E2E7     		b	.L1
+ 150              	.LVL14:
+ 151              	.L13:
+ 168:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c ****         }
+ 152              		.loc 1 168 13 is_stmt 1 view .LVU51
+ 168:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c ****         }
+ 153              		.loc 1 168 27 is_stmt 0 view .LVU52
+ 154 005a 096B     		ldr	r1, [r1, #48]
+ 155              	.LVL15:
+ 168:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c ****         }
+ 156              		.loc 1 168 27 view .LVU53
+ 157 005c ECE7     		b	.L6
+ 158              	.LVL16:
+ 159              	.L11:
+ 124:Middlewares/ST/usbx/common/core/src/ux_device_stack_clear_feature.c ****         }
+ 160              		.loc 1 124 24 view .LVU54
+ 161 005e 5420     		movs	r0, #84
+ 162 0060 DEE7     		b	.L1
+ 163              	.L16:
+ 164 0062 00BF     		.align	2
+ 165              	.L15:
+ 166 0064 00000000 		.word	_ux_system_slave
+ 167              		.cfi_endproc
+ 168              	.LFE3:
+ 170              		.text
+ 171              	.Letext0:
+ 172              		.file 2 "Middlewares/ST/usbx/ports/generic/inc/ux_port.h"
+ 173              		.file 3 "Middlewares/ST/usbx/common/core/inc/ux_api.h"
+ 174              		.file 4 "Middlewares/ST/usbx/common/core/inc/ux_system.h"
+ARM GAS  C:\Users\sapph\AppData\Local\Temp\ccOUXM5B.s 			page 8
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 ux_device_stack_clear_feature.c
+C:\Users\sapph\AppData\Local\Temp\ccOUXM5B.s:22     .text._ux_device_stack_clear_feature:00000000 $t
+C:\Users\sapph\AppData\Local\Temp\ccOUXM5B.s:28     .text._ux_device_stack_clear_feature:00000000 _ux_device_stack_clear_feature
+C:\Users\sapph\AppData\Local\Temp\ccOUXM5B.s:166    .text._ux_device_stack_clear_feature:00000064 $d
+
+UNDEFINED SYMBOLS
+_ux_system_slave

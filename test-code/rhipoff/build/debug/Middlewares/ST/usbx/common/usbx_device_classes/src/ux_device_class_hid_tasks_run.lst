@@ -1,0 +1,541 @@
+ARM GAS  C:\Users\sapph\AppData\Local\Temp\cchKL84O.s 			page 1
+
+
+   1              		.cpu cortex-m33
+   2              		.arch armv8-m.main
+   3              		.fpu fpv4-sp-d16
+   4              		.arch_extension dsp
+   5              		.eabi_attribute 27, 1
+   6              		.eabi_attribute 28, 1
+   7              		.eabi_attribute 20, 1
+   8              		.eabi_attribute 21, 1
+   9              		.eabi_attribute 23, 3
+  10              		.eabi_attribute 24, 1
+  11              		.eabi_attribute 25, 1
+  12              		.eabi_attribute 26, 1
+  13              		.eabi_attribute 30, 1
+  14              		.eabi_attribute 34, 1
+  15              		.eabi_attribute 18, 4
+  16              		.file	"ux_device_class_hid_tasks_run.c"
+  17              		.text
+  18              	.Ltext0:
+  19              		.cfi_sections	.debug_frame
+  20              		.file 1 "Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c"
+  21              		.section	.text._ux_device_class_hid_tasks_run,"ax",%progbits
+  22              		.align	1
+  23              		.global	_ux_device_class_hid_tasks_run
+  24              		.syntax unified
+  25              		.thumb
+  26              		.thumb_func
+  28              	_ux_device_class_hid_tasks_run:
+  29              	.LVL0:
+  30              	.LFB3:
+   1:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c **** /**************************************************************************/
+   2:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c **** /*                                                                        */
+   3:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c **** /*       Copyright (c) Microsoft Corporation. All rights reserved.        */
+   4:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c **** /*                                                                        */
+   5:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c **** /*       This software is licensed under the Microsoft Software License   */
+   6:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c **** /*       Terms for Microsoft Azure RTOS. Full text of the license can be  */
+   7:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c **** /*       found in the LICENSE file at https://aka.ms/AzureRTOS_EULA       */
+   8:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c **** /*       and in the root directory of this software.                      */
+   9:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c **** /*                                                                        */
+  10:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c **** /**************************************************************************/
+  11:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c **** 
+  12:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c **** /**************************************************************************/
+  13:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c **** /**************************************************************************/
+  14:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c **** /**                                                                       */
+  15:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c **** /** USBX Component                                                        */
+  16:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c **** /**                                                                       */
+  17:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c **** /**   Device HID Class                                                    */
+  18:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c **** /**                                                                       */
+  19:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c **** /**************************************************************************/
+  20:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c **** /**************************************************************************/
+  21:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c **** 
+  22:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c **** #define UX_SOURCE_CODE
+  23:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c **** 
+  24:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c **** 
+  25:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c **** /* Include necessary system files.  */
+  26:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c **** 
+  27:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c **** #include "ux_api.h"
+  28:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c **** #include "ux_device_class_hid.h"
+ARM GAS  C:\Users\sapph\AppData\Local\Temp\cchKL84O.s 			page 2
+
+
+  29:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c **** #include "ux_device_stack.h"
+  30:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c **** 
+  31:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c **** 
+  32:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c **** #if defined(UX_DEVICE_STANDALONE)
+  33:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c **** /**************************************************************************/
+  34:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c **** /*                                                                        */
+  35:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c **** /*  FUNCTION                                               RELEASE        */
+  36:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c **** /*                                                                        */
+  37:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c **** /*    _ux_device_class_hid_tasks_run                      PORTABLE C      */
+  38:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c **** /*                                                           6.1.10       */
+  39:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c **** /*  AUTHOR                                                                */
+  40:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c **** /*                                                                        */
+  41:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c **** /*    Chaoqiong Xiao, Microsoft Corporation                               */
+  42:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c **** /*                                                                        */
+  43:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c **** /*  DESCRIPTION                                                           */
+  44:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c **** /*                                                                        */
+  45:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c **** /*    This function is the background task of the hid.                    */
+  46:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c **** /*                                                                        */
+  47:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c **** /*    It's for standalone mode.                                           */
+  48:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c **** /*                                                                        */
+  49:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c **** /*  INPUT                                                                 */
+  50:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c **** /*                                                                        */
+  51:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c **** /*    hid_class                                 Address of hid class      */
+  52:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c **** /*                                                container               */
+  53:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c **** /*                                                                        */
+  54:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c **** /*  OUTPUT                                                                */
+  55:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c **** /*                                                                        */
+  56:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c **** /*    State machine status                                                */
+  57:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c **** /*    UX_STATE_EXIT                         Device not configured         */
+  58:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c **** /*    UX_STATE_IDLE                         No interrupt transfer running */
+  59:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c **** /*    UX_STATE_WAIT                         Interrupt IN transfer running */
+  60:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c **** /*                                                                        */
+  61:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c **** /*  CALLS                                                                 */
+  62:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c **** /*                                                                        */
+  63:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c **** /*    _ux_device_class_hid_event_get        Get HID event                 */
+  64:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c **** /*    _ux_device_stack_transfer_run         Run transfer state machine    */
+  65:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c **** /*    _ux_utility_memory_copy               Copy memory                   */
+  66:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c **** /*                                                                        */
+  67:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c **** /*  CALLED BY                                                             */
+  68:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c **** /*                                                                        */
+  69:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c **** /*    USBX Device Stack                                                   */
+  70:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c **** /*                                                                        */
+  71:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c **** /*  RELEASE HISTORY                                                       */
+  72:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c **** /*                                                                        */
+  73:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c **** /*    DATE              NAME                      DESCRIPTION             */
+  74:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c **** /*                                                                        */
+  75:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c **** /*  01-31-2022     Chaoqiong Xiao           Initial Version 6.1.10        */
+  76:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c **** /*                                                                        */
+  77:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c **** /**************************************************************************/
+  78:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c **** UINT _ux_device_class_hid_tasks_run(VOID *instance)
+  79:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c **** {
+  31              		.loc 1 79 1 view -0
+  32              		.cfi_startproc
+  33              		@ args = 0, pretend = 0, frame = 0
+  34              		@ frame_needed = 0, uses_anonymous_args = 0
+  35              		.loc 1 79 1 is_stmt 0 view .LVU1
+  36 0000 38B5     		push	{r3, r4, r5, lr}
+ARM GAS  C:\Users\sapph\AppData\Local\Temp\cchKL84O.s 			page 3
+
+
+  37              		.cfi_def_cfa_offset 16
+  38              		.cfi_offset 3, -16
+  39              		.cfi_offset 4, -12
+  40              		.cfi_offset 5, -8
+  41              		.cfi_offset 14, -4
+  42 0002 0446     		mov	r4, r0
+  80:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c **** 
+  81:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c **** UX_SLAVE_CLASS_HID          *hid;
+  43              		.loc 1 81 1 is_stmt 1 view .LVU2
+  82:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c **** UX_SLAVE_DEVICE             *device;
+  44              		.loc 1 82 1 view .LVU3
+  83:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c **** UX_SLAVE_CLASS_HID_EVENT    *hid_event;
+  45              		.loc 1 83 1 view .LVU4
+  84:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c **** UX_SLAVE_TRANSFER           *trans;
+  46              		.loc 1 84 1 view .LVU5
+  85:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c **** ULONG                       tick, elapsed;
+  47              		.loc 1 85 1 view .LVU6
+  86:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c **** UINT                        status;
+  48              		.loc 1 86 1 view .LVU7
+  87:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c **** 
+  88:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c **** 
+  89:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c ****     /* Get HID instance.  */
+  90:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c ****     hid = (UX_SLAVE_CLASS_HID *) instance;
+  49              		.loc 1 90 5 view .LVU8
+  50              	.LVL1:
+  91:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c **** 
+  92:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c ****     /* Get the pointer to the device.  */
+  93:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c ****     device =  &_ux_system_slave -> ux_system_slave_device;
+  51              		.loc 1 93 5 view .LVU9
+  52              		.loc 1 93 33 is_stmt 0 view .LVU10
+  53 0004 2B4B     		ldr	r3, .L20
+  54 0006 1B68     		ldr	r3, [r3]
+  55              	.LVL2:
+  94:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c **** 
+  95:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c ****     /* Check if the device is configured.  */
+  96:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c ****     if (device -> ux_slave_device_state != UX_DEVICE_CONFIGURED)
+  56              		.loc 1 96 5 is_stmt 1 view .LVU11
+  57              		.loc 1 96 16 is_stmt 0 view .LVU12
+  58 0008 5B6A     		ldr	r3, [r3, #36]
+  59              	.LVL3:
+  60              		.loc 1 96 8 view .LVU13
+  61 000a 032B     		cmp	r3, #3
+  62 000c 02D0     		beq	.L2
+  97:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c ****     {
+  98:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c ****         hid -> ux_device_class_hid_event_state = UX_STATE_EXIT;
+  63              		.loc 1 98 9 is_stmt 1 view .LVU14
+  64              		.loc 1 98 48 is_stmt 0 view .LVU15
+  65 000e 0120     		movs	r0, #1
+  66              	.LVL4:
+  67              		.loc 1 98 48 view .LVU16
+  68 0010 A062     		str	r0, [r4, #40]
+  99:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c ****         return(UX_STATE_EXIT);
+  69              		.loc 1 99 9 is_stmt 1 view .LVU17
+  70              	.LVL5:
+  71              	.L1:
+ 100:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c ****     }
+ 101:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c **** 
+ARM GAS  C:\Users\sapph\AppData\Local\Temp\cchKL84O.s 			page 4
+
+
+ 102:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c **** #if defined(UX_DEVICE_CLASS_HID_INTERRUPT_OUT_SUPPORT)
+ 103:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c ****     if (hid -> ux_device_class_hid_receiver)
+ 104:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c ****         hid -> ux_device_class_hid_receiver -> ux_device_class_hid_receiver_tasks_run(hid);
+ 105:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c **** #endif
+ 106:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c **** 
+ 107:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c ****     /* Run HID state machine.  */
+ 108:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c ****     switch(hid -> ux_device_class_hid_event_state)
+ 109:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c ****     {
+ 110:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c ****     case UX_STATE_EXIT:
+ 111:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c **** 
+ 112:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c ****         /* There is nothing to do in this state.  */
+ 113:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c ****         return (UX_STATE_EXIT);
+ 114:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c **** 
+ 115:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c ****     case UX_STATE_RESET:
+ 116:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c **** 
+ 117:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c ****         /* Start timeout waiting.  */
+ 118:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c ****         hid -> ux_device_class_hid_event_wait_start = _ux_utility_time_get();
+ 119:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c ****         hid -> ux_device_class_hid_event_state = UX_STATE_IDLE;
+ 120:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c **** 
+ 121:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c ****         /* Fall through.  */
+ 122:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c ****     case UX_STATE_IDLE:
+ 123:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c **** 
+ 124:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c ****         /* Check if there is event ready.  */
+ 125:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c ****         hid_event = &hid -> ux_device_class_hid_event;
+ 126:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c ****         status = _ux_device_class_hid_event_get(hid, hid_event);
+ 127:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c **** 
+ 128:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c ****         /* If there is no event, check idle rate.  */
+ 129:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c ****         if (status != UX_SUCCESS)
+ 130:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c ****         {
+ 131:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c **** 
+ 132:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c ****             /* Check idle rate setting.  */
+ 133:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c ****             if (hid -> ux_device_class_hid_event_wait_timeout == UX_WAIT_FOREVER)
+ 134:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c ****             {
+ 135:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c **** 
+ 136:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c ****                 /* There is no background idle report, keep waiting.  */
+ 137:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c ****                 return(UX_STATE_IDLE);
+ 138:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c ****             }
+ 139:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c **** 
+ 140:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c ****             /* Check wait timeout.  */
+ 141:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c ****             tick = _ux_utility_time_get();
+ 142:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c ****             elapsed = _ux_utility_time_elapsed(hid -> ux_device_class_hid_event_wait_start, tick);
+ 143:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c ****             if (elapsed < hid -> ux_device_class_hid_event_wait_timeout)
+ 144:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c ****             {
+ 145:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c **** 
+ 146:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c ****                 /* Keep waiting.  */
+ 147:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c ****                 return(UX_STATE_IDLE);
+ 148:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c ****             }
+ 149:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c **** 
+ 150:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c ****             /* Send the last event in buffer.  */
+ 151:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c ****         }
+ 152:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c **** 
+ 153:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c ****         /* Prepare the request to send event.  */
+ 154:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c ****         trans = &hid -> ux_device_class_hid_interrupt_endpoint ->
+ 155:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c ****                                             ux_slave_endpoint_transfer_request;
+ 156:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c ****         _ux_utility_memory_copy(trans -> ux_slave_transfer_request_data_pointer,
+ 157:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c ****                                 hid_event -> ux_device_class_hid_event_buffer,
+ 158:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c ****                                 hid_event -> ux_device_class_hid_event_length); /* Use case of memc
+ARM GAS  C:\Users\sapph\AppData\Local\Temp\cchKL84O.s 			page 5
+
+
+ 159:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c ****         trans -> ux_slave_transfer_request_requested_length =
+ 160:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c ****                                 hid_event -> ux_device_class_hid_event_length;
+ 161:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c ****         UX_SLAVE_TRANSFER_STATE_RESET(trans);
+ 162:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c ****         hid -> ux_device_class_hid_event_state = UX_STATE_WAIT;
+ 163:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c **** 
+ 164:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c ****         /* Fall through.  */
+ 165:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c ****     case UX_STATE_WAIT:
+ 166:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c **** 
+ 167:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c ****         /* Run transfer state machine.  */
+ 168:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c ****         trans = &hid -> ux_device_class_hid_interrupt_endpoint ->
+ 169:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c ****                                             ux_slave_endpoint_transfer_request;
+ 170:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c ****         hid_event = &hid -> ux_device_class_hid_event;
+ 171:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c ****         status = _ux_device_stack_transfer_run(trans,
+ 172:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c ****                                 hid_event -> ux_device_class_hid_event_length,
+ 173:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c ****                                 hid_event -> ux_device_class_hid_event_length);
+ 174:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c **** 
+ 175:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c ****         /* Any error or success case.  */
+ 176:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c ****         if (status <= UX_STATE_NEXT)
+ 177:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c ****         {
+ 178:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c **** 
+ 179:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c ****             /* Next round.  */
+ 180:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c ****             hid -> ux_device_class_hid_event_state = UX_STATE_RESET;
+ 181:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c ****             return(UX_STATE_IDLE);
+ 182:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c ****         }
+ 183:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c **** 
+ 184:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c ****         /* Wait.  */
+ 185:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c ****         return(UX_STATE_WAIT);
+ 186:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c **** 
+ 187:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c ****     default:
+ 188:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c **** 
+ 189:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c ****         /* Just go back to normal state.  */
+ 190:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c ****         hid -> ux_device_class_hid_event_state = UX_STATE_RESET;
+ 191:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c ****         return(UX_STATE_IDLE);
+ 192:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c ****     }
+ 193:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c **** }
+  72              		.loc 1 193 1 is_stmt 0 view .LVU18
+  73 0012 38BD     		pop	{r3, r4, r5, pc}
+  74              	.LVL6:
+  75              	.L2:
+ 108:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c ****     {
+  76              		.loc 1 108 5 is_stmt 1 view .LVU19
+ 108:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c ****     {
+  77              		.loc 1 108 16 is_stmt 0 view .LVU20
+  78 0014 806A     		ldr	r0, [r0, #40]
+  79              	.LVL7:
+ 108:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c ****     {
+  80              		.loc 1 108 5 view .LVU21
+  81 0016 0528     		cmp	r0, #5
+  82 0018 43D8     		bhi	.L4
+  83 001a 01A3     		adr	r3, .L6
+  84 001c 53F820F0 		ldr	pc, [r3, r0, lsl #2]
+  85              		.p2align 2
+  86              	.L6:
+  87 0020 39000000 		.word	.L8+1
+  88 0024 13000000 		.word	.L1+1
+  89 0028 43000000 		.word	.L7+1
+  90 002c A3000000 		.word	.L4+1
+ARM GAS  C:\Users\sapph\AppData\Local\Temp\cchKL84O.s 			page 6
+
+
+  91 0030 A3000000 		.word	.L4+1
+  92 0034 83000000 		.word	.L5+1
+  93              		.p2align 1
+  94              	.L8:
+ 118:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c ****         hid -> ux_device_class_hid_event_state = UX_STATE_IDLE;
+  95              		.loc 1 118 9 is_stmt 1 view .LVU22
+ 118:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c ****         hid -> ux_device_class_hid_event_state = UX_STATE_IDLE;
+  96              		.loc 1 118 55 is_stmt 0 view .LVU23
+  97 0038 FFF7FEFF 		bl	_ux_utility_time_get
+  98              	.LVL8:
+ 118:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c ****         hid -> ux_device_class_hid_event_state = UX_STATE_IDLE;
+  99              		.loc 1 118 53 discriminator 1 view .LVU24
+ 100 003c E062     		str	r0, [r4, #44]
+ 119:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c **** 
+ 101              		.loc 1 119 9 is_stmt 1 view .LVU25
+ 119:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c **** 
+ 102              		.loc 1 119 48 is_stmt 0 view .LVU26
+ 103 003e 0223     		movs	r3, #2
+ 104 0040 A362     		str	r3, [r4, #40]
+ 105              	.L7:
+ 125:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c ****         status = _ux_device_class_hid_event_get(hid, hid_event);
+ 106              		.loc 1 125 9 is_stmt 1 view .LVU27
+ 107              	.LVL9:
+ 126:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c **** 
+ 108              		.loc 1 126 9 view .LVU28
+ 126:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c **** 
+ 109              		.loc 1 126 18 is_stmt 0 view .LVU29
+ 110 0042 04F13001 		add	r1, r4, #48
+ 111              	.LVL10:
+ 126:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c **** 
+ 112              		.loc 1 126 18 view .LVU30
+ 113 0046 2046     		mov	r0, r4
+ 114 0048 FFF7FEFF 		bl	_ux_device_class_hid_event_get
+ 115              	.LVL11:
+ 129:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c ****         {
+ 116              		.loc 1 129 9 is_stmt 1 view .LVU31
+ 129:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c ****         {
+ 117              		.loc 1 129 12 is_stmt 0 view .LVU32
+ 118 004c 60B1     		cbz	r0, .L9
+ 133:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c ****             {
+ 119              		.loc 1 133 13 is_stmt 1 view .LVU33
+ 133:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c ****             {
+ 120              		.loc 1 133 21 is_stmt 0 view .LVU34
+ 121 004e 236E     		ldr	r3, [r4, #96]
+ 133:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c ****             {
+ 122              		.loc 1 133 16 view .LVU35
+ 123 0050 B3F1FF3F 		cmp	r3, #-1
+ 124 0054 29D0     		beq	.L12
+ 141:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c ****             elapsed = _ux_utility_time_elapsed(hid -> ux_device_class_hid_event_wait_start, tick);
+ 125              		.loc 1 141 13 is_stmt 1 view .LVU36
+ 141:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c ****             elapsed = _ux_utility_time_elapsed(hid -> ux_device_class_hid_event_wait_start, tick);
+ 126              		.loc 1 141 20 is_stmt 0 view .LVU37
+ 127 0056 FFF7FEFF 		bl	_ux_utility_time_get
+ 128              	.LVL12:
+ 142:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c ****             if (elapsed < hid -> ux_device_class_hid_event_wait_timeout)
+ 129              		.loc 1 142 13 is_stmt 1 view .LVU38
+ 142:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c ****             if (elapsed < hid -> ux_device_class_hid_event_wait_timeout)
+ARM GAS  C:\Users\sapph\AppData\Local\Temp\cchKL84O.s 			page 7
+
+
+ 130              		.loc 1 142 23 is_stmt 0 view .LVU39
+ 131 005a E36A     		ldr	r3, [r4, #44]
+ 132 005c 8342     		cmp	r3, r0
+ 133 005e 1AD8     		bhi	.L10
+ 142:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c ****             if (elapsed < hid -> ux_device_class_hid_event_wait_timeout)
+ 134              		.loc 1 142 23 discriminator 1 view .LVU40
+ 135 0060 C31A     		subs	r3, r0, r3
+ 136              	.L11:
+ 137              	.LVL13:
+ 143:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c ****             {
+ 138              		.loc 1 143 13 is_stmt 1 view .LVU41
+ 143:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c ****             {
+ 139              		.loc 1 143 31 is_stmt 0 view .LVU42
+ 140 0062 226E     		ldr	r2, [r4, #96]
+ 143:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c ****             {
+ 141              		.loc 1 143 16 view .LVU43
+ 142 0064 9A42     		cmp	r2, r3
+ 143 0066 22D8     		bhi	.L13
+ 144              	.LVL14:
+ 145              	.L9:
+ 154:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c ****                                             ux_slave_endpoint_transfer_request;
+ 146              		.loc 1 154 9 is_stmt 1 view .LVU44
+ 154:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c ****                                             ux_slave_endpoint_transfer_request;
+ 147              		.loc 1 154 22 is_stmt 0 view .LVU45
+ 148 0068 6568     		ldr	r5, [r4, #4]
+ 149              	.LVL15:
+ 156:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c ****                                 hid_event -> ux_device_class_hid_event_buffer,
+ 150              		.loc 1 156 9 is_stmt 1 view .LVU46
+ 151 006a A26D     		ldr	r2, [r4, #88]
+ 152 006c 04F13801 		add	r1, r4, #56
+ 153 0070 E86B     		ldr	r0, [r5, #60]
+ 154 0072 FFF7FEFF 		bl	_ux_utility_memory_copy
+ 155              	.LVL16:
+ 159:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c ****                                 hid_event -> ux_device_class_hid_event_length;
+ 156              		.loc 1 159 9 view .LVU47
+ 160:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c ****         UX_SLAVE_TRANSFER_STATE_RESET(trans);
+ 157              		.loc 1 160 43 is_stmt 0 view .LVU48
+ 158 0076 A36D     		ldr	r3, [r4, #88]
+ 159:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c ****                                 hid_event -> ux_device_class_hid_event_length;
+ 159              		.loc 1 159 61 view .LVU49
+ 160 0078 6B64     		str	r3, [r5, #68]
+ 161:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c ****         hid -> ux_device_class_hid_event_state = UX_STATE_WAIT;
+ 161              		.loc 1 161 9 is_stmt 1 view .LVU50
+ 162 007a 0023     		movs	r3, #0
+ 163 007c 2B66     		str	r3, [r5, #96]
+ 162:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c **** 
+ 164              		.loc 1 162 9 view .LVU51
+ 162:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c **** 
+ 165              		.loc 1 162 48 is_stmt 0 view .LVU52
+ 166 007e 0523     		movs	r3, #5
+ 167 0080 A362     		str	r3, [r4, #40]
+ 168              	.LVL17:
+ 169              	.L5:
+ 168:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c ****                                             ux_slave_endpoint_transfer_request;
+ 170              		.loc 1 168 9 is_stmt 1 view .LVU53
+ 168:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c ****                                             ux_slave_endpoint_transfer_request;
+ 171              		.loc 1 168 22 is_stmt 0 view .LVU54
+ARM GAS  C:\Users\sapph\AppData\Local\Temp\cchKL84O.s 			page 8
+
+
+ 172 0082 6068     		ldr	r0, [r4, #4]
+ 173              	.LVL18:
+ 170:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c ****         status = _ux_device_stack_transfer_run(trans,
+ 174              		.loc 1 170 9 is_stmt 1 view .LVU55
+ 171:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c ****                                 hid_event -> ux_device_class_hid_event_length,
+ 175              		.loc 1 171 9 view .LVU56
+ 171:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c ****                                 hid_event -> ux_device_class_hid_event_length,
+ 176              		.loc 1 171 18 is_stmt 0 view .LVU57
+ 177 0084 A16D     		ldr	r1, [r4, #88]
+ 178 0086 0A46     		mov	r2, r1
+ 179 0088 3030     		adds	r0, r0, #48
+ 180              	.LVL19:
+ 171:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c ****                                 hid_event -> ux_device_class_hid_event_length,
+ 181              		.loc 1 171 18 view .LVU58
+ 182 008a FFF7FEFF 		bl	_ux_device_stack_transfer_run
+ 183              	.LVL20:
+ 176:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c ****         {
+ 184              		.loc 1 176 9 is_stmt 1 view .LVU59
+ 176:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c ****         {
+ 185              		.loc 1 176 12 is_stmt 0 view .LVU60
+ 186 008e 0428     		cmp	r0, #4
+ 187 0090 03D9     		bls	.L19
+ 185:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c **** 
+ 188              		.loc 1 185 15 view .LVU61
+ 189 0092 0520     		movs	r0, #5
+ 190              	.LVL21:
+ 185:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c **** 
+ 191              		.loc 1 185 15 view .LVU62
+ 192 0094 BDE7     		b	.L1
+ 193              	.LVL22:
+ 194              	.L10:
+ 142:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c ****             if (elapsed < hid -> ux_device_class_hid_event_wait_timeout)
+ 195              		.loc 1 142 23 discriminator 2 view .LVU63
+ 196 0096 1B1A     		subs	r3, r3, r0
+ 197 0098 E3E7     		b	.L11
+ 198              	.LVL23:
+ 199              	.L19:
+ 180:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c ****             return(UX_STATE_IDLE);
+ 200              		.loc 1 180 13 is_stmt 1 view .LVU64
+ 180:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c ****             return(UX_STATE_IDLE);
+ 201              		.loc 1 180 52 is_stmt 0 view .LVU65
+ 202 009a 0023     		movs	r3, #0
+ 203 009c A362     		str	r3, [r4, #40]
+ 181:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c ****         }
+ 204              		.loc 1 181 13 is_stmt 1 view .LVU66
+ 181:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c ****         }
+ 205              		.loc 1 181 19 is_stmt 0 view .LVU67
+ 206 009e 0220     		movs	r0, #2
+ 207              	.LVL24:
+ 181:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c ****         }
+ 208              		.loc 1 181 19 view .LVU68
+ 209 00a0 B7E7     		b	.L1
+ 210              	.LVL25:
+ 211              	.L4:
+ 190:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c ****         return(UX_STATE_IDLE);
+ 212              		.loc 1 190 9 is_stmt 1 view .LVU69
+ 190:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c ****         return(UX_STATE_IDLE);
+ARM GAS  C:\Users\sapph\AppData\Local\Temp\cchKL84O.s 			page 9
+
+
+ 213              		.loc 1 190 48 is_stmt 0 view .LVU70
+ 214 00a2 0023     		movs	r3, #0
+ 215 00a4 A362     		str	r3, [r4, #40]
+ 191:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c ****     }
+ 216              		.loc 1 191 9 is_stmt 1 view .LVU71
+ 191:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c ****     }
+ 217              		.loc 1 191 15 is_stmt 0 view .LVU72
+ 218 00a6 0220     		movs	r0, #2
+ 219 00a8 B3E7     		b	.L1
+ 220              	.LVL26:
+ 221              	.L12:
+ 137:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c ****             }
+ 222              		.loc 1 137 23 view .LVU73
+ 223 00aa 0220     		movs	r0, #2
+ 224              	.LVL27:
+ 137:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c ****             }
+ 225              		.loc 1 137 23 view .LVU74
+ 226 00ac B1E7     		b	.L1
+ 227              	.LVL28:
+ 228              	.L13:
+ 147:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c ****             }
+ 229              		.loc 1 147 23 view .LVU75
+ 230 00ae 0220     		movs	r0, #2
+ 231              	.LVL29:
+ 147:Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c ****             }
+ 232              		.loc 1 147 23 view .LVU76
+ 233 00b0 AFE7     		b	.L1
+ 234              	.L21:
+ 235 00b2 00BF     		.align	2
+ 236              	.L20:
+ 237 00b4 00000000 		.word	_ux_system_slave
+ 238              		.cfi_endproc
+ 239              	.LFE3:
+ 241              		.text
+ 242              	.Letext0:
+ 243              		.file 2 "Middlewares/ST/usbx/ports/generic/inc/ux_port.h"
+ 244              		.file 3 "Middlewares/ST/usbx/common/core/inc/ux_api.h"
+ 245              		.file 4 "Middlewares/ST/usbx/common/usbx_device_classes/inc/ux_device_class_hid.h"
+ 246              		.file 5 "Middlewares/ST/usbx/common/core/inc/ux_device_stack.h"
+ 247              		.file 6 "Middlewares/ST/usbx/common/core/inc/ux_system.h"
+ 248              		.file 7 "Middlewares/ST/usbx/common/core/inc/ux_utility.h"
+ARM GAS  C:\Users\sapph\AppData\Local\Temp\cchKL84O.s 			page 10
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 ux_device_class_hid_tasks_run.c
+C:\Users\sapph\AppData\Local\Temp\cchKL84O.s:22     .text._ux_device_class_hid_tasks_run:00000000 $t
+C:\Users\sapph\AppData\Local\Temp\cchKL84O.s:28     .text._ux_device_class_hid_tasks_run:00000000 _ux_device_class_hid_tasks_run
+C:\Users\sapph\AppData\Local\Temp\cchKL84O.s:87     .text._ux_device_class_hid_tasks_run:00000020 $d
+C:\Users\sapph\AppData\Local\Temp\cchKL84O.s:93     .text._ux_device_class_hid_tasks_run:00000038 $t
+C:\Users\sapph\AppData\Local\Temp\cchKL84O.s:237    .text._ux_device_class_hid_tasks_run:000000b4 $d
+
+UNDEFINED SYMBOLS
+_ux_utility_time_get
+_ux_device_class_hid_event_get
+_ux_utility_memory_copy
+_ux_device_stack_transfer_run
+_ux_system_slave
