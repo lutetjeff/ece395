@@ -63,7 +63,7 @@ TIM_HandleTypeDef htim16;
 // id[11:8] = addr
 // id[7:4] = 0xF if successful, 0xE if setting up
 // id[3:0] = sensor # 
-CAN_TxHeaderTypeDef txh_std;
+CAN_TxHeaderTypeDef txh_std[4];
 
 // non standard transmission (higher priority than data)
 // transmit and receive - receive means control signals, transmit for feedback
@@ -110,6 +110,12 @@ static void MX_TIM14_Init(void);
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
 
+void delay_us (uint16_t us)
+{
+	__HAL_TIM_SET_COUNTER(&htim16,0);  
+	while (__HAL_TIM_GET_COUNTER(&htim16) < us);  
+}
+
 void addr_setup() {  
   uint8_t a0 = HAL_GPIO_ReadPin(A0_GPIO_Port, A0_Pin) & 1;
   uint8_t a1 = HAL_GPIO_ReadPin(A1_GPIO_Port, A1_Pin) & 1;
@@ -122,20 +128,22 @@ void addr_setup() {
 
 void can_setup() {
   // txh std
-  txh_std.DLC = 4; // send 32-bit ADC data
-  txh_std.StdId = 0; // not used
-  txh_std.ExtId = std_addr_base | std_state;
-  txh_std.IDE = CAN_ID_EXT;
-  txh_std.RTR = CAN_RTR_DATA;
-  txh_std.TransmitGlobalTime = DISABLE;
+  for (int j = 0; j < 4; j++) {
+    txh_std[j].DLC = 3; // send 24-bit ADC data
+    txh_std[j].StdId = 0; // not used
+    txh_std[j].ExtId = std_addr_base | std_state | j;
+    txh_std[j].IDE = CAN_ID_EXT;
+    txh_std[j].RTR = CAN_RTR_DATA;
+    txh_std[j].TransmitGlobalTime = DISABLE;
+  }
 
   // txh nst
-  txh_std.DLC = 4; // default
-  txh_std.StdId = 0; // not used
-  txh_std.ExtId = nst_addr_base ;
-  txh_std.IDE = CAN_ID_EXT;
-  txh_std.RTR = CAN_RTR_DATA;
-  txh_std.TransmitGlobalTime = DISABLE;
+  txh_nst.DLC = 4; // default
+  txh_nst.StdId = 0; // not used
+  txh_nst.ExtId = nst_addr_base ;
+  txh_nst.IDE = CAN_ID_EXT;
+  txh_nst.RTR = CAN_RTR_DATA;
+  txh_nst.TransmitGlobalTime = DISABLE;
 
   // filter config
   filter.FilterMaskIdHigh = 0x1FFF;
@@ -152,10 +160,9 @@ void can_setup() {
 }
 
 void can_std_transmit(uint8_t sensor) {
-  txh_std.ExtId = std_addr_base | std_state | sensor;
-  if (HAL_CAN_AddTxMessage(&hcan, &txh_std, (uint8_t*) (adc_data + sensor), &txMailbox) != HAL_OK) {
+  while (HAL_CAN_AddTxMessage(&hcan, &(txh_std[sensor]), ((uint8_t*) (adc_data + sensor)) + 1, &txMailbox) != HAL_OK) {
     // too many messages! FIXME
-    while (1);
+    delay_us(128); // delay one message
   } 
 }
 
@@ -178,12 +185,6 @@ void can_tx_transmit_timer_handler() {
 void can_rx_handler() {
   // handle various commands
   // parameters are in rxh and rx_nst_data
-}
-
-void delay_us (uint16_t us)
-{
-	__HAL_TIM_SET_COUNTER(&htim16,0);  
-	while (__HAL_TIM_GET_COUNTER(&htim16) < us);  
 }
 
 uint32_t ads131m04_transfer_word(uint16_t word) {
@@ -514,11 +515,11 @@ static void MX_CAN_Init(void)
 
   /* USER CODE END CAN_Init 1 */
   hcan.Instance = CAN;
-  hcan.Init.Prescaler = 16;
+  hcan.Init.Prescaler = 3;
   hcan.Init.Mode = CAN_MODE_NORMAL;
-  hcan.Init.SyncJumpWidth = CAN_SJW_1TQ;
-  hcan.Init.TimeSeg1 = CAN_BS1_1TQ;
-  hcan.Init.TimeSeg2 = CAN_BS2_1TQ;
+  hcan.Init.SyncJumpWidth = CAN_SJW_2TQ;
+  hcan.Init.TimeSeg1 = CAN_BS1_13TQ;
+  hcan.Init.TimeSeg2 = CAN_BS2_2TQ;
   hcan.Init.TimeTriggeredMode = DISABLE;
   hcan.Init.AutoBusOff = DISABLE;
   hcan.Init.AutoWakeUp = DISABLE;
