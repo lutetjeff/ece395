@@ -1,0 +1,9 @@
+../USB/Core/Src/usbd_desc.c:259:10:USBD_Class_DeviceDescriptor	1
+../USB/Core/Src/usbd_desc.c:273:10:USBD_Class_LangIDStrDescriptor	1
+../USB/Core/Src/usbd_desc.c:287:10:USBD_Class_ProductStrDescriptor	2
+../USB/Core/Src/usbd_desc.c:306:10:USBD_Class_ManufacturerStrDescriptor	1
+../USB/Core/Src/usbd_desc.c:320:10:USBD_Class_SerialStrDescriptor	1
+../USB/Core/Src/usbd_desc.c:338:10:USBD_Class_ConfigStrDescriptor	2
+../USB/Core/Src/usbd_desc.c:357:10:USBD_Class_InterfaceStrDescriptor	2
+../USB/Core/Src/usbd_desc.c:375:13:Get_SerialNum	2
+../USB/Core/Src/usbd_desc.c:435:13:IntToUnicode	3
