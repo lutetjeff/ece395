@@ -80,6 +80,9 @@ CAN_FilterTypeDef filter;
 // ADC data array
 int32_t adc_data[4];
 
+// configuration
+uint8_t adc_configured = 0;
+
 // address
 uint8_t addr = 0x00;
 
@@ -129,7 +132,7 @@ void addr_setup() {
 void can_setup() {
   // txh std
   for (int j = 0; j < 4; j++) {
-    txh_std[j].DLC = 3; // send 24-bit ADC data
+    txh_std[j].DLC = 1; // send only top 8 bits of ADC data
     txh_std[j].StdId = 0; // not used
     txh_std[j].ExtId = std_addr_base | std_state | j;
     txh_std[j].IDE = CAN_ID_EXT;
@@ -224,7 +227,8 @@ void ads131m04_read_adc_nonblocking(int32_t* out) {
 }
 
 void ads131m04_drdy_exti_handler() {
-  ads131m04_read_adc_nonblocking(adc_data);
+  if (adc_configured)
+    ads131m04_read_adc_nonblocking(adc_data);
 }
 
 void ads131m04_cmd(uint16_t cmd, uint32_t* out, uint16_t tx_rx_delay) {
@@ -240,7 +244,7 @@ void ads131m04_cmd(uint16_t cmd, uint32_t* out, uint16_t tx_rx_delay) {
 uint16_t ads131m04_reset() {
     uint32_t recv[12];
     ads131m04_cmd(0x0011, recv, 12); // reset time
-    return recv[6] >> 8;
+    return recv[9];
 }
 
 uint16_t ads131m04_status() {
@@ -368,12 +372,17 @@ uint16_t ads131m04_wreg_multiple(uint8_t start_reg, uint8_t count, uint16_t* dat
 // returns 1 if success, 0 if failed
 uint8_t ads131m04_test() {
   uint16_t id = ads131m04_rreg(0x00);
-  return (id >> 8) == 0x24;
+  return id == 0x24;
 }
 
 // returns 1 if success, 0 if failed
 uint8_t adc_configure() {
-  if (!ads131m04_test()) return 0;
+  while (!ads131m04_reset()) {
+    delay_us(10);
+  };
+  while (!ads131m04_test()) {
+    delay_us(10);
+  };
   uint16_t mode = 0x0110; // clear reset bit, disable all CRCs
   ads131m04_wreg(0x02, mode);
 
@@ -387,6 +396,8 @@ uint8_t adc_configure() {
 
   uint16_t cfg = 0x0000; // disable global chop and current detect
   ads131m04_wreg(0x06, cfg);
+  
+  adc_configured = 1;
 
   // add calibration here if we want to do that
   return 1;
@@ -438,6 +449,7 @@ int main(void)
   
   addr_setup();
   can_setup();
+  adc_configure();
 
   HAL_CAN_Start(&hcan);
   HAL_CAN_ActivateNotification(&hcan, CAN_IT_RX_FIFO0_MSG_PENDING);
@@ -653,7 +665,7 @@ static void MX_TIM14_Init(void)
   htim14.Instance = TIM14;
   htim14.Init.Prescaler = 11;
   htim14.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim14.Init.Period = 1000;
+  htim14.Init.Period = 10000;
   htim14.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
   htim14.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
   if (HAL_TIM_Base_Init(&htim14) != HAL_OK)
