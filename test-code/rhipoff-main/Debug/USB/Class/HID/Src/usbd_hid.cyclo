@@ -1,0 +1,6 @@
+../USB/Class/HID/Src/usbd_hid.c:279:16:USBD_HID_Init	3
+../USB/Class/HID/Src/usbd_hid.c:326:16:USBD_HID_DeInit	2
+../USB/Class/HID/Src/usbd_hid.c:357:16:USBD_HID_Setup	18
+../USB/Class/HID/Src/usbd_hid.c:485:9:USBD_HID_SendReport	4
+../USB/Class/HID/Src/usbd_hid.c:522:10:USBD_HID_GetPollingInterval	2
+../USB/Class/HID/Src/usbd_hid.c:613:16:USBD_HID_DataIn	1
