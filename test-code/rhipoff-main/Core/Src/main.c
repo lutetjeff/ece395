@@ -56,6 +56,11 @@ uint8_t HID_EpAdd_Inst = HID_EPIN_ADDR;								/* HID Endpoint Address array */
 USBD_HandleTypeDef hUsbDeviceFS;
 uint8_t hid_report_buffer[4];
 uint8_t HID_InstID = 0, CDC_InstID = 0;
+
+FDCAN_RxHeaderTypeDef Rx_Header;
+uint8_t rxData[8];
+FDCAN_TxHeaderTypeDef Tx_Header;
+uint8_t txData[4];
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -63,7 +68,7 @@ void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
 static void MX_FDCAN1_Init(void);
 /* USER CODE BEGIN PFP */
-
+static void FDCAN_Config(void);
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -78,12 +83,12 @@ static void MX_FDCAN1_Init(void);
 int main(void)
 {
 
-	/* USER CODE BEGIN 1 */
+  /* USER CODE BEGIN 1 */
 	hid_report_buffer[0] = 0;   /* Buttons – first 3 bits [LSB] */
 	hid_report_buffer[1] = 001; /* X axis 8 bits value signed */
 	hid_report_buffer[2] = 0;   /* Y axis 8 bits value signed*/
 	hid_report_buffer[3] = 0;   /* Wheel 8 bits value signed*/
-	/* USER CODE END 1 */
+  /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
 
@@ -124,6 +129,8 @@ int main(void)
   	USBD_CDC_RegisterInterface(&hUsbDeviceFS, &USBD_CDC_Template_fops);
   }
   USBD_Start(&hUsbDeviceFS);
+
+  FDCAN_Config(); // need to set up the FD CAN peripheral with our parameters.
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -132,11 +139,16 @@ int main(void)
   {
 //  	if(HAL_GPIO_ReadPin(USER_BT_GPIO_Port, USER_BT_Pin) == GPIO_PIN_SET)
 //  	{
-  		USBD_HID_SendReport(&hUsbDeviceFS, hid_report_buffer, 4, HID_InstID);
+  		USBD_HID_SendReport(&hUsbDeviceFS, rxData, 4, HID_InstID);
   		USBD_CDC_TransmitPacket(&hUsbDeviceFS, CDC_InstID);
+
+  		if (HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan1, &Tx_Header, txData) != HAL_OK)
+  		{
+  			Error_Handler();
+  		}
   		HAL_Delay(1000);
 //  	}
-  /* USER CODE END WHILE */
+    /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
   }
@@ -168,7 +180,7 @@ void SystemClock_Config(void)
   RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
   RCC_OscInitStruct.PLL.PLLSource = RCC_PLL1_SOURCE_CSI;
   RCC_OscInitStruct.PLL.PLLM = 1;
-  RCC_OscInitStruct.PLL.PLLN = 125;
+  RCC_OscInitStruct.PLL.PLLN = 120;
   RCC_OscInitStruct.PLL.PLLP = 2;
   RCC_OscInitStruct.PLL.PLLQ = 2;
   RCC_OscInitStruct.PLL.PLLR = 2;
@@ -223,15 +235,15 @@ static void MX_FDCAN1_Init(void)
   hfdcan1.Init.AutoRetransmission = DISABLE;
   hfdcan1.Init.TransmitPause = DISABLE;
   hfdcan1.Init.ProtocolException = DISABLE;
-  hfdcan1.Init.NominalPrescaler = 16;
-  hfdcan1.Init.NominalSyncJumpWidth = 1;
-  hfdcan1.Init.NominalTimeSeg1 = 1;
-  hfdcan1.Init.NominalTimeSeg2 = 1;
-  hfdcan1.Init.DataPrescaler = 1;
-  hfdcan1.Init.DataSyncJumpWidth = 1;
-  hfdcan1.Init.DataTimeSeg1 = 1;
-  hfdcan1.Init.DataTimeSeg2 = 1;
-  hfdcan1.Init.StdFiltersNbr = 0;
+  hfdcan1.Init.NominalPrescaler = 15;
+  hfdcan1.Init.NominalSyncJumpWidth = 2;
+  hfdcan1.Init.NominalTimeSeg1 = 13;
+  hfdcan1.Init.NominalTimeSeg2 = 2;
+  hfdcan1.Init.DataPrescaler = 15;
+  hfdcan1.Init.DataSyncJumpWidth = 2;
+  hfdcan1.Init.DataTimeSeg1 = 13;
+  hfdcan1.Init.DataTimeSeg2 = 2;
+  hfdcan1.Init.StdFiltersNbr = 1;
   hfdcan1.Init.ExtFiltersNbr = 0;
   hfdcan1.Init.TxFifoQueueMode = FDCAN_TX_FIFO_OPERATION;
   if (HAL_FDCAN_Init(&hfdcan1) != HAL_OK)
@@ -323,6 +335,59 @@ static void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
+static void FDCAN_Config(void)
+{
+	FDCAN_FilterTypeDef filter;
+
+	filter.IdType = FDCAN_STANDARD_ID;
+	filter.FilterIndex = 0;
+	filter.FilterType = FDCAN_FILTER_RANGE;
+	filter.FilterConfig = FDCAN_FILTER_TO_RXFIFO0;
+	filter.FilterID1 = 0x0;
+	filter.FilterID2 = 0x7FF;
+
+	if (HAL_FDCAN_ConfigFilter(&hfdcan1, &filter) != HAL_OK)
+	  {
+	    Error_Handler();
+	  }
+
+	if (HAL_FDCAN_ConfigGlobalFilter(&hfdcan1, FDCAN_REJECT, FDCAN_REJECT, FDCAN_FILTER_REMOTE, FDCAN_FILTER_REMOTE) != HAL_OK)
+	  {
+	    Error_Handler();
+	  }
+
+	if (HAL_FDCAN_Start(&hfdcan1) != HAL_OK)
+	  {
+	    Error_Handler();
+	  }
+
+	  if (HAL_FDCAN_ActivateNotification(&hfdcan1, FDCAN_IT_RX_FIFO0_NEW_MESSAGE, 0) != HAL_OK)
+	  {
+	    Error_Handler();
+	  }
+
+	  Tx_Header.Identifier = 0x23D;
+	  Tx_Header.IdType = FDCAN_STANDARD_ID;
+	  Tx_Header.TxFrameType = FDCAN_DATA_FRAME;
+	  Tx_Header.DataLength = FDCAN_DLC_BYTES_4;
+	  Tx_Header.ErrorStateIndicator = FDCAN_ESI_ACTIVE;
+	  Tx_Header.BitRateSwitch = FDCAN_BRS_OFF;
+	  Tx_Header.FDFormat = FDCAN_CLASSIC_CAN;
+	  Tx_Header.TxEventFifoControl = FDCAN_NO_TX_EVENTS;
+	  Tx_Header.MessageMarker = 0;
+}
+
+void HAL_FDCAN_RxFifo0Callback(FDCAN_HandleTypeDef *hfdcan, uint32_t RxFifo0ITs)
+{
+	if (RxFifo0ITs == FDCAN_IT_RX_FIFO0_NEW_MESSAGE) // we have a new message!
+	{
+		if (HAL_FDCAN_GetRxMessage(&hfdcan1, FDCAN_RX_FIFO0, &Rx_Header, rxData) != HAL_OK)
+		{
+			Error_Handler();
+		}
+	}
+}
+
 
 /* USER CODE END 4 */
 
