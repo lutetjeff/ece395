@@ -63,6 +63,11 @@ TIM_HandleTypeDef htim16;
 // id[11:8] = addr
 // id[7:4] = 0xF if successful, 0xE if setting up
 // id[3:0] = sensor # 
+
+// new format: 11-bit standard identifier
+// id[10:8] = 0x1
+// id[7:4] = addr
+// id[3:0] = sensor #
 CAN_TxHeaderTypeDef txh_std[4];
 
 // non standard transmission (higher priority than data)
@@ -71,6 +76,11 @@ CAN_TxHeaderTypeDef txh_std[4];
 // id[15:12] = 0x0
 // id[11:8] = addr
 // id[7:4] = 0xF if successful, 0xE if setting up, 0xD if failed, 0xC if instruction
+// id[3:0] = instruction
+
+// new format: 11-bit standard identifier
+// id[10:8] = 0x0
+// id[7:4] = addr
 // id[3:0] = instruction
 CAN_TxHeaderTypeDef txh_nst;
 CAN_RxHeaderTypeDef rxh_nst;
@@ -87,10 +97,10 @@ uint8_t adc_configured = 0;
 uint8_t addr = 0x00;
 
 // for CAN
-uint32_t std_addr_base = 0x00010000;
-uint8_t std_state = STD_STARTUP;
-uint32_t nst_addr_base = 0x00000000;
-uint8_t nst_state = NST_STARTUP;
+uint32_t std_addr_base = 0x100;
+uint8_t std_state = STD_READY;
+uint32_t nst_addr_base = 0x000;
+uint8_t nst_state = NST_READY;
 uint32_t txMailbox;
 uint8_t can_std_channel = 0x00;
 uint8_t rx_nst_data[8];
@@ -125,37 +135,37 @@ void addr_setup() {
   uint8_t a2 = HAL_GPIO_ReadPin(A2_GPIO_Port, A2_Pin) & 1;
   uint8_t a3 = HAL_GPIO_ReadPin(A3_GPIO_Port, A3_Pin) & 1;
   addr = (a3 << 3) | (a2 << 2) | (a1 << 1) | a0;
-  addr = ~addr; // remove if dip s
-  std_addr_base = 0x000100C0 | (addr << 8);
+  addr = (~addr) & 0x0F; // remove if dip s
+  std_addr_base = 0x100 | (addr << 4);
 }
 
 void can_setup() {
   // txh std
   for (int j = 0; j < 4; j++) {
-    txh_std[j].DLC = 1; // send only top 8 bits of ADC data
-    txh_std[j].StdId = 0; // not used
-    txh_std[j].ExtId = std_addr_base | std_state | j;
-    txh_std[j].IDE = CAN_ID_EXT;
+    txh_std[j].DLC = 4; // send only top 8 bits of ADC data
+    txh_std[j].StdId = std_addr_base | (addr << 4) | j; // not used
+    txh_std[j].ExtId = 0; // not used std_addr_base | std_state | j;
+    txh_std[j].IDE = CAN_ID_STD;
     txh_std[j].RTR = CAN_RTR_DATA;
     txh_std[j].TransmitGlobalTime = DISABLE;
   }
 
   // txh nst
   txh_nst.DLC = 4; // default
-  txh_nst.StdId = 0; // not used
-  txh_nst.ExtId = nst_addr_base ;
-  txh_nst.IDE = CAN_ID_EXT;
+  txh_nst.StdId = nst_addr_base; // not used
+  txh_nst.ExtId = 0; // not used nst_addr_base ;
+  txh_nst.IDE = CAN_ID_STD;
   txh_nst.RTR = CAN_RTR_DATA;
   txh_nst.TransmitGlobalTime = DISABLE;
 
   // filter config
-  filter.FilterMaskIdHigh = 0x1FFF;
-  filter.FilterMaskIdLow = 0xFFF0;
+  filter.FilterMaskIdHigh = 0x07F0;
+  filter.FilterMaskIdLow = 0x07F0;
   filter.FilterIdHigh = 0x0000;
-  filter.FilterIdLow = 0x00C0 | (addr << 8);
+  filter.FilterIdLow = 0x0000 | (addr << 4);
   filter.FilterMode = CAN_FILTERMODE_IDMASK;
   filter.FilterFIFOAssignment = CAN_FILTER_FIFO0;
-  filter.FilterScale = CAN_FILTERSCALE_32BIT;
+  filter.FilterScale = CAN_FILTERSCALE_16BIT;
   filter.FilterActivation = CAN_FILTER_ENABLE;
   filter.FilterBank = 0x00; // use first filter bank
 
@@ -163,7 +173,14 @@ void can_setup() {
 }
 
 void can_std_transmit(uint8_t sensor) {
-  while (HAL_CAN_AddTxMessage(&hcan, &(txh_std[sensor]), ((uint8_t*) (adc_data + sensor)) + 1, &txMailbox) != HAL_OK) {
+  uint8_t* adc_ptr = (uint8_t*) adc_data;
+  uint8_t adc_data_conv[4];
+  adc_data_conv[0] = adc_ptr[1];
+  adc_data_conv[1] = adc_ptr[5];
+  adc_data_conv[2] = adc_ptr[9];
+  adc_data_conv[3] = adc_ptr[13];
+  
+    while (HAL_CAN_AddTxMessage(&hcan, &(txh_std[sensor]), adc_data_conv, &txMailbox) != HAL_OK) {
     // too many messages! FIXME
     delay_us(128); // delay one message
   } 
@@ -181,8 +198,8 @@ void can_nst_transmit(uint8_t cmd, uint8_t len) {
 
 void can_tx_transmit_timer_handler() {
   can_std_transmit(can_std_channel);
-  can_std_channel++;
-  can_std_channel %= 4;
+  //can_std_channel++;
+  //can_std_channel %= 4;
 }
 
 void can_rx_handler() {
@@ -213,13 +230,14 @@ void ads131m04_transfer_frame(uint32_t* out, uint16_t* words, uint16_t tx_rx_del
 }
 
 int32_t ads131m04_adc_format_convert(int32_t data){
-  return ((data & 0x800000) ? -0x800000 : 0x000000) + (data & 0x7FFFFF);
+  return ((data & 0x8000) ? -0x8000 : 0x0000) + (data & 0x7FFF);
 }
 
 void ads131m04_read_adc_nonblocking(int32_t* out) {
-  uint32_t recv[12];
+  uint32_t recv[24];
   uint16_t words[6] = {0, 0, 0, 0, 0, 0};
   ads131m04_transfer_frame(recv, words, 0);
+  ads131m04_transfer_frame(recv+12, words, 0);
   out[0] = ads131m04_adc_format_convert(recv[1]);
   out[1] = ads131m04_adc_format_convert(recv[2]);
   out[2] = ads131m04_adc_format_convert(recv[3]);
@@ -377,11 +395,16 @@ uint8_t ads131m04_test() {
 
 // returns 1 if success, 0 if failed
 uint8_t adc_configure() {
-  while (!ads131m04_reset()) {
+  uint8_t attempts = 0;
+  while (ads131m04_reset()) {
     delay_us(10);
+    attempts++;
+    if (attempts > 64) break;
   };
   while (!ads131m04_test()) {
     delay_us(10);
+    attempts++;
+    if (attempts > 128) break;
   };
   uint16_t mode = 0x0110; // clear reset bit, disable all CRCs
   ads131m04_wreg(0x02, mode);
@@ -571,7 +594,7 @@ static void MX_SPI1_Init(void)
   hspi1.Init.CLKPolarity = SPI_POLARITY_LOW;
   hspi1.Init.CLKPhase = SPI_PHASE_2EDGE;
   hspi1.Init.NSS = SPI_NSS_SOFT;
-  hspi1.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_8;
+  hspi1.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_16;
   hspi1.Init.FirstBit = SPI_FIRSTBIT_MSB;
   hspi1.Init.TIMode = SPI_TIMODE_DISABLE;
   hspi1.Init.CRCCalculation = SPI_CRCCALCULATION_DISABLE;
@@ -663,7 +686,7 @@ static void MX_TIM14_Init(void)
 
   /* USER CODE END TIM14_Init 1 */
   htim14.Instance = TIM14;
-  htim14.Init.Prescaler = 11;
+  htim14.Init.Prescaler = 47;
   htim14.Init.CounterMode = TIM_COUNTERMODE_UP;
   htim14.Init.Period = 10000;
   htim14.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
