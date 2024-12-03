@@ -135,14 +135,13 @@ void addr_setup() {
   uint8_t a2 = HAL_GPIO_ReadPin(A2_GPIO_Port, A2_Pin) & 1;
   uint8_t a3 = HAL_GPIO_ReadPin(A3_GPIO_Port, A3_Pin) & 1;
   addr = (a3 << 3) | (a2 << 2) | (a1 << 1) | a0;
-  addr = (~addr) & 0x0F; // remove if dip s
   std_addr_base = 0x100 | (addr << 4);
 }
 
 void can_setup() {
   // txh std
-  for (int j = 0; j < 4; j++) {
-    txh_std[j].DLC = 4; // send only top 8 bits of ADC data
+  for (int j = 0; j < 16; j++) {
+    txh_std[j].DLC = 4; // send only top 16 bits of ADC data
     txh_std[j].StdId = std_addr_base | (addr << 4) | j; // not used
     txh_std[j].ExtId = 0; // not used std_addr_base | std_state | j;
     txh_std[j].IDE = CAN_ID_STD;
@@ -174,6 +173,15 @@ void can_setup() {
 
 void can_std_transmit(uint8_t sensor) {
   uint8_t* adc_ptr = (uint8_t*) adc_data;
+  // uint8_t adc_data_conv[8];
+  // adc_data_conv[0] = adc_ptr[1];
+  // adc_data_conv[1] = adc_ptr[2];
+  // adc_data_conv[2] = adc_ptr[5];
+  // adc_data_conv[3] = adc_ptr[6];
+  // adc_data_conv[4] = adc_ptr[9];
+  // adc_data_conv[5] = adc_ptr[10];
+  // adc_data_conv[6] = adc_ptr[13];
+  // adc_data_conv[7] = adc_ptr[14];
   uint8_t adc_data_conv[4];
   adc_data_conv[0] = adc_ptr[1];
   adc_data_conv[1] = adc_ptr[5];
