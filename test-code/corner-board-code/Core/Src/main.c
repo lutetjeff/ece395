@@ -413,7 +413,7 @@ uint8_t adc_configure() {
   uint16_t clock = 0x0F03 | (osr << 2); // enable all, highest precision
   ads131m04_wreg(0x03, clock);
 
-  uint8_t gain = 0b110; // 64
+  uint8_t gain = 0b101; // 64
   uint16_t gain1 = (gain << 12) | (gain << 8) | (gain << 4) | gain;
   ads131m04_wreg(0x04, gain1);
 
