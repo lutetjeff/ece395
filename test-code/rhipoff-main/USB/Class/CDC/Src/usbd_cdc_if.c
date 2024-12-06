@@ -90,6 +90,7 @@ extern USBD_HandleTypeDef hUsbDeviceFS;
 extern uint8_t CDC_InstID;
 uint8_t UserTxBuffer[64] = "MY CDC is Working!\r\n";
 extern uint8_t rxData[8];
+extern char buffer[256];
 uint8_t UserRxBuffer[64];
 
 /* Private functions ---------------------------------------------------------*/
@@ -103,7 +104,7 @@ uint8_t UserRxBuffer[64];
 static int8_t TEMPLATE_Init(void)
 {
 	hUsbDeviceFS.classId = CDC_InstID;
-	USBD_CDC_SetTxBuffer(&hUsbDeviceFS, rxData, sizeof(rxData), CDC_InstID);
+	USBD_CDC_SetTxBuffer(&hUsbDeviceFS, buffer, sizeof(buffer), CDC_InstID);
 	USBD_CDC_SetRxBuffer(&hUsbDeviceFS, UserRxBuffer);
 	return (USBD_OK);
 }

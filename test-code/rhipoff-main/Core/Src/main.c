@@ -24,7 +24,8 @@
 #include "usbd_core.h"
 #include "usbd_cdc.h"
 #include "usbd_cdc_if.h"
-#include "usbd_hid.h"
+#include "usbd_customhid.h"
+#include "usbd_customhid_if.h"
 #include "usbd_desc.h"
 #include "usbd_composite_builder.h"
 /* USER CODE END Includes */
@@ -54,13 +55,17 @@ PCD_HandleTypeDef hpcd_USB_DRD_FS;
 uint8_t CDC_EpAdd_Inst[3] = {CDC_IN_EP, CDC_OUT_EP, CDC_CMD_EP}; 	/* CDC Endpoint Addresses array */
 uint8_t HID_EpAdd_Inst = HID_EPIN_ADDR;								/* HID Endpoint Address array */
 USBD_HandleTypeDef hUsbDeviceFS;
-uint8_t hid_report_buffer[4];
+uint8_t tx_buffer[64];		//Variable to store the output data
+uint8_t report_buffer[64];		//Variable to receive the report buffer
+uint8_t flag = 0;			//Variable to store the button flag
+uint8_t flag_rx = 0;			//Variable to store the reception flag
 uint8_t HID_InstID = 0, CDC_InstID = 0;
 
 FDCAN_RxHeaderTypeDef Rx_Header;
 uint8_t rxData[8];
 FDCAN_TxHeaderTypeDef Tx_Header;
 uint8_t txData[4];
+char buffer[256]; // :)
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -84,10 +89,6 @@ int main(void)
 {
 
   /* USER CODE BEGIN 1 */
-	hid_report_buffer[0] = 0;   /* Buttons – first 3 bits [LSB] */
-	hid_report_buffer[1] = 001; /* X axis 8 bits value signed */
-	hid_report_buffer[2] = 0;   /* Y axis 8 bits value signed*/
-	hid_report_buffer[3] = 0;   /* Wheel 8 bits value signed*/
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -131,6 +132,12 @@ int main(void)
   USBD_Start(&hUsbDeviceFS);
 
   FDCAN_Config(); // need to set up the FD CAN peripheral with our parameters.
+
+  //To fill the buffer
+  for (uint8_t i=0; i<64; i++)
+  {
+	  tx_buffer[i] = i;
+  }
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -139,14 +146,17 @@ int main(void)
   {
 //  	if(HAL_GPIO_ReadPin(USER_BT_GPIO_Port, USER_BT_Pin) == GPIO_PIN_SET)
 //  	{
-  		USBD_HID_SendReport(&hUsbDeviceFS, rxData, 4, HID_InstID);
+//  		USBD_HID_SendReport(&hUsbDeviceFS, hid_report_buffer, 4, HID_InstID);
   		USBD_CDC_TransmitPacket(&hUsbDeviceFS, CDC_InstID);
-
+  		HAL_GPIO_WritePin(GPIOA, GPIO_PIN_0, GPIO_PIN_SET);
   		if (HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan1, &Tx_Header, txData) != HAL_OK)
   		{
   			Error_Handler();
   		}
-  		HAL_Delay(1000);
+  		HAL_Delay(100);
+
+  	    sprintf(buffer, "%d %d %d %d\r\n", rxData[0], rxData[1], rxData[2], rxData[3]);
+
 //  	}
     /* USER CODE END WHILE */
 

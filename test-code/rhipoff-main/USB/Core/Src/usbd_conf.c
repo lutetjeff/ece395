@@ -21,7 +21,7 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "usbd_core.h"
-#include "usbd_hid.h"
+#include "usbd_customhid.h"
 #include "usbd_cdc.h"
 /* Include class header file */
 /* Private typedef -----------------------------------------------------------*/
