@@ -1,3 +1,3 @@
-../USB/Class/CustomHID/Src/usbd_customhid_if.c:80:15:TEMPLATE_CUSTOM_HID_Init	1
-../USB/Class/CustomHID/Src/usbd_customhid_if.c:91:15:TEMPLATE_CUSTOM_HID_DeInit	1
-../USB/Class/CustomHID/Src/usbd_customhid_if.c:107:15:TEMPLATE_CUSTOM_HID_OutEvent	2
+../USB/Class/CustomHID/Src/usbd_customhid_if.c:113:15:CUSTOM_HID_Init	1
+../USB/Class/CustomHID/Src/usbd_customhid_if.c:124:15:CUSTOM_HID_DeInit	1
+../USB/Class/CustomHID/Src/usbd_customhid_if.c:140:15:CUSTOM_HID_OutEvent	2

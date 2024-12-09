@@ -54,7 +54,7 @@ extern "C" {
 #define USE_USBD_COMPOSITE
 /* Activate CustomHID and CDC classes in composite builder */
 #define USBD_CMPSIT_ACTIVATE_CDC                    1U
-#define USBD_CMPSIT_ACTIVATE_HID  					1U
+#define USBD_CMPSIT_ACTIVATE_CUSTOM_HID  			1U
 /* Define the number of supported classes */
 #define USBD_MAX_SUPPORTED_CLASS                       2U
 /* Define the number of endpoints per class */

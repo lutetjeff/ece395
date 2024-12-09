@@ -33,7 +33,7 @@ USB/Core/Src/usbd_conf.o: ../USB/Core/Src/usbd_conf.c ../Core/Inc/main.h \
  C:/Users/sapph/STM32CubeIDE/workspace_1.16.0/rhipoff-main/USB/Core/Inc/usbd_ioreq.h \
  C:/Users/sapph/STM32CubeIDE/workspace_1.16.0/rhipoff-main/USB/Core/Inc/usbd_core.h \
  C:/Users/sapph/STM32CubeIDE/workspace_1.16.0/rhipoff-main/USB/Core/Inc/usbd_ctlreq.h \
- C:/Users/sapph/STM32CubeIDE/workspace_1.16.0/rhipoff-main/USB/Class/HID/Inc/usbd_hid.h \
+ C:/Users/sapph/STM32CubeIDE/workspace_1.16.0/rhipoff-main/USB/Class/CustomHID/Inc/usbd_customhid.h \
  C:/Users/sapph/STM32CubeIDE/workspace_1.16.0/rhipoff-main/USB/Core/Inc/usbd_ioreq.h \
  C:/Users/sapph/STM32CubeIDE/workspace_1.16.0/rhipoff-main/USB/Class/CDC/Inc/usbd_cdc.h
 ../Core/Inc/main.h:
@@ -71,6 +71,6 @@ C:/Users/sapph/STM32CubeIDE/workspace_1.16.0/rhipoff-main/USB/Core/Inc/usbd_def.
 C:/Users/sapph/STM32CubeIDE/workspace_1.16.0/rhipoff-main/USB/Core/Inc/usbd_ioreq.h:
 C:/Users/sapph/STM32CubeIDE/workspace_1.16.0/rhipoff-main/USB/Core/Inc/usbd_core.h:
 C:/Users/sapph/STM32CubeIDE/workspace_1.16.0/rhipoff-main/USB/Core/Inc/usbd_ctlreq.h:
-C:/Users/sapph/STM32CubeIDE/workspace_1.16.0/rhipoff-main/USB/Class/HID/Inc/usbd_hid.h:
+C:/Users/sapph/STM32CubeIDE/workspace_1.16.0/rhipoff-main/USB/Class/CustomHID/Inc/usbd_customhid.h:
 C:/Users/sapph/STM32CubeIDE/workspace_1.16.0/rhipoff-main/USB/Core/Inc/usbd_ioreq.h:
 C:/Users/sapph/STM32CubeIDE/workspace_1.16.0/rhipoff-main/USB/Class/CDC/Inc/usbd_cdc.h:

@@ -1,0 +1,3 @@
+../USB/Class/CustomHID/Src/usbd_customhid_if.c:91:15:CUSTOM_HID_Init	1
+../USB/Class/CustomHID/Src/usbd_customhid_if.c:102:15:CUSTOM_HID_DeInit	1
+../USB/Class/CustomHID/Src/usbd_customhid_if.c:118:15:CUSTOM_HID_OutEvent	1

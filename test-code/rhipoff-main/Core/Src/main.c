@@ -53,19 +53,20 @@ PCD_HandleTypeDef hpcd_USB_DRD_FS;
 
 /* USER CODE BEGIN PV */
 uint8_t CDC_EpAdd_Inst[3] = {CDC_IN_EP, CDC_OUT_EP, CDC_CMD_EP}; 	/* CDC Endpoint Addresses array */
-uint8_t HID_EpAdd_Inst = HID_EPIN_ADDR;								/* HID Endpoint Address array */
+uint8_t CUSTOM_HID_EpAdd_Inst = CUSTOM_HID_EPIN_ADDR;								/* HID Endpoint Address array */
 USBD_HandleTypeDef hUsbDeviceFS;
-uint8_t tx_buffer[64];		//Variable to store the output data
-uint8_t report_buffer[64];		//Variable to receive the report buffer
-uint8_t flag = 0;			//Variable to store the button flag
-uint8_t flag_rx = 0;			//Variable to store the reception flag
-uint8_t HID_InstID = 0, CDC_InstID = 0;
+//uint8_t tx_buffer[64];		//Variable to store the output data
+//uint8_t report_buffer[64];		//Variable to receive the report buffer
+//uint8_t flag = 0;			//Variable to store the button flag
+//uint8_t flag_rx = 0;			//Variable to store the reception flag
+uint8_t CHID_InstID = 0, CDC_InstID = 0;
 
 FDCAN_RxHeaderTypeDef Rx_Header;
 uint8_t rxData[8];
 FDCAN_TxHeaderTypeDef Tx_Header;
 uint8_t txData[4];
 char buffer[256]; // :)
+uint8_t buttons[2] = {0};
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -115,12 +116,10 @@ int main(void)
   if(USBD_Init(&hUsbDeviceFS, &Class_Desc, 0) != USBD_OK)
   	Error_Handler();
   /* Store HID Instance Class ID */
-  HID_InstID = hUsbDeviceFS.classId;
-  /* Register the HID Class */
-  if(USBD_RegisterClassComposite(&hUsbDeviceFS, USBD_HID_CLASS, CLASS_TYPE_HID, &HID_EpAdd_Inst) != USBD_OK)
+  CHID_InstID = hUsbDeviceFS.classId;
+  /* Register the CHID Class */
+  if(USBD_RegisterClassComposite(&hUsbDeviceFS, USBD_CUSTOM_HID_CLASS, CLASS_TYPE_CHID, &CUSTOM_HID_EpAdd_Inst) != USBD_OK)
   	Error_Handler();
-  /* Store the HID Class */
-  CDC_InstID = hUsbDeviceFS.classId;
   /* Register CDC Class First Instance */
   if(USBD_RegisterClassComposite(&hUsbDeviceFS, USBD_CDC_CLASS, CLASS_TYPE_CDC, CDC_EpAdd_Inst) != USBD_OK)
   	Error_Handler();
@@ -129,15 +128,11 @@ int main(void)
   {
   	USBD_CDC_RegisterInterface(&hUsbDeviceFS, &USBD_CDC_Template_fops);
   }
+
   USBD_Start(&hUsbDeviceFS);
 
   FDCAN_Config(); // need to set up the FD CAN peripheral with our parameters.
 
-  //To fill the buffer
-  for (uint8_t i=0; i<64; i++)
-  {
-	  tx_buffer[i] = i;
-  }
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -146,25 +141,24 @@ int main(void)
   {
 //  	if(HAL_GPIO_ReadPin(USER_BT_GPIO_Port, USER_BT_Pin) == GPIO_PIN_SET)
 //  	{
-//  		USBD_HID_SendReport(&hUsbDeviceFS, hid_report_buffer, 4, HID_InstID);
+//  		USBD_HID_SendReport(&hUsbDeviceFS, hid_report_buffer, 4, CHID_InstID);
   		USBD_CDC_TransmitPacket(&hUsbDeviceFS, CDC_InstID);
   		HAL_GPIO_WritePin(GPIOA, GPIO_PIN_0, GPIO_PIN_SET);
-  		if (HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan1, &Tx_Header, txData) != HAL_OK)
+  		if (HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan1, &Tx_Header, txData) != HAL_OK) // not useful rn
   		{
   			Error_Handler();
   		}
-  		HAL_Delay(100);
+  		HAL_Delay(50);
 
   	    sprintf(buffer, "%d %d %d %d\r\n", rxData[0], rxData[1], rxData[2], rxData[3]);
-
-//  	}
+  	    	buttons[0] = ((rxData[0] > 49) + 2*(rxData[1] > 46) + 4*(rxData[2] > 46) + 8*(rxData[3] > 60));
+//  	    USBD_CUSTOM_HID_SendReport(&hUsbDeviceFS, buttons, sizeof(buttons), CHID_InstID);
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */
 }
-
 /**
   * @brief System Clock Configuration
   * @retval None

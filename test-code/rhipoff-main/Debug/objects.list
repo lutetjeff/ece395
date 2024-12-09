@@ -28,7 +28,6 @@
 "./USB/Class/CompositeBuilder/Src/usbd_composite_builder.o"
 "./USB/Class/CustomHID/Src/usbd_customhid.o"
 "./USB/Class/CustomHID/Src/usbd_customhid_if.o"
-"./USB/Class/HID/Src/usbd_hid.o"
 "./USB/Core/Src/usbd_conf.o"
 "./USB/Core/Src/usbd_core.o"
 "./USB/Core/Src/usbd_ctlreq.o"

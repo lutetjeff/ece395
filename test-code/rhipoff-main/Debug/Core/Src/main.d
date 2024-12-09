@@ -37,7 +37,9 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
  C:/Users/sapph/STM32CubeIDE/workspace_1.16.0/rhipoff-main/USB/Core/Inc/usbd_ioreq.h \
  C:/Users/sapph/STM32CubeIDE/workspace_1.16.0/rhipoff-main/USB/Class/CDC/Inc/usbd_cdc_if.h \
  C:/Users/sapph/STM32CubeIDE/workspace_1.16.0/rhipoff-main/USB/Class/CDC/Inc/usbd_cdc.h \
- C:/Users/sapph/STM32CubeIDE/workspace_1.16.0/rhipoff-main/USB/Class/HID/Inc/usbd_hid.h \
+ C:/Users/sapph/STM32CubeIDE/workspace_1.16.0/rhipoff-main/USB/Class/CustomHID/Inc/usbd_customhid.h \
+ C:/Users/sapph/STM32CubeIDE/workspace_1.16.0/rhipoff-main/USB/Class/CustomHID/Inc/usbd_customhid_if.h \
+ C:/Users/sapph/STM32CubeIDE/workspace_1.16.0/rhipoff-main/USB/Class/CustomHID/Inc/usbd_customhid.h \
  C:/Users/sapph/STM32CubeIDE/workspace_1.16.0/rhipoff-main/USB/Core/Inc/usbd_desc.h \
  C:/Users/sapph/STM32CubeIDE/workspace_1.16.0/rhipoff-main/USB/Class/CompositeBuilder/Inc/usbd_composite_builder.h
 ../Core/Inc/main.h:
@@ -79,6 +81,8 @@ C:/Users/sapph/STM32CubeIDE/workspace_1.16.0/rhipoff-main/USB/Class/CDC/Inc/usbd
 C:/Users/sapph/STM32CubeIDE/workspace_1.16.0/rhipoff-main/USB/Core/Inc/usbd_ioreq.h:
 C:/Users/sapph/STM32CubeIDE/workspace_1.16.0/rhipoff-main/USB/Class/CDC/Inc/usbd_cdc_if.h:
 C:/Users/sapph/STM32CubeIDE/workspace_1.16.0/rhipoff-main/USB/Class/CDC/Inc/usbd_cdc.h:
-C:/Users/sapph/STM32CubeIDE/workspace_1.16.0/rhipoff-main/USB/Class/HID/Inc/usbd_hid.h:
+C:/Users/sapph/STM32CubeIDE/workspace_1.16.0/rhipoff-main/USB/Class/CustomHID/Inc/usbd_customhid.h:
+C:/Users/sapph/STM32CubeIDE/workspace_1.16.0/rhipoff-main/USB/Class/CustomHID/Inc/usbd_customhid_if.h:
+C:/Users/sapph/STM32CubeIDE/workspace_1.16.0/rhipoff-main/USB/Class/CustomHID/Inc/usbd_customhid.h:
 C:/Users/sapph/STM32CubeIDE/workspace_1.16.0/rhipoff-main/USB/Core/Inc/usbd_desc.h:
 C:/Users/sapph/STM32CubeIDE/workspace_1.16.0/rhipoff-main/USB/Class/CompositeBuilder/Inc/usbd_composite_builder.h:

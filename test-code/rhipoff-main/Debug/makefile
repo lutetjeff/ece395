@@ -10,7 +10,6 @@ RM := rm -rf
 # All of the sources participating in the build are defined here
 -include sources.mk
 -include USB/Core/Src/subdir.mk
--include USB/Class/HID/Src/subdir.mk
 -include USB/Class/CustomHID/Src/subdir.mk
 -include USB/Class/CompositeBuilder/Src/subdir.mk
 -include USB/Class/CDC/Src/subdir.mk
