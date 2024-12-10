@@ -43,49 +43,27 @@ static uint8_t *TEMPLATE_CUSTOM_HID_GetReport(uint16_t *ReportLength);
 #endif /* USBD_CUSTOMHID_CTRL_REQ_GET_REPORT_ENABLED */
 /* Private variables ---------------------------------------------------------*/
 extern USBD_HandleTypeDef USBD_Device;
-//To extern the report_buffer variable
-//extern uint8_t report_buffer[64];
-//extern uint8_t flag_rx;
 
 /** Usb HID report descriptor. */
 __ALIGN_BEGIN static uint8_t CUSTOM_HID_ReportDesc_FS[USBD_CUSTOM_HID_REPORT_DESC_SIZE] __ALIGN_END =
 {
-		/* USER CODE BEGIN 0 */
-				0x06, 0x00, 0xff, // Usage Page(Undefined )
-				0x09, 0x01, // USAGE (Undefined)
-				0xa1, 0x01, // COLLECTION (Application)
-				0x15, 0x00, // LOGICAL_MINIMUM (0)
-				0x26, 0xff, 0x00, // LOGICAL_MAXIMUM (255)
-				0x75, 0x08, // REPORT_SIZE (8)
-				0x95, 0x40, // REPORT_COUNT (64)
-				0x09, 0x01, // USAGE (Undefined)
-				0x81, 0x02, // INPUT (Data,Var,Abs)
-				0x95, 0x40, // REPORT_COUNT (64)
-				0x09, 0x01, // USAGE (Undefined)
-				0x91, 0x02, // OUTPUT (Data,Var,Abs)
-				0x95, 0x01, // REPORT_COUNT (1)
-				0x09, 0x01, // USAGE (Undefined)
-				0xb1, 0x02, // FEATURE (Data,Var,Abs)
-				/* USER CODE END 0 */
-				0xC0 /* END_COLLECTION */
-//		0x05, 0x01, 0xff, // Usage Page (Generic Desktop)
-//		0x09, 0x05, // USAGE (Game Pad)
-//		0xa1, 0x01, // COLLECTION (Application)
-//		0x05, 0x09, // USAGE (Button)
-//		0x19, 0x01,  // USAGE MINIMUM (1)
-//		0x29, 0x09,  // USAGE MAXIMUM (9)
-//		0x15, 0x01, // LOGICAL_MINIMUM (0)
-//		0x26, 0x01, 0x00, // LOGICAL_MAXIMUM (1)
-//		0x95, 0x09, // REPORT_COUNT (9)
-//		0x75, 0x01, // REPORT_SIZE (1)
-//		0x81, 0x02, // INPUT (Data,Var,Abs)
-//		0x95, 0x01, // REPORT_COUNT (1)
-//		0x75, 0x07, // REPORT_SIZE (7)
-//		0x81, 0x03, // INPUT (Cnst,Var,Abs)
-//		0xC0 /* END_COLLECTION */
-//
-
-
+ /* USER CODE BEGIN 0 */
+			0x05, 0x01, // Usage Page (Generic Desktop)
+			0x09, 0x05, // USAGE (Game Pad)
+			0xa1, 0x01, // COLLECTION (Application)
+			0x05, 0x09, // USAGE (Button)
+			0x19, 0x01, // USAGE MINIMUM (1)
+			0x29, 0x09, // USAGE MAXIMUM (9)
+			0x15, 0x01, // LOGICAL_MINIMUM (0)
+			0x26, 0x01, 0xFF, // LOGICAL_MAXIMUM (1)
+			0x95, 0x09, // REPORT_COUNT (9)
+			0x75, 0x01, // REPORT_SIZE (1)
+			0x81, 0x02, // INPUT (Data,Var,Abs)
+			0x95, 0x01, // REPORT_COUNT (1)
+			0x75, 0x07, // REPORT_SIZE (7)
+			0x81, 0x03, // INPUT (Cnst,Var,Abs)
+			0xC0 /* END_COLLECTION */
+/* USER CODE END 0 */
 };
 
 USBD_CUSTOM_HID_ItfTypeDef USBD_CustomHID_template_fops =
@@ -139,14 +117,7 @@ static int8_t CUSTOM_HID_DeInit(void)
   */
 static int8_t CUSTOM_HID_OutEvent(uint8_t event_idx, uint8_t state)
 {
-	UNUSED(event_idx);
-	UNUSED(state);
-	/* Start next USB packet transfer once data processing is completed */
-	  if (USBD_CUSTOM_HID_ReceivePacket(&USBD_Device) != (uint8_t)USBD_OK)
-	  {
-	    return -1;
-	  }
-	return (USBD_OK);
+	return (0);
 }
 
 #ifdef USBD_CUSTOMHID_CTRL_REQ_COMPLETE_CALLBACK_ENABLED

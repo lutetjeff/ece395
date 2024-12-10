@@ -29,12 +29,12 @@
 #define USBD_PID                      0x5750
 #define USBD_LANGID_STRING            0x409
 #define USBD_MANUFACTURER_STRING      "STMicroelectronics"
-#define USBD_PRODUCT_HS_STRING        "Composite_HID_CDC_CDC in HS Mode"
-#define USBD_PRODUCT_FS_STRING        "Composite_HID_CDC_CDC in FS Mode"
-#define USBD_CONFIGURATION_HS_STRING  "Composite_HID_CDC_CDC Config"
-#define USBD_INTERFACE_HS_STRING      "Composite_HID_CDC_CDC Interface"
-#define USBD_CONFIGURATION_FS_STRING  "Composite_HID_CDC_CDC Config"
-#define USBD_INTERFACE_FS_STRING      "Composite_HID_CDC_CDC Interface"
+#define USBD_PRODUCT_HS_STRING        "RHipoff Gamepad"
+#define USBD_PRODUCT_FS_STRING        "RHipoff Gamepad"
+#define USBD_CONFIGURATION_HS_STRING  "HID Config"
+#define USBD_INTERFACE_HS_STRING      "HID Interface"
+#define USBD_CONFIGURATION_FS_STRING  "HID Config"
+#define USBD_INTERFACE_FS_STRING      "HID Interface"
 
 /* Private macro -------------------------------------------------------------*/
 /* Private function prototypes -----------------------------------------------*/
@@ -79,7 +79,7 @@ USBD_DescriptorsTypeDef Class_Desc =
 #endif /* __ICCARM__ */
 __ALIGN_BEGIN uint8_t USBD_DeviceDesc[USB_LEN_DEV_DESC] __ALIGN_END =
 {
-  0x12,                       /* bLength */
+  0x12,                       /* bLength */ // previously 12
   USB_DESC_TYPE_DEVICE,       /* bDescriptorType */
 #if ((USBD_LPM_ENABLED == 1) || (USBD_CLASS_BOS_ENABLED == 1))
   0x01,                       /*bcdUSB */     /* changed to USB version 2.01
@@ -88,9 +88,9 @@ __ALIGN_BEGIN uint8_t USBD_DeviceDesc[USB_LEN_DEV_DESC] __ALIGN_END =
   0x00,                       /* bcdUSB */
 #endif /* (USBD_LPM_ENABLED == 1) || (USBD_CLASS_BOS_ENABLED == 1) */
   0x02,
-  0x00,                       /* bDeviceClass */
-  0x00,                       /* bDeviceSubClass */
-  0x00,                       /* bDeviceProtocol */
+  0xEF,                       /* bDeviceClass */ // next 3 lines were 0x00
+  0x02,                       /* bDeviceSubClass */
+  0x01,                       /* bDeviceProtocol */
   USB_MAX_EP0_SIZE,           /* bMaxPacketSize */
   LOBYTE(USBD_VID),           /* idVendor */
   HIBYTE(USBD_VID),           /* idVendor */

@@ -1,5 +1,0 @@
-../USB/Class/CDC/Src/usbd_cdc_if.c:104:15:TEMPLATE_Init	1
-../USB/Class/CDC/Src/usbd_cdc_if.c:118:15:TEMPLATE_DeInit	1
-../USB/Class/CDC/Src/usbd_cdc_if.c:135:15:TEMPLATE_Control	3
-../USB/Class/CDC/Src/usbd_cdc_if.c:214:15:TEMPLATE_Receive	1
-../USB/Class/CDC/Src/usbd_cdc_if.c:234:15:TEMPLATE_TransmitCplt	1

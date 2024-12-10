@@ -53,12 +53,8 @@ PCD_HandleTypeDef hpcd_USB_DRD_FS;
 
 /* USER CODE BEGIN PV */
 uint8_t CDC_EpAdd_Inst[3] = {CDC_IN_EP, CDC_OUT_EP, CDC_CMD_EP}; 	/* CDC Endpoint Addresses array */
-uint8_t CUSTOM_HID_EpAdd_Inst = CUSTOM_HID_EPIN_ADDR;								/* HID Endpoint Address array */
+uint8_t CUSTOM_HID_EpAdd_Inst[2] = {CUSTOM_HID_EPIN_ADDR, CUSTOM_HID_EPOUT_ADDR};		/* HID Endpoint Address array */
 USBD_HandleTypeDef hUsbDeviceFS;
-//uint8_t tx_buffer[64];		//Variable to store the output data
-//uint8_t report_buffer[64];		//Variable to receive the report buffer
-//uint8_t flag = 0;			//Variable to store the button flag
-//uint8_t flag_rx = 0;			//Variable to store the reception flag
 uint8_t CHID_InstID = 0, CDC_InstID = 0;
 
 FDCAN_RxHeaderTypeDef Rx_Header;
@@ -115,20 +111,24 @@ int main(void)
   /* Initialize the USB Device Library */
   if(USBD_Init(&hUsbDeviceFS, &Class_Desc, 0) != USBD_OK)
   	Error_Handler();
-  /* Store HID Instance Class ID */
-  CHID_InstID = hUsbDeviceFS.classId;
   /* Register the CHID Class */
-  if(USBD_RegisterClassComposite(&hUsbDeviceFS, USBD_CUSTOM_HID_CLASS, CLASS_TYPE_CHID, &CUSTOM_HID_EpAdd_Inst) != USBD_OK)
+  CHID_InstID = hUsbDeviceFS.classId;
+  if(USBD_RegisterClassComposite(&hUsbDeviceFS, USBD_CUSTOM_HID_CLASS, CLASS_TYPE_CHID, CUSTOM_HID_EpAdd_Inst) != USBD_OK)
   	Error_Handler();
-  /* Register CDC Class First Instance */
+    /* Register CDC Class First Instance */
+  CDC_InstID = hUsbDeviceFS.classId;
   if(USBD_RegisterClassComposite(&hUsbDeviceFS, USBD_CDC_CLASS, CLASS_TYPE_CDC, CDC_EpAdd_Inst) != USBD_OK)
   	Error_Handler();
-  /* Add CDC Interface Class */
+/* Store Instance Class ID */
+  if (USBD_CMPSIT_SetClassID(&hUsbDeviceFS, CLASS_TYPE_CHID, 0) != 0xFF)
+  {
+    USBD_CUSTOM_HID_RegisterInterface(&hUsbDeviceFS, &USBD_CustomHID_template_fops);
+  }
   if (USBD_CMPSIT_SetClassID(&hUsbDeviceFS, CLASS_TYPE_CDC, 0) != 0xFF)
   {
   	USBD_CDC_RegisterInterface(&hUsbDeviceFS, &USBD_CDC_Template_fops);
   }
-
+  /* Add CHID Interface Class */
   USBD_Start(&hUsbDeviceFS);
 
   FDCAN_Config(); // need to set up the FD CAN peripheral with our parameters.
@@ -139,9 +139,6 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-//  	if(HAL_GPIO_ReadPin(USER_BT_GPIO_Port, USER_BT_Pin) == GPIO_PIN_SET)
-//  	{
-//  		USBD_HID_SendReport(&hUsbDeviceFS, hid_report_buffer, 4, CHID_InstID);
   		USBD_CDC_TransmitPacket(&hUsbDeviceFS, CDC_InstID);
   		HAL_GPIO_WritePin(GPIOA, GPIO_PIN_0, GPIO_PIN_SET);
   		if (HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan1, &Tx_Header, txData) != HAL_OK) // not useful rn
@@ -151,8 +148,8 @@ int main(void)
   		HAL_Delay(50);
 
   	    sprintf(buffer, "%d %d %d %d\r\n", rxData[0], rxData[1], rxData[2], rxData[3]);
-  	    	buttons[0] = ((rxData[0] > 49) + 2*(rxData[1] > 46) + 4*(rxData[2] > 46) + 8*(rxData[3] > 60));
-//  	    USBD_CUSTOM_HID_SendReport(&hUsbDeviceFS, buttons, sizeof(buttons), CHID_InstID);
+  	    	buttons[0] = ((rxData[0] > 75) + 2*(rxData[1] > 75) + 4*(rxData[2] > 75) + 8*(rxData[3] > 75));
+  	    USBD_CUSTOM_HID_SendReport(&hUsbDeviceFS, buttons, sizeof(buttons), CHID_InstID);
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
