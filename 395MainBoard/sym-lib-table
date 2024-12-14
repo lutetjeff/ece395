@@ -1,0 +1,6 @@
+(sym_lib_table
+  (version 7)
+  (lib (name "DDRLibrary")(type "KiCad")(uri "${KIPRJMOD}/New_Library.kicad_sym")(options "")(descr ""))
+  (lib (name "jtd1524d12")(type "KiCad")(uri "${KIPRJMOD}/jtd1524d12.kicad_sym")(options "")(descr ""))
+  (lib (name "tlv76733qwdrbxq1")(type "KiCad")(uri "${KIPRJMOD}/tlv76733qwdrbxq1.kicad_sym")(options "")(descr ""))
+)
